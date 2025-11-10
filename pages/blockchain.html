@@ -1,0 +1,299 @@
+<section id="blockchain" class="page">
+    <h2>⛓️ Blockchain y Criptografía</h2>
+    <p class="page-description">Blockchain es una tecnología de registro distribuido que usa criptografía
+        para crear una cadena inmutable de bloques. Fundamental en criptomonedas y contratos inteligentes.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🧱 ¿Qué es un Bloque?</h3>
+            <div class="algo-info">
+                <p>Cada bloque contiene:</p>
+                <ul>
+                    <li><strong>Datos:</strong> Transacciones, contratos, información</li>
+                    <li><strong>Hash del bloque:</strong> Identificador único calculado</li>
+                    <li><strong>Hash del bloque anterior:</strong> Crea la cadena</li>
+                    <li><strong>Timestamp:</strong> Marca de tiempo</li>
+                    <li><strong>Nonce:</strong> Número usado en minería (Proof of Work)</li>
+                </ul>
+
+                <div class="code-example">
+                    <strong>Estructura de Bloque:</strong>
+                    <pre>
+Bloque #1 (Génesis)
+├─ Hash: 0000a4f3...
+├─ Hash Anterior: 0000000000... (ninguno)
+├─ Timestamp: 2009-01-03
+├─ Nonce: 2083236893
+└─ Datos: "The Times 03/Jan/2009..."
+
+Bloque #2
+├─ Hash: 00008b3c...
+├─ Hash Anterior: 0000a4f3... ← Conectado al #1
+├─ Timestamp: 2009-01-09
+├─ Nonce: 856192328
+└─ Datos: Transacción A → B (50 BTC)
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔗 Construcción de la Cadena</h3>
+            <div class="blockchain-visual">
+                <div class="block">
+                    <div class="block-header">Bloque #0</div>
+                    <div class="block-content">
+                        <small>Hash: abc123...</small><br>
+                        <small>Prev: 000000...</small>
+                    </div>
+                </div>
+                <div class="chain-link">→</div>
+                <div class="block">
+                    <div class="block-header">Bloque #1</div>
+                    <div class="block-content">
+                        <small>Hash: def456...</small><br>
+                        <small>Prev: abc123...</small>
+                    </div>
+                </div>
+                <div class="chain-link">→</div>
+                <div class="block">
+                    <div class="block-header">Bloque #2</div>
+                    <div class="block-content">
+                        <small>Hash: ghi789...</small><br>
+                        <small>Prev: def456...</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section" style="margin-top: 24px;">
+        <h3>⛏️ Demo Interactiva: Crear Blockchain</h3>
+        <div class="blockchain-demo">
+            <div class="input-group">
+                <label for="block-data">Datos del bloque:</label>
+                <input type="text" id="block-data" placeholder="Ej: Alice paga 5 BTC a Bob" />
+            </div>
+
+            <button id="mine-block" class="btn-primary">⛏️ Minar Bloque</button>
+            <button id="tamper-block" class="btn-attack" style="margin-left: 8px;">🔧 Alterar Blockchain</button>
+            <button id="reset-chain" class="btn-primary" style="margin-left: 8px; background: #666;">🔄
+                Reiniciar</button>
+
+            <div id="blockchain-container" class="blockchain-container"></div>
+            <div id="blockchain-status" class="blockchain-status"></div>
+        </div>
+    </div>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🔐 Inmutabilidad</h3>
+            <div class="algo-info">
+                <p><strong>¿Por qué blockchain es inmutable?</strong></p>
+                <div class="code-example">
+                    <strong>Intento de alterar:</strong>
+                    <pre>
+1. Atacante modifica Bloque #100
+   → Hash del bloque cambia
+
+2. Bloque #101 apunta al hash antiguo
+   → Cadena rota detectada ❌
+
+3. Atacante intenta recalcular #101, #102...
+   → Necesita recalcular TODOS los bloques siguientes
+   → Red rechaza cadena más corta
+   
+Conclusión: Alterar blockchain requiere:
+✗ Recalcular todos los bloques (mucho poder computacional)
+✗ Controlar >51% de la red (ataque 51%)
+✓ Prácticamente imposible en redes grandes
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>⚡ Proof of Work (PoW)</h3>
+            <div class="algo-info">
+                <p><strong>Minería:</strong> Encontrar un nonce que haga que el hash comience con ceros</p>
+                <div class="code-example">
+                    <strong>Algoritmo de minería:</strong>
+                    <pre>
+Objetivo: Hash que empiece con "0000..."
+
+Intento 1: nonce=0 → Hash: 8a3b... ❌
+Intento 2: nonce=1 → Hash: 7f2c... ❌
+Intento 3: nonce=2 → Hash: 9d4e... ❌
+...
+Intento 48201: nonce=48200 → Hash: 0000a3... ✅
+
+Bitcoin: ~13 quintillones de intentos/segundo globalmente
+Dificultad ajustada para 1 bloque cada 10 minutos
+                    </pre>
+                </div>
+
+                <p><strong>Dificultad:</strong></p>
+                <ul>
+                    <li>1 cero: ~16 intentos</li>
+                    <li>2 ceros: ~256 intentos</li>
+                    <li>4 ceros: ~65,536 intentos</li>
+                    <li>10 ceros: ~1 billón de intentos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-table">
+        <h3>📊 Consensos de Blockchain</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mecanismo</th>
+                    <th>Cómo Funciona</th>
+                    <th>Energía</th>
+                    <th>Velocidad</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Proof of Work</strong></td>
+                    <td>Resolver puzzle criptográfico</td>
+                    <td>🔴 Muy alta</td>
+                    <td>🐌 Lenta</td>
+                    <td>Bitcoin, Ethereum (antiguo)</td>
+                </tr>
+                <tr>
+                    <td><strong>Proof of Stake</strong></td>
+                    <td>Validadores con tokens bloqueados</td>
+                    <td>🟢 Muy baja</td>
+                    <td>⚡ Rápida</td>
+                    <td>Ethereum 2.0, Cardano</td>
+                </tr>
+                <tr>
+                    <td><strong>Proof of Authority</strong></td>
+                    <td>Validadores pre-aprobados</td>
+                    <td>🟢 Baja</td>
+                    <td>⚡ Muy rápida</td>
+                    <td>Redes privadas</td>
+                </tr>
+                <tr>
+                    <td><strong>Delegated PoS</strong></td>
+                    <td>Votar por delegados validadores</td>
+                    <td>🟢 Baja</td>
+                    <td>⚡ Rápida</td>
+                    <td>EOS, Tron</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-box">
+        <h4>🎯 Aplicaciones de Blockchain</h4>
+        <ul>
+            <li><strong>Criptomonedas:</strong> Bitcoin, Ethereum, stablecoins</li>
+            <li><strong>Contratos Inteligentes:</strong> Código auto-ejecutable en blockchain</li>
+            <li><strong>NFTs:</strong> Tokens no fungibles, certificados de autenticidad</li>
+            <li><strong>Supply Chain:</strong> Rastreo de productos desde origen</li>
+            <li><strong>Registros Médicos:</strong> Historial médico inmutable</li>
+            <li><strong>Votación Electrónica:</strong> Votos transparentes y verificables</li>
+            <li><strong>Propiedad Intelectual:</strong> Timestamps de creaciones</li>
+            <li><strong>DeFi:</strong> Finanzas descentralizadas sin intermediarios</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #fff3e0; border-left-color: #ff9800;">
+        <h4>⚠️ Limitaciones y Desafíos</h4>
+        <ul>
+            <li><strong>Escalabilidad:</strong> Bitcoin ~7 tx/s vs Visa ~24,000 tx/s</li>
+            <li><strong>Consumo Energético:</strong> Bitcoin consume más electricidad que países enteros</li>
+            <li><strong>Almacenamiento:</strong> Blockchain de Bitcoin > 500 GB y creciendo</li>
+            <li><strong>Finalidad:</strong> Transacciones tardan minutos en confirmarse</li>
+            <li><strong>Privacidad:</strong> Todas las transacciones son públicas</li>
+            <li><strong>Regulación:</strong> Marco legal aún en desarrollo</li>
+            <li><strong>Ataque 51%:</strong> Si alguien controla >51% puede alterar transacciones recientes</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .blockchain-visual {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    .block {
+        background: linear-gradient(135deg, #1687a7 0%, #0b3954 100%);
+        color: white;
+        border-radius: 8px;
+        padding: 16px;
+        min-width: 140px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .block-header {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 4px;
+    }
+
+    .block-content {
+        font-size: 0.85em;
+    }
+
+    .chain-link {
+        color: #1687a7;
+        font-size: 2em;
+        font-weight: bold;
+        margin: 0 8px;
+    }
+
+    .blockchain-demo {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .blockchain-container {
+        margin-top: 20px;
+        padding: 16px;
+        background: white;
+        border-radius: 8px;
+        min-height: 100px;
+    }
+
+    .blockchain-status {
+        margin-top: 16px;
+        padding: 12px;
+        background: #e8f5e9;
+        border-left: 4px solid #4caf50;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .mini-block {
+        background: #f5f5f5;
+        border: 2px solid #1687a7;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 12px;
+        font-size: 0.9em;
+    }
+
+    .mini-block.invalid {
+        border-color: #f44336;
+        background: #ffebee;
+    }
+
+    .mini-block.valid {
+        border-color: #4caf50;
+        background: #e8f5e9;
+    }
+</style>

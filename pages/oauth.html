@@ -1,0 +1,256 @@
+<section id="oauth" class="page">
+    <h2>🔓 OAuth 2.0 & JWT (JSON Web Tokens)</h2>
+    <p class="page-description">OAuth 2.0 es un estándar de autorización que permite a aplicaciones acceder
+        a recursos de un usuario sin compartir contraseñas. JWT es un formato compacto para transmitir información de
+        forma segura.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🔑 OAuth 2.0 - Flujo de Autorización</h3>
+            <div class="oauth-flow">
+                <div class="flow-step">
+                    <span class="step-num">1</span>
+                    <div class="step-content">
+                        <strong>Usuario → App</strong>
+                        <p>"Quiero iniciar sesión con Google"</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <span class="step-num">2</span>
+                    <div class="step-content">
+                        <strong>App → Google</strong>
+                        <p>Redirige a página de login de Google</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <span class="step-num">3</span>
+                    <div class="step-content">
+                        <strong>Usuario → Google</strong>
+                        <p>Ingresa credenciales y autoriza</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <span class="step-num">4</span>
+                    <div class="step-content">
+                        <strong>Google → App</strong>
+                        <p>Código de autorización temporal</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <span class="step-num">5</span>
+                    <div class="step-content">
+                        <strong>App → Google</strong>
+                        <p>Intercambia código por access token</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <span class="step-num">6</span>
+                    <div class="step-content">
+                        <strong>App</strong>
+                        <p>✅ Usa token para acceder a recursos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎟️ JWT - Estructura</h3>
+            <div class="jwt-structure">
+                <div class="jwt-part jwt-header">
+                    <strong>HEADER</strong>
+                    <code>{"alg": "HS256", "typ": "JWT"}</code>
+                </div>
+                <span class="jwt-dot">.</span>
+                <div class="jwt-part jwt-payload">
+                    <strong>PAYLOAD</strong>
+                    <code>{"sub": "1234", "name": "Juan", "iat": 1516239022}</code>
+                </div>
+                <span class="jwt-dot">.</span>
+                <div class="jwt-part jwt-signature">
+                    <strong>SIGNATURE</strong>
+                    <code>HMACSHA256(base64(header) + "." + base64(payload), secret)</code>
+                </div>
+            </div>
+
+            <div class="code-example" style="margin-top: 16px;">
+                <strong>JWT Completo:</strong>
+                <pre style="word-break: break-all;">
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikp1YW4gUGVyZXoiLCJpYXQiOjE1MTYyMzkwMjJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-table">
+        <h3>⚖️ OAuth vs Autenticación Tradicional</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>OAuth 2.0</th>
+                    <th>Tradicional (Usuario/Pass)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Compartir credenciales</strong></td>
+                    <td>🟢 No necesario</td>
+                    <td>🔴 Sí, se comparten</td>
+                </tr>
+                <tr>
+                    <td><strong>Seguridad</strong></td>
+                    <td>🟢 Alta (tokens con expiración)</td>
+                    <td>🟡 Media (password estático)</td>
+                </tr>
+                <tr>
+                    <td><strong>Revocación</strong></td>
+                    <td>🟢 Fácil (invalidar token)</td>
+                    <td>🔴 Cambiar password</td>
+                </tr>
+                <tr>
+                    <td><strong>Permisos granulares</strong></td>
+                    <td>🟢 Sí (scopes)</td>
+                    <td>🔴 Todo o nada</td>
+                </tr>
+                <tr>
+                    <td><strong>Experiencia usuario</strong></td>
+                    <td>🟢 Un clic</td>
+                    <td>🟡 Formulario manual</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-box">
+        <h4>🎯 Casos de Uso</h4>
+        <ul>
+            <li><strong>"Login con Google/Facebook":</strong> Single Sign-On (SSO)</li>
+            <li><strong>Apps móviles:</strong> Acceso a APIs sin guardar password</li>
+            <li><strong>Microservicios:</strong> Autenticación entre servicios</li>
+            <li><strong>APIs públicas:</strong> Control de acceso con tokens</li>
+            <li><strong>IoT:</strong> Dispositivos sin interfaz de login</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #ffebee; border-left-color: #f44336;">
+        <h4>⚠️ Vulnerabilidades Comunes</h4>
+        <ul>
+            <li><strong>Token Leakage:</strong> Tokens expuestos en URLs o logs</li>
+            <li><strong>CSRF:</strong> Forzar login con cuenta del atacante</li>
+            <li><strong>Open Redirect:</strong> Redirigir a sitio malicioso después de auth</li>
+            <li><strong>Tokens sin expiración:</strong> Válidos indefinidamente</li>
+            <li><strong>Algoritmo "none":</strong> JWT sin firma (vulnerable)</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+        <h4>✅ Mejores Prácticas</h4>
+        <ul>
+            <li>Usa <strong>HTTPS</strong> siempre para OAuth</li>
+            <li>Valida el <strong>redirect_uri</strong> estrictamente</li>
+            <li>Implementa <strong>state parameter</strong> para CSRF protection</li>
+            <li>Tokens con <strong>expiración corta</strong> (15-60 minutos)</li>
+            <li>Usa <strong>refresh tokens</strong> para renovar access tokens</li>
+            <li>Almacena JWTs en <strong>httpOnly cookies</strong>, no localStorage</li>
+            <li>Nunca uses algoritmo <strong>"none"</strong> en JWT</li>
+            <li>Valida <strong>firma</strong> del JWT en cada request</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .oauth-flow {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .flow-step {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 6px;
+        border-left: 4px solid #1687a7;
+    }
+
+    .step-num {
+        background: #1687a7;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .step-content strong {
+        color: #1687a7;
+        display: block;
+    }
+
+    .flow-arrow {
+        text-align: center;
+        font-size: 2em;
+        color: #1687a7;
+        margin: 8px 0;
+    }
+
+    .jwt-structure {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    .jwt-part {
+        padding: 16px;
+        border-radius: 6px;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .jwt-header {
+        background: #ffebee;
+        border: 2px solid #f44336;
+    }
+
+    .jwt-payload {
+        background: #e3f2fd;
+        border: 2px solid #2196f3;
+    }
+
+    .jwt-signature {
+        background: #e8f5e9;
+        border: 2px solid #4caf50;
+    }
+
+    .jwt-part strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9em;
+    }
+
+    .jwt-part code {
+        font-size: 0.8em;
+        word-break: break-all;
+    }
+
+    .jwt-dot {
+        font-size: 2em;
+        font-weight: bold;
+        color: #666;
+    }
+</style>

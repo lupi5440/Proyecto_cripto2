@@ -1,0 +1,66 @@
+<section id="https" class="page">
+    <h2>HTTPS y Seguridad en la Transmisión</h2>
+    <p>HTTPS cifra la comunicación entre el navegador y el servidor, protegiendo contra escuchas y manipulación de datos
+        en tránsito.</p>
+
+    <h3>HTTP vs HTTPS</h3>
+    <div class="row">
+        <div>
+            <h4 style="color: red;">❌ HTTP (Inseguro)</h4>
+            <ul>
+                <li>Datos transmitidos en texto plano</li>
+                <li>Vulnerable a sniffing (Wireshark, tcpdump)</li>
+                <li>Vulnerable a MITM (Man-in-the-Middle)</li>
+                <li>Sin verificación de identidad del servidor</li>
+                <li>Los ISP/routers pueden modificar contenido</li>
+            </ul>
+            <pre>GET /login HTTP/1.1
+Host: ejemplo.com
+Cookie: session=abc123
+username=admin&password=secreto123</pre>
+            <p style="color: red;">↑ Todo esto es visible en la red!</p>
+        </div>
+
+        <div>
+            <h4 style="color: green;">✅ HTTPS (Seguro)</h4>
+            <ul>
+                <li>Cifrado TLS 1.2/1.3</li>
+                <li>Protege contra sniffing</li>
+                <li>Protege contra MITM</li>
+                <li>Certificados verifican identidad</li>
+                <li>Integridad de datos garantizada</li>
+            </ul>
+            <pre>GET /login HTTP/1.1
+Host: ejemplo.com
+[Datos cifrados con TLS]
+→ AES-256-GCM, SHA-384
+→ Perfect Forward Secrecy</pre>
+            <p style="color: green;">↑ Atacante solo ve datos cifrados</p>
+        </div>
+    </div>
+
+    <h3>Componentes de HTTPS</h3>
+    <ul>
+        <li><strong>TLS Handshake:</strong> Negociación de cifrado y autenticación</li>
+        <li><strong>Certificados SSL/TLS:</strong> Verifican identidad del servidor (CA firmados)</li>
+        <li><strong>Cifrado Simétrico:</strong> AES para cifrar datos (rápido)</li>
+        <li><strong>Cifrado Asimétrico:</strong> RSA/ECDHE para intercambio de claves</li>
+        <li><strong>HASHES:</strong> SHA-256/384 para integridad</li>
+    </ul>
+
+    <h3>Mejores Prácticas</h3>
+    <div class="info-box">
+        <p>✅ <strong>Usar TLS 1.2 o superior</strong> (deshabilitar SSLv3, TLS 1.0/1.1)</p>
+        <p>✅ <strong>HSTS</strong> (HTTP Strict Transport Security) - forzar HTTPS</p>
+        <p>✅ <strong>Certificate Pinning</strong> para apps móviles</p>
+        <p>✅ <strong>Certificados de CA confiables</strong> (Let's Encrypt es gratis)</p>
+        <p>✅ <strong>Renovar certificados antes de expirar</strong></p>
+        <p>✅ <strong>Configurar ciphers seguros</strong> (ECDHE, AES-GCM)</p>
+    </div>
+
+    <h3>Headers de Seguridad</h3>
+    <pre>Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Security-Policy: default-src https:
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff</pre>
+</section>

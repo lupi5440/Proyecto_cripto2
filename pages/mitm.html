@@ -1,0 +1,58 @@
+<section id="mitm" class="page">
+    <h2>🔒 Ataque Man-in-the-Middle (MITM)</h2>
+    <p class="page-description">Un ataque MITM ocurre cuando un tercero intercepta la comunicación entre dos partes.
+        Demuestra cómo el cifrado protege tus datos incluso si son interceptados.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>📤 Cliente - Enviar Mensaje</h3>
+            <div class="input-group">
+                <label for="mitm-message">Mensaje secreto:</label>
+                <input id="mitm-message" type="text" placeholder="Escribe tu mensaje aquí..." />
+            </div>
+
+            <div class="input-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="mitm-encrypt" />
+                    <span>🔐 Cifrar mensaje antes de enviar</span>
+                </label>
+            </div>
+
+            <div class="input-group" id="password-group">
+                <label for="mitm-pass">Contraseña de cifrado:</label>
+                <input id="mitm-pass" type="password" placeholder="Mínimo 8 caracteres" />
+            </div>
+
+            <button id="mitm-send" class="btn-primary">Enviar Mensaje</button>
+        </div>
+
+        <div class="demo-section">
+            <h3>📡 Red - Paquetes en Tránsito</h3>
+            <p class="section-description">Estos son los paquetes que viajan por la red:</p>
+            <div class="log-container">
+                <ul id="network-log" class="log-list"></ul>
+                <p class="empty-state" id="network-empty">No hay paquetes aún...</p>
+            </div>
+        </div>
+
+        <div class="demo-section attacker-section">
+            <h3>👤 Atacante - Vista Interceptada</h3>
+            <p class="section-description warning">⚠️ El atacante puede ver todo el tráfico de red:</p>
+            <div class="log-container attacker-view">
+                <ul id="attacker-view" class="log-list"></ul>
+                <p class="empty-state" id="attacker-empty">Esperando interceptar paquetes...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>💡 ¿Qué aprendemos?</h4>
+        <ul>
+            <li><strong>Sin cifrado:</strong> El atacante puede leer todo tu mensaje en texto plano</li>
+            <li><strong>Con cifrado:</strong> El atacante solo ve datos ilegibles, tu información está protegida</li>
+            <li><strong>Criptografía:</strong> Transforma información legible en datos incomprensibles sin la clave
+                correcta</li>
+            <li><strong>Defensa:</strong> Siempre usa HTTPS, VPN, o cifrado end-to-end en comunicaciones sensibles</li>
+        </ul>
+    </div>
+</section>

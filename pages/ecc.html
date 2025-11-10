@@ -1,0 +1,355 @@
+<section id="ecc" class="page">
+    <h2>📊 Criptografía de Curva Elíptica (ECC)</h2>
+    <p class="page-description">La criptografía de curva elíptica es un enfoque moderno de criptografía asimétrica
+        que ofrece el mismo nivel de seguridad que RSA pero con claves mucho más pequeñas, haciéndola ideal para
+        dispositivos móviles y IoT.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>📐 ¿Qué es una Curva Elíptica?</h3>
+            <div class="algo-info">
+                <p>Una curva elíptica es una curva definida por la ecuación:</p>
+                <div class="math-formula">
+                    y² = x³ + ax + b
+                </div>
+                <p>Ejemplo de curva popular: <strong>secp256k1</strong> (usado en Bitcoin)</p>
+                <div class="curve-visualization">
+                    <svg width="100%" height="200" viewBox="0 0 400 200">
+                        <!-- Ejes -->
+                        <line x1="0" y1="100" x2="400" y2="100" stroke="#ccc" stroke-width="1" />
+                        <line x1="200" y1="0" x2="200" y2="200" stroke="#ccc" stroke-width="1" />
+
+                        <!-- Curva elíptica simplificada -->
+                        <path d="M 50,100 Q 100,50 150,80 T 250,70 T 350,90" stroke="#1687a7" stroke-width="3"
+                            fill="none" />
+                        <path d="M 50,100 Q 100,150 150,120 T 250,130 T 350,110" stroke="#1687a7" stroke-width="3"
+                            fill="none" />
+
+                        <!-- Puntos de ejemplo -->
+                        <circle cx="150" cy="80" r="5" fill="#f44336" />
+                        <circle cx="250" cy="70" r="5" fill="#4caf50" />
+                        <circle cx="300" cy="85" r="5" fill="#ff9800" />
+
+                        <text x="150" y="70" font-size="12" fill="#f44336">P</text>
+                        <text x="250" y="60" font-size="12" fill="#4caf50">Q</text>
+                        <text x="300" y="75" font-size="12" fill="#ff9800">R</text>
+                    </svg>
+                    <p class="caption">Representación visual de una curva elíptica con puntos P, Q, R</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🧮 Calculadora de Curvas Elípticas</h3>
+            <div class="algo-info">
+                <div class="calculator-section">
+                    <h4>Definir Curva: y² = x³ + ax + b (mod p)</h4>
+                    <div class="input-group">
+                        <label>Parámetro a:</label>
+                        <input type="number" id="curve-a" value="0" />
+                    </div>
+                    <div class="input-group">
+                        <label>Parámetro b:</label>
+                        <input type="number" id="curve-b" value="7" />
+                    </div>
+                    <div class="input-group">
+                        <label>Primo p:</label>
+                        <input type="number" id="curve-p" value="17" />
+                    </div>
+                    <button id="validate-curve" class="btn-primary">Validar Curva</button>
+                    <div id="curve-validation" class="result-box"></div>
+                </div>
+
+                <div class="calculator-section">
+                    <h4>Generar Puntos de la Curva</h4>
+                    <button id="generate-points" class="btn-primary">Generar Todos los Puntos</button>
+                    <div id="curve-points" class="result-box"></div>
+                </div>
+
+                <div class="calculator-section">
+                    <h4>Suma de Puntos (P + Q)</h4>
+                    <div class="input-group">
+                        <label>Punto P (x, y):</label>
+                        <input type="text" id="point-p" placeholder="Ej: 5,1" />
+                    </div>
+                    <div class="input-group">
+                        <label>Punto Q (x, y):</label>
+                        <input type="text" id="point-q" placeholder="Ej: 6,3" />
+                    </div>
+                    <button id="add-points" class="btn-primary">Calcular P + Q</button>
+                    <div id="point-addition" class="result-box"></div>
+                </div>
+
+                <div class="calculator-section">
+                    <h4>Multiplicación Escalar (k × P)</h4>
+                    <div class="input-group">
+                        <label>Escalar k:</label>
+                        <input type="number" id="scalar-k" value="5" />
+                    </div>
+                    <div class="input-group">
+                        <label>Punto P (x, y):</label>
+                        <input type="text" id="point-scalar" placeholder="Ej: 5,1" />
+                    </div>
+                    <button id="scalar-mult" class="btn-primary">Calcular k × P</button>
+                    <div id="scalar-result" class="result-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🔑 Generación de Claves ECDSA</h3>
+            <div class="algo-info">
+                <p>Usando la curva definida arriba, genera un par de claves criptográficas real.</p>
+                <div class="input-group">
+                    <label>Punto Base G (x, y):</label>
+                    <input type="text" id="base-point" placeholder="Ej: 5,1" value="5,1" />
+                </div>
+                <button id="ecc-generate" class="btn-primary">Generar Par de Claves ECC</button>
+                <div id="ecc-keys" class="result-box"></div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📝 Firma Digital ECDSA (REAL)</h3>
+            <div class="algo-info">
+                <p><strong>Elliptic Curve Digital Signature Algorithm</strong></p>
+
+                <h4>Firmar un Mensaje:</h4>
+                <div class="input-group">
+                    <label for="ecc-message">Mensaje a firmar:</label>
+                    <input type="text" id="ecc-message" placeholder="Escribe un mensaje..." />
+                </div>
+
+                <button id="ecc-sign" class="btn-primary">Firmar con ECDSA</button>
+                <div id="ecc-signature" class="result-box"></div>
+
+                <h4>Verificar Firma:</h4>
+                <button id="ecc-verify" class="btn-primary">Verificar Firma</button>
+                <div id="ecc-verify-result" class="result-box"></div>
+
+                <h4>Probar con Mensaje Modificado:</h4>
+                <div class="input-group">
+                    <label>Mensaje falso:</label>
+                    <input type="text" id="ecc-fake-message" placeholder="Intenta modificar el mensaje..." />
+                </div>
+                <button id="ecc-verify-fake" class="btn-primary">Verificar Mensaje Falso</button>
+                <div id="ecc-fake-result" class="result-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-table">
+        <h3>⚖️ ECC vs RSA - Comparación</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>ECC</th>
+                    <th>RSA</th>
+                    <th>Ganador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tamaño de clave (seguridad 128-bit)</strong></td>
+                    <td>256 bits</td>
+                    <td>3072 bits</td>
+                    <td>🏆 ECC</td>
+                </tr>
+                <tr>
+                    <td><strong>Velocidad de firma</strong></td>
+                    <td>⚡ Muy rápido</td>
+                    <td>🐌 Lento</td>
+                    <td>🏆 ECC</td>
+                </tr>
+                <tr>
+                    <td><strong>Velocidad de verificación</strong></td>
+                    <td>🐌 Moderado</td>
+                    <td>⚡ Rápido</td>
+                    <td>🏆 RSA</td>
+                </tr>
+                <tr>
+                    <td><strong>Ancho de banda</strong></td>
+                    <td>32 bytes</td>
+                    <td>384 bytes</td>
+                    <td>🏆 ECC</td>
+                </tr>
+                <tr>
+                    <td><strong>Consumo de energía</strong></td>
+                    <td>⚡ Bajo</td>
+                    <td>🔋 Alto</td>
+                    <td>🏆 ECC</td>
+                </tr>
+                <tr>
+                    <td><strong>Madurez y adopción</strong></td>
+                    <td>📈 Creciendo</td>
+                    <td>📊 Establecido</td>
+                    <td>🏆 RSA</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-box">
+        <h4>🌟 Curvas Elípticas Populares</h4>
+        <ul>
+            <li><strong>secp256k1:</strong> Bitcoin, Ethereum (256 bits)</li>
+            <li><strong>P-256 (secp256r1):</strong> NIST, TLS, Apple (256 bits)</li>
+            <li><strong>Curve25519:</strong> Signal, WhatsApp, SSH (255 bits)</li>
+            <li><strong>Ed25519:</strong> Firmas digitales modernas (255 bits)</li>
+            <li><strong>P-384:</strong> Gobierno de EE.UU., alta seguridad (384 bits)</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+        <h4>✅ Ventajas de ECC</h4>
+        <ul>
+            <li>Claves más pequeñas = Menos almacenamiento</li>
+            <li>Operaciones más rápidas = Mejor rendimiento</li>
+            <li>Menor consumo de energía = Ideal para móviles/IoT</li>
+            <li>Menor ancho de banda = Mejor para redes lentas</li>
+            <li>Misma seguridad con menos recursos</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #fff3e0; border-left-color: #ff9800;">
+        <h4>⚠️ Consideraciones</h4>
+        <ul>
+            <li>Algunas curvas tienen puertas traseras potenciales (evitar Dual_EC_DRBG)</li>
+            <li>Implementación más compleja que RSA</li>
+            <li>Vulnerable a computación cuántica (al igual que RSA)</li>
+            <li>Preferir curvas bien estudiadas: Curve25519, Ed25519</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .math-formula {
+        background: #f5f5f5;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.5em;
+        font-family: 'Times New Roman', serif;
+        border-radius: 6px;
+        margin: 16px 0;
+        border: 2px solid #1687a7;
+    }
+
+    .curve-visualization {
+        background: white;
+        padding: 16px;
+        border-radius: 6px;
+        margin: 16px 0;
+        border: 1px solid #ddd;
+    }
+
+    .caption {
+        text-align: center;
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 8px;
+    }
+
+    .key-generation {
+        background: white;
+        padding: 16px;
+        border-radius: 6px;
+        margin: 16px 0;
+    }
+
+    .step {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 16px;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 4px solid #1687a7;
+    }
+
+    .step-number {
+        background: #1687a7;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .step-content {
+        flex: 1;
+    }
+
+    .step-content strong {
+        display: block;
+        color: #1687a7;
+        margin-bottom: 4px;
+    }
+
+    .step-content code {
+        background: #e0e0e0;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 0.85em;
+    }
+
+    .result-box {
+        background: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 16px;
+        margin-top: 12px;
+        min-height: 60px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        word-break: break-all;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .calculator-section {
+        background: white;
+        padding: 16px;
+        border-radius: 6px;
+        margin: 16px 0;
+        border: 1px solid #e0e0e0;
+    }
+
+    .calculator-section h4 {
+        color: #1687a7;
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
+
+    .input-group {
+        margin-bottom: 12px;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1em;
+    }
+
+    .input-group input:focus {
+        outline: none;
+        border-color: #1687a7;
+        box-shadow: 0 0 0 2px rgba(22, 135, 167, 0.1);
+    }
+</style>

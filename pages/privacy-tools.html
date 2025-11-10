@@ -1,0 +1,473 @@
+<section id="privacy-tools" class="page">
+    <h2>🛠️ Herramientas de Privacidad y Seguridad</h2>
+    <p class="page-description">Guía completa de software, aplicaciones y servicios que protegen tu privacidad digital.
+        Todas las herramientas aquí listadas son código abierto o han sido auditadas independientemente.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>💻 Sistemas Operativos Seguros</h3>
+
+            <div class="tool-card featured">
+                <div class="tool-header">
+                    <h4>🐧 Linux (Distribuciones enfocadas en privacidad)</h4>
+                    <span class="tool-badge recommended">Recomendado</span>
+                </div>
+                <p><strong>Qué es:</strong> Familia de sistemas operativos de código abierto</p>
+                <div class="tool-options">
+                    <div class="option-item">
+                        <strong>Tails OS</strong> - Live OS que no deja rastro, todo el tráfico va por Tor
+                        <br><small>Usado por Snowden, periodistas, activistas</small>
+                    </div>
+                    <div class="option-item">
+                        <strong>Qubes OS</strong> - Seguridad por aislamiento en VMs
+                        <br><small>Recomendado por Snowden como "bastante cercano a mágico"</small>
+                    </div>
+                    <div class="option-item">
+                        <strong>Whonix</strong> - Todo el tráfico forzado por Tor, anti-fingerprinting
+                    </div>
+                    <div class="option-item">
+                        <strong>Ubuntu/Debian</strong> - Uso general, gran comunidad
+                    </div>
+                </div>
+                <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50; margin-top: 10px;">
+                    <strong>✅ Por qué usarlo:</strong> Sin telemetría, sin backdoors conocidas, auditado por miles de
+                    desarrolladores
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🪟 Windows Alternativas</h4>
+                </div>
+                <ul>
+                    <li><strong>Desactivar telemetría:</strong> O&O ShutUp10++, WPD (gratuitas)</li>
+                    <li><strong>Considerar:</strong> Migrar a Linux si la privacidad es prioridad</li>
+                    <li><strong>Nunca:</strong> Windows 10/11 Home con configuración por defecto (telemetría masiva)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🌐 Navegadores Web Privados</h3>
+
+            <div class="tool-card featured">
+                <div class="tool-header">
+                    <h4>🦊 Firefox (hardened)</h4>
+                    <span class="tool-badge recommended">Recomendado</span>
+                </div>
+                <p>Único navegador mainstream de código abierto no basado en Chromium</p>
+                <ul>
+                    <li>Configurar con <strong>user.js</strong> (arkenfox) para máxima privacidad</li>
+                    <li>Instalar uBlock Origin, Privacy Badger, HTTPS Everywhere</li>
+                    <li>Deshabilitar telemetría y WebRTC</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🧅 Tor Browser</h4>
+                    <span class="tool-badge specialist">Especialista</span>
+                </div>
+                <p>Navegador basado en Firefox que rutea todo por la red Tor</p>
+                <ul>
+                    <li><strong>Pros:</strong> Anonimato máximo, anti-fingerprinting, acceso a .onion</li>
+                    <li><strong>Contras:</strong> Más lento, algunos sitios lo bloquean</li>
+                    <li><strong>Uso:</strong> Periodismo, activismo, navegación anónima</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🦁 Brave</h4>
+                </div>
+                <p>Chromium con bloqueo de rastreadores por defecto</p>
+                <ul>
+                    <li><strong>Pros:</strong> Fácil de usar, bloquea ads/trackers</li>
+                    <li><strong>Contras:</strong> Basado en Chromium (Google), controversias con criptomonedas</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📧 Email Seguro</h3>
+
+            <div class="tool-card featured">
+                <div class="tool-header">
+                    <h4>🔐 ProtonMail</h4>
+                    <span class="tool-badge recommended">Recomendado</span>
+                </div>
+                <p>Email con cifrado end-to-end desde Suiza</p>
+                <ul>
+                    <li>Cifrado automático entre usuarios ProtonMail</li>
+                    <li>Sin acceso a contenido para ProtonMail (cero-access encryption)</li>
+                    <li>No requiere información personal para registrarse</li>
+                    <li>Planes gratuitos disponibles</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🇩🇪 Tutanota</h4>
+                </div>
+                <p>Email cifrado desde Alemania, incluso más privado que ProtonMail</p>
+                <ul>
+                    <li>Cifra asunto, cuerpo y adjuntos</li>
+                    <li>Código abierto completo</li>
+                    <li>Más barato que ProtonMail</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🔑 PGP/GPG</h4>
+                    <span class="tool-badge advanced">Avanzado</span>
+                </div>
+                <p>Cifrado de email clásico, funciona con cualquier proveedor</p>
+                <ul>
+                    <li>Estándar de oro para seguridad (desde 1991)</li>
+                    <li>Curva de aprendizaje alta</li>
+                    <li>Herramientas: GPG4Win, Mailvelope, Thunderbird + Enigmail</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>💬 Mensajería Instantánea</h3>
+
+            <div class="tool-card featured">
+                <div class="tool-header">
+                    <h4>📱 Signal</h4>
+                    <span class="tool-badge best">Mejor Opción</span>
+                </div>
+                <p>El estándar de oro en mensajería segura</p>
+                <ul>
+                    <li><strong>Cifrado:</strong> Signal Protocol (E2E) - usado por WhatsApp, Messenger</li>
+                    <li><strong>Metadatos:</strong> Mínimos, sealed sender oculta remitente</li>
+                    <li><strong>Código abierto:</strong> 100% auditado</li>
+                    <li><strong>Respaldado por:</strong> Snowden, Bruce Schneier, criptógrafos mundiales</li>
+                    <li><strong>Funciones:</strong> Mensajes que desaparecen, llamadas cifradas, grupos seguros</li>
+                </ul>
+                <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+                    <strong>Quote de Snowden:</strong> "Uso Signal todos los días. [...] Es el mensajero más seguro que
+                    existe."
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>💚 WhatsApp</h4>
+                    <span class="tool-badge caution">Usar con Precaución</span>
+                </div>
+                <p>Usa Signal Protocol pero propiedad de Meta</p>
+                <ul>
+                    <li><strong>Pros:</strong> E2E encryption, fácil, todo el mundo lo usa</li>
+                    <li><strong>Contras:</strong> Meta recopila metadatos (quién habla con quién, cuándo), backups no
+                        cifrados</li>
+                    <li><strong>Recomendación:</strong> OK para uso casual, evitar para temas sensibles</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🔐 Element/Matrix</h4>
+                    <span class="tool-badge advanced">Avanzado</span>
+                </div>
+                <p>Protocolo descentralizado de mensajería</p>
+                <ul>
+                    <li>Código abierto, federado (como email)</li>
+                    <li>Puedes hostear tu propio servidor</li>
+                    <li>E2E encryption opcional</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🚫 Evitar</h4>
+                    <span class="tool-badge danger">Peligro</span>
+                </div>
+                <ul>
+                    <li><strong>Telegram:</strong> NO es E2E por defecto, chats secretos débiles, cerrado</li>
+                    <li><strong>SMS/MMS:</strong> Sin cifrado, operadora y gobierno pueden leer</li>
+                    <li><strong>Facebook Messenger:</strong> Metadatos para Meta, E2E solo en chats secretos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔑 Gestores de Contraseñas</h3>
+
+            <div class="tool-card featured">
+                <div class="tool-header">
+                    <h4>🔓 Bitwarden</h4>
+                    <span class="tool-badge best">Mejor Opción</span>
+                </div>
+                <p>Gestor de contraseñas de código abierto</p>
+                <ul>
+                    <li>100% código abierto, auditado independientemente</li>
+                    <li>Cifrado AES-256, derivación PBKDF2</li>
+                    <li>Multiplataforma (Windows, Mac, Linux, iOS, Android, extensiones)</li>
+                    <li><strong>Gratis</strong> para uso personal con funciones ilimitadas</li>
+                    <li>Opción de self-hosting</li>
+                    <li><strong>Premium:</strong> $10/año (2FA con YubiKey, reportes de salud)</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🔐 KeePassXC</h4>
+                    <span class="tool-badge advanced">Avanzado</span>
+                </div>
+                <p>Gestor local, sin nube</p>
+                <ul>
+                    <li>Completamente local (base de datos .kdbx en tu disco)</li>
+                    <li>Código abierto, multiplataforma</li>
+                    <li>Sincronización manual (Nextcloud, Syncthing)</li>
+                    <li><strong>Mejor para:</strong> Máxima seguridad, sin confianza en terceros</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🔑 1Password / LastPass</h4>
+                    <span class="tool-badge caution">Usar con Precaución</span>
+                </div>
+                <p>Opciones comerciales populares</p>
+                <ul>
+                    <li><strong>1Password:</strong> Buena reputación, NO código abierto, $36/año</li>
+                    <li><strong>LastPass:</strong> Brechas de seguridad pasadas, modelo freemium limitado</li>
+                    <li><strong>Recomendación:</strong> Preferir Bitwarden por ser open source y gratuito</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🌐 VPNs Recomendadas</h3>
+
+            <div class="tool-card featured">
+                <div class="tool-header">
+                    <h4>🛡️ Mullvad VPN</h4>
+                    <span class="tool-badge recommended">Recomendado</span>
+                </div>
+                <p>VPN centrada en privacidad desde Suecia</p>
+                <ul>
+                    <li><strong>No requiere email</strong> - te dan número de cuenta aleatorio</li>
+                    <li>No-logs policy auditada</li>
+                    <li>Acepta efectivo, criptomonedas (anonimato total)</li>
+                    <li>€5/mes fijo, sin planes complicados</li>
+                    <li>WireGuard y OpenVPN</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🔐 ProtonVPN</h4>
+                </div>
+                <p>De los creadores de ProtonMail</p>
+                <ul>
+                    <li>Plan gratuito (limitado pero funcional)</li>
+                    <li>Basado en Suiza</li>
+                    <li>No-logs, código abierto</li>
+                    <li>Secure Core (multi-hop)</li>
+                </ul>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <h4>🚫 Evitar VPNs Gratuitas</h4>
+                    <span class="tool-badge danger">Peligro</span>
+                </div>
+                <ul>
+                    <li><strong>Hola VPN:</strong> Vende tu ancho de banda, P2P botnet</li>
+                    <li><strong>VPNs con ads:</strong> Monetizan tus datos</li>
+                    <li><strong>VPNs de "5/14 Eyes":</strong> Evitar EE.UU., Reino Unido, Australia</li>
+                    <li><strong>Regla:</strong> Si el producto es gratis, TÚ eres el producto</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔍 Buscadores Privados</h3>
+
+            <div class="tool-grid">
+                <div class="tool-mini">
+                    <h4>🦆 DuckDuckGo</h4>
+                    <p>Sin rastreo, sin perfil de usuario</p>
+                </div>
+                <div class="tool-mini">
+                    <h4>🔍 Startpage</h4>
+                    <p>Resultados de Google sin rastreo</p>
+                </div>
+                <div class="tool-mini">
+                    <h4>🌲 Ecosia</h4>
+                    <p>Privado + planta árboles con ingresos</p>
+                </div>
+                <div class="tool-mini">
+                    <h4>🔎 Brave Search</h4>
+                    <p>Índice propio, sin rastreo</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🛡️ Herramientas Adicionales</h3>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <strong>🔐 VeraCrypt</strong> - Cifrado de disco/particiones
+                </div>
+                <div class="tool-item">
+                    <strong>📝 Standard Notes</strong> - Notas cifradas E2E
+                </div>
+                <div class="tool-item">
+                    <strong>☁️ Nextcloud</strong> - Cloud self-hosted (alternativa a Google Drive)
+                </div>
+                <div class="tool-item">
+                    <strong>🔄 Syncthing</strong> - Sincronización P2P cifrada
+                </div>
+                <div class="tool-item">
+                    <strong>📞 Jitsi Meet</strong> - Videollamadas cifradas E2E
+                </div>
+                <div class="tool-item">
+                    <strong>🗑️ BleachBit</strong> - Limpieza segura de archivos
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>⚠️ Ninguna Herramienta es Perfecta</h4>
+        <p><strong>Recuerda:</strong></p>
+        <ul>
+            <li>La seguridad es un proceso, no un producto</li>
+            <li>Combina múltiples capas (navegador + VPN + email cifrado)</li>
+            <li>El eslabón más débil suele ser el humano (ingeniería social)</li>
+            <li>Mantén software actualizado</li>
+            <li>Considera tu modelo de amenaza (¿contra quién te proteges?)</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .tool-card {
+        background: white;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #1687a7;
+    }
+
+    .tool-card.featured {
+        border-left-color: #4caf50;
+        border-left-width: 6px;
+    }
+
+    .tool-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tool-header h4 {
+        margin: 0;
+        color: #0b3954;
+    }
+
+    .tool-badge {
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.8em;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .tool-badge.best {
+        background: #4caf50;
+        color: white;
+    }
+
+    .tool-badge.recommended {
+        background: #1687a7;
+        color: white;
+    }
+
+    .tool-badge.specialist {
+        background: #9c27b0;
+        color: white;
+    }
+
+    .tool-badge.advanced {
+        background: #ff9800;
+        color: white;
+    }
+
+    .tool-badge.caution {
+        background: #ffc107;
+        color: #333;
+    }
+
+    .tool-badge.danger {
+        background: #f44336;
+        color: white;
+    }
+
+    .tool-options {
+        margin: 15px 0;
+    }
+
+    .option-item {
+        background: #f5f5f5;
+        padding: 12px;
+        margin: 8px 0;
+        border-left: 3px solid #1687a7;
+        border-radius: 4px;
+    }
+
+    .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+    }
+
+    .tool-mini {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        border: 2px solid #1687a7;
+        text-align: center;
+    }
+
+    .tool-mini h4 {
+        margin-top: 0;
+        color: #0b3954;
+    }
+
+    .tool-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+        margin: 15px 0;
+    }
+
+    .tool-item {
+        background: #f0f8ff;
+        padding: 12px;
+        border-radius: 6px;
+        border-left: 3px solid #1687a7;
+    }
+
+    @media (max-width: 768px) {
+        .tool-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .tool-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

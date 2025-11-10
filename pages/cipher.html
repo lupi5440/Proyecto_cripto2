@@ -1,0 +1,102 @@
+<section id="cipher" class="page">
+    <h2>🔐 Cifrado Básico: César vs AES</h2>
+    <p class="page-description">Compara el cifrado clásico de César con el moderno AES-GCM. Observa cómo ha evolucionado
+        la criptografía desde los tiempos de la Roma antigua hasta los estándares actuales.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🔤 Herramienta de cifrado</h3>
+
+            <div class="input-group">
+                <label for="cipher-text">Texto a cifrar/descifrar:</label>
+                <input id="cipher-text" type="text" placeholder="Escribe tu mensaje aquí..." />
+            </div>
+
+            <div class="input-group">
+                <label for="cipher-method">Método de cifrado:</label>
+                <select id="cipher-method">
+                    <option value="caesar">🏛️ Cifrado César (desplazamiento numérico)</option>
+                    <option value="aes">🔒 AES-GCM (cifrado real, contraseña mín. 8 caracteres)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="cipher-key">Clave/Desplazamiento:</label>
+                <input id="cipher-key" type="text" value="3"
+                    placeholder="Número (1-25) para César, contraseña fuerte para AES" />
+                <small style="display: block; margin-top: 5px; color: #666;">
+                    <strong>César:</strong> Solo número (ej: 3, 13, 25) |
+                    <strong>AES:</strong> Mínimo 8 caracteres (ej: MiClave123!)
+                </small>
+            </div>
+
+            <button id="cipher-encrypt" class="btn-primary">🔒 Cifrar</button>
+            <button id="cipher-decrypt" class="btn-primary" style="margin-left: 8px;">🔓 Descifrar</button>
+
+            <div class="result-box">
+                <h4>Resultado:</h4>
+                <textarea id="cipher-result" rows="6" readonly placeholder="El resultado aparecerá aquí..."></textarea>
+                <small style="display: block; margin-top: 8px; color: #666;">
+                    💡 <strong>Tip:</strong> Para AES, copia el texto cifrado, pégalo en el campo de entrada y usa
+                    "Descifrar" con la misma contraseña.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>🏛️ Cifrado César (Cifrado Clásico)</h4>
+        <p>Usado por Julio César hace más de 2000 años. Desplaza cada letra un número fijo de posiciones en el alfabeto.
+        </p>
+        <ul>
+            <li><strong>Ejemplo:</strong> Con desplazamiento 3: A→D, B→E, C→F, HOLA→KROD</li>
+            <li><strong>Funcionamiento:</strong> Solo cifra letras (A-Z), mantiene mayúsculas/minúsculas, ignora números
+                y símbolos</li>
+            <li><strong>Seguridad:</strong> ❌ Muy débil - solo 25 posibles claves (desplazamientos 1-25)</li>
+            <li><strong>Vulnerabilidad:</strong> Se rompe en segundos con análisis de frecuencia o fuerza bruta</li>
+            <li><strong>Uso moderno:</strong> Solo educativo, nunca para seguridad real (ROT13 es César con shift=13)
+            </li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+        <h4>🔒 AES-GCM (Advanced Encryption Standard - Modo Galois/Counter)</h4>
+        <p>Estándar moderno usado en WiFi (WPA3), HTTPS (TLS 1.3), VPNs, Signal, WhatsApp y más. Adoptado por el
+            gobierno de EE.UU. en 2001.</p>
+        <ul>
+            <li><strong>Implementación:</strong> ✅ <strong>Cifrado real</strong> usando Web Crypto API del navegador (no
+                simulado)</li>
+            <li><strong>Algoritmo:</strong> AES-256-GCM con PBKDF2 (100,000 iteraciones) para derivar clave desde
+                contraseña</li>
+            <li><strong>Seguridad:</strong> ✅ Extremadamente seguro con contraseña adecuada (2^256 ≈ 10^77
+                combinaciones)</li>
+            <li><strong>GCM:</strong> Proporciona autenticación e integridad además de confidencialidad (detecta
+                manipulación)</li>
+            <li><strong>Salt e IV aleatorios:</strong> Cada cifrado genera valores únicos, mismo texto + contraseña =
+                cifrados diferentes</li>
+            <li><strong>PBKDF2:</strong> Derivación lenta de clave (dificulta ataques de diccionario)</li>
+            <li><strong>Uso:</strong> El texto cifrado incluye salt + IV + datos cifrados codificados en Base64</li>
+        </ul>
+        <p style="margin-top: 10px; padding: 10px; background: #fff9c4; border-radius: 5px;">
+            <strong>⚠️ Importante:</strong> Para descifrar, usa <strong>exactamente la misma contraseña</strong> que
+            usaste para cifrar.
+            Una contraseña incorrecta generará error de autenticación.
+        </p>
+    </div>
+
+    <div class="info-box" style="background: #e3f2fd; border-left-color: #2196f3;">
+        <h4>🧪 Ejercicios Sugeridos</h4>
+        <ol>
+            <li><strong>César:</strong> Cifra "HOLA MUNDO" con desplazamiento 3, luego descífralo con el mismo número
+            </li>
+            <li><strong>César ROT13:</strong> Cifra un mensaje con desplazamiento 13, nota que cifrarlo dos veces lo
+                restaura</li>
+            <li><strong>AES básico:</strong> Cifra "Mensaje secreto" con contraseña "MiClave123", copia resultado,
+                descífralo</li>
+            <li><strong>AES seguridad:</strong> Cifra el mismo texto dos veces con igual contraseña, observa que los
+                resultados son diferentes (salt/IV únicos)</li>
+            <li><strong>AES fallo:</strong> Intenta descifrar con contraseña incorrecta, verifica que detecta el error
+            </li>
+        </ol>
+    </div>
+</section>

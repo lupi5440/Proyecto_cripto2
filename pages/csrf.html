@@ -1,0 +1,21 @@
+<section id="csrf" class="page">
+    <h2>CSRF - Cross-Site Request Forgery</h2>
+    <p>El CSRF permite que un atacante ejecute acciones en nombre de un usuario autenticado sin su consentimiento.</p>
+
+    <h3>¿Cómo funciona?</h3>
+    <p>Si estás autenticado en un sitio web, tu navegador envía automáticamente tus cookies de sesión con cada petición.
+        Un atacante puede aprovechar esto creando una página maliciosa que envíe peticiones a ese sitio.</p>
+
+    <button id="csrf-attack">Mostrar Ataque CSRF</button>
+    <button id="csrf-safe">Mostrar Protección</button>
+
+    <div id="csrf-result"></div>
+
+    <h3>Mitigación:</h3>
+    <ul>
+        <li><strong>Tokens CSRF:</strong> Generar tokens únicos para cada sesión/petición</li>
+        <li><strong>SameSite cookies:</strong> Configurar cookies con SameSite=Strict o Lax</li>
+        <li><strong>Verificar Origin/Referer:</strong> Validar el origen de las peticiones</li>
+        <li><strong>Re-autenticación:</strong> Solicitar contraseña para acciones críticas</li>
+    </ul>
+</section>

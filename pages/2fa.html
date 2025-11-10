@@ -1,0 +1,306 @@
+<section id="2fa" class="page">
+    <h2>📱 Autenticación de Dos Factores (2FA/MFA)</h2>
+    <p class="page-description">La autenticación de dos factores agrega una capa extra de seguridad requiriendo
+        dos formas diferentes de verificar tu identidad, haciendo extremadamente difícil el acceso no autorizado.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🔐 Los Tres Factores de Autenticación</h3>
+            <div class="algo-info">
+                <div class="factor-card">
+                    <div class="factor-icon">🧠</div>
+                    <div class="factor-content">
+                        <strong>1. Algo que SABES</strong>
+                        <ul>
+                            <li>Contraseña</li>
+                            <li>PIN</li>
+                            <li>Pregunta de seguridad</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">📱</div>
+                    <div class="factor-content">
+                        <strong>2. Algo que TIENES</strong>
+                        <ul>
+                            <li>Teléfono móvil (SMS/App)</li>
+                            <li>Token de hardware (YubiKey)</li>
+                            <li>Tarjeta inteligente</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="factor-card">
+                    <div class="factor-icon">👤</div>
+                    <div class="factor-content">
+                        <strong>3. Algo que ERES</strong>
+                        <ul>
+                            <li>Huella dactilar</li>
+                            <li>Reconocimiento facial</li>
+                            <li>Iris/retina</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📲 Tipos de 2FA</h3>
+            <div class="mfa-types">
+                <div class="mfa-type">
+                    <h4>💬 SMS (Menos seguro)</h4>
+                    <p>Código enviado por mensaje de texto</p>
+                    <div class="pro-con">
+                        <div class="pro">✅ Fácil de usar</div>
+                        <div class="con">❌ Vulnerable a SIM swapping</div>
+                        <div class="con">❌ Requiere cobertura celular</div>
+                    </div>
+                </div>
+
+                <div class="mfa-type">
+                    <h4>📱 App Authenticator (Recomendado)</h4>
+                    <p>TOTP - Código temporal generado por app</p>
+                    <div class="pro-con">
+                        <div class="pro">✅ Funciona sin internet</div>
+                        <div class="pro">✅ Más seguro que SMS</div>
+                        <div class="con">❌ Puede perderse con el teléfono</div>
+                    </div>
+                </div>
+
+                <div class="mfa-type">
+                    <h4>🔑 Hardware Token (Más seguro)</h4>
+                    <p>Dispositivo físico (YubiKey, Titan)</p>
+                    <div class="pro-con">
+                        <div class="pro">✅ Resistente a phishing</div>
+                        <div class="pro">✅ Muy seguro</div>
+                        <div class="con">❌ Costo adicional</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section" style="margin-top: 24px;">
+        <h3>🔢 Demo: Generador TOTP (Time-based OTP)</h3>
+        <div class="totp-demo">
+            <p><strong>Cómo funciona TOTP:</strong> Algoritmo HMAC-SHA1 + timestamp actual = código de 6 dígitos</p>
+
+            <div class="totp-display">
+                <div class="totp-code" id="totp-code">------</div>
+                <div class="totp-timer">
+                    <div class="timer-bar" id="timer-bar"></div>
+                    <div class="timer-text" id="timer-text">30s</div>
+                </div>
+            </div>
+
+            <button id="totp-start" class="btn-primary">🔄 Iniciar Generador TOTP</button>
+
+            <div class="code-example" style="margin-top: 16px;">
+                <strong>Algoritmo TOTP:</strong>
+                <pre>
+1. Secret Key compartida: K (almacenada en app y servidor)
+2. Timestamp actual: T (en intervalos de 30 segundos)
+3. HMAC-SHA1(K, T) = Hash
+4. Extraer 6 dígitos del hash
+5. Código válido solo por 30 segundos
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-table">
+        <h3>⚖️ Comparación de Métodos 2FA</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Método</th>
+                    <th>Seguridad</th>
+                    <th>Usabilidad</th>
+                    <th>Costo</th>
+                    <th>Resistencia Phishing</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>SMS</strong></td>
+                    <td>🟡 Media</td>
+                    <td>🟢 Alta</td>
+                    <td>🟢 Gratis</td>
+                    <td>❌ Baja</td>
+                </tr>
+                <tr>
+                    <td><strong>App TOTP</strong></td>
+                    <td>🟢 Alta</td>
+                    <td>🟢 Alta</td>
+                    <td>🟢 Gratis</td>
+                    <td>⚠️ Media</td>
+                </tr>
+                <tr>
+                    <td><strong>Push Notification</strong></td>
+                    <td>🟢 Alta</td>
+                    <td>🟢 Muy alta</td>
+                    <td>🟢 Gratis</td>
+                    <td>⚠️ Media</td>
+                </tr>
+                <tr>
+                    <td><strong>Hardware Token</strong></td>
+                    <td>🟢 Muy alta</td>
+                    <td>🟡 Media</td>
+                    <td>🔴 $20-50</td>
+                    <td>✅ Muy alta</td>
+                </tr>
+                <tr>
+                    <td><strong>Biométrico</strong></td>
+                    <td>🟢 Alta</td>
+                    <td>🟢 Muy alta</td>
+                    <td>🟡 Variable</td>
+                    <td>✅ Alta</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-box" style="background: #ffebee; border-left-color: #f44336;">
+        <h4>⚠️ Ataques contra 2FA</h4>
+        <ul>
+            <li><strong>SIM Swapping:</strong> Atacante convence a operador de transferir número a nueva SIM</li>
+            <li><strong>Phishing de código:</strong> Página falsa solicita código 2FA además de password</li>
+            <li><strong>Man-in-the-Middle:</strong> Interceptar y reenviar código en tiempo real</li>
+            <li><strong>Session Hijacking:</strong> Robar cookie después de autenticación exitosa</li>
+            <li><strong>SS7 Attack:</strong> Explotar vulnerabilidad en protocolo de telefonía</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+        <h4>✅ Mejores Prácticas</h4>
+        <ul>
+            <li>Usar <strong>app authenticator</strong> o <strong>hardware token</strong> en vez de SMS</li>
+            <li>Guardar <strong>códigos de respaldo</strong> en lugar seguro</li>
+            <li>Registrar <strong>múltiples dispositivos</strong> 2FA como backup</li>
+            <li>Habilitar 2FA en <strong>todas las cuentas importantes</strong> (email, banco, redes sociales)</li>
+            <li>Nunca compartir códigos 2FA con nadie (ni "soporte técnico")</li>
+            <li>Considerar <strong>YubiKey</strong> para cuentas críticas</li>
+            <li>Revisar periódicamente <strong>sesiones activas</strong></li>
+        </ul>
+    </div>
+
+    <div class="info-box">
+        <h4>🎯 Apps Authenticator Recomendadas</h4>
+        <ul>
+            <li><strong>Google Authenticator:</strong> Simple, ampliamente soportado</li>
+            <li><strong>Authy:</strong> Sincronización entre dispositivos, backup en nube</li>
+            <li><strong>Microsoft Authenticator:</strong> Integración con servicios Microsoft</li>
+            <li><strong>1Password:</strong> Gestor de contraseñas + TOTP integrado</li>
+            <li><strong>Aegis (Android):</strong> Open source, cifrado local</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .factor-card {
+        display: flex;
+        gap: 16px;
+        background: white;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        border-left: 4px solid #1687a7;
+    }
+
+    .factor-icon {
+        font-size: 3em;
+        flex-shrink: 0;
+    }
+
+    .factor-content strong {
+        color: #1687a7;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .mfa-types {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+    }
+
+    .mfa-type {
+        background: white;
+        padding: 16px;
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+    }
+
+    .mfa-type h4 {
+        margin-top: 0;
+        color: #1687a7;
+    }
+
+    .pro-con {
+        margin-top: 12px;
+        font-size: 0.9em;
+    }
+
+    .pro {
+        color: #4caf50;
+        margin: 4px 0;
+    }
+
+    .con {
+        color: #f44336;
+        margin: 4px 0;
+    }
+
+    .totp-demo {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .totp-display {
+        background: white;
+        padding: 32px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 3px solid #1687a7;
+    }
+
+    .totp-code {
+        font-size: 3em;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        color: #1687a7;
+        letter-spacing: 8px;
+    }
+
+    .totp-timer {
+        margin-top: 20px;
+    }
+
+    .timer-bar {
+        height: 8px;
+        background: linear-gradient(90deg, #4caf50, #ff9800);
+        border-radius: 4px;
+        transition: width 1s linear;
+    }
+
+    .timer-text {
+        margin-top: 8px;
+        font-weight: bold;
+        color: #666;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+    }
+</style>

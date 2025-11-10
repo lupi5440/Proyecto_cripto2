@@ -1,0 +1,89 @@
+<section id="sqli" class="page">
+    <h2>💉 SQL Injection - Inyección de Código SQL</h2>
+    <p class="page-description">SQL Injection es una vulnerabilidad que permite a un atacante ejecutar código SQL
+        malicioso en la base de datos mediante la manipulación de entradas no validadas. Es una de las vulnerabilidades
+        más peligrosas según OWASP Top 10.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🧪 Demostración Interactiva</h3>
+
+            <div class="input-group">
+                <label for="sqli-username">Nombre de usuario:</label>
+                <input id="sqli-username" type="text" placeholder="Intenta: admin' OR '1'='1" />
+            </div>
+
+            <p class="section-description">Prueba estos ataques comunes:</p>
+            <ul style="margin-bottom: 16px;">
+                <li><code>' OR '1'='1</code> - Siempre verdadero</li>
+                <li><code>admin'--</code> - Comentar el resto de la consulta</li>
+                <li><code>' OR 1=1--</code> - Bypass de autenticación</li>
+            </ul>
+
+            <button id="sqli-insecure" class="btn-attack">❌ Consultar (INSEGURO)</button>
+            <button id="sqli-secure" class="btn-primary" style="margin-left: 8px;">✅ Consultar (SEGURO)</button>
+
+            <div id="sqli-result" class="result-box"></div>
+        </div>
+    </div>
+
+    <div class="info-box" style="background: #ffebee; border-left-color: #f44336;">
+        <h4>❌ Código Inseguro (Concatenación Directa)</h4>
+        <pre style="background: #fff; padding: 12px; border-radius: 4px; overflow-x: auto;">
+// ¡NUNCA HAGAS ESTO!
+const username = req.body.username;
+const query = "SELECT * FROM users WHERE username = '" + username + "'";
+db.query(query);
+
+// Si el usuario ingresa: admin' OR '1'='1
+// La consulta se convierte en:
+// SELECT * FROM users WHERE username = 'admin' OR '1'='1'
+// Esto devuelve TODOS los usuarios</pre>
+    </div>
+
+    <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+        <h4>✅ Código Seguro (Consultas Parametrizadas)</h4>
+        <pre style="background: #fff; padding: 12px; border-radius: 4px; overflow-x: auto;">
+// ✅ SIEMPRE USA PREPARED STATEMENTS
+const username = req.body.username;
+const query = "SELECT * FROM users WHERE username = ?";
+db.query(query, [username]);
+
+// O con nombres de parámetros:
+const query = "SELECT * FROM users WHERE username = :username";
+db.query(query, { username: username });
+
+// El input malicioso se trata como DATO, no como CÓDIGO</pre>
+    </div>
+
+    <div class="info-box">
+        <h4>🛡️ Defensas Contra SQL Injection</h4>
+        <ul>
+            <li><strong>Consultas parametrizadas:</strong> La defensa principal (prepared statements)</li>
+            <li><strong>ORM:</strong> Usar frameworks como Sequelize, TypeORM, Prisma</li>
+            <li><strong>Validación de entrada:</strong> Whitelist de caracteres permitidos</li>
+            <li><strong>Principio de menor privilegio:</strong> Usuario DB con permisos mínimos</li>
+            <li><strong>WAF:</strong> Web Application Firewall para detectar patrones de ataque</li>
+            <li><strong>Escapado:</strong> Como último recurso (no recomendado como única defensa)</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .btn-attack {
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-attack:hover {
+        background: #d32f2f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+    }
+</style>

@@ -1,0 +1,41 @@
+<section id="session" class="page">
+    <h2>Gestión Segura de Sesiones</h2>
+    <p>Las sesiones permiten mantener el estado de un usuario autenticado. Una gestión inadecuada puede llevar a
+        secuestro de sesión, fijación de sesión, y otros ataques.</p>
+
+    <button id="session-show">Mostrar Configuración Segura</button>
+
+    <div id="session-result"></div>
+
+    <h3>Ataques Comunes:</h3>
+    <ul>
+        <li><strong>Session Hijacking:</strong> Robo del ID de sesión (ej. por XSS o sniffing)</li>
+        <li><strong>Session Fixation:</strong> El atacante fija un ID de sesión conocido</li>
+        <li><strong>Session Replay:</strong> Reutilización de un ID de sesión capturado</li>
+    </ul>
+
+    <h3>Defensa en Profundidad:</h3>
+    <div class="info-box">
+        <p><strong>Nivel 1 - Cookies Seguras:</strong></p>
+        <ul>
+            <li>HttpOnly: Previene acceso por JavaScript</li>
+            <li>Secure: Solo transmisión por HTTPS</li>
+            <li>SameSite: Previene CSRF</li>
+        </ul>
+
+        <p><strong>Nivel 2 - Gestión del Servidor:</strong></p>
+        <ul>
+            <li>IDs de sesión aleatorios y criptográficamente seguros</li>
+            <li>Regenerar ID después del login</li>
+            <li>Timeout de inactividad</li>
+            <li>Almacenar mínima información en cookies</li>
+        </ul>
+
+        <p><strong>Nivel 3 - Monitoreo:</strong></p>
+        <ul>
+            <li>Detectar cambios de IP/User-Agent</li>
+            <li>Limitar sesiones concurrentes</li>
+            <li>Logging de actividad sospechosa</li>
+        </ul>
+    </div>
+</section>

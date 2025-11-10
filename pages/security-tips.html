@@ -1,0 +1,129 @@
+<section id="security-tips" class="page">
+    <h2>💡 Consejos de Seguridad en Desarrollo</h2>
+    <p>Guía práctica de mejores prácticas para desarrollar aplicaciones web seguras.</p>
+
+    <h3>🔐 Autenticación y Autorización</h3>
+    <div class="info-box">
+        <p><strong>Contraseñas:</strong></p>
+        <ul>
+            <li>✅ Nunca almacenar contraseñas en texto plano</li>
+            <li>✅ Usar bcrypt, scrypt, o Argon2 para hashear (NO MD5, SHA1)</li>
+            <li>✅ Salt único por contraseña</li>
+            <li>✅ Implementar rate limiting en login</li>
+            <li>✅ Autenticación multi-factor (2FA/MFA)</li>
+            <li>✅ Política de contraseñas fuertes (longitud mínima, complejidad)</li>
+        </ul>
+
+        <p><strong>Tokens y Sesiones:</strong></p>
+        <ul>
+            <li>✅ Tokens JWT con expiración corta</li>
+            <li>✅ Refresh tokens almacenados de forma segura</li>
+            <li>✅ Validar permisos en cada petición (no confiar en el cliente)</li>
+            <li>✅ Principio de menor privilegio</li>
+        </ul>
+    </div>
+
+    <h3>🛡️ Validación de Entrada</h3>
+    <div class="info-box">
+        <p><strong>Regla de oro: NUNCA CONFÍES EN LA ENTRADA DEL USUARIO</strong></p>
+        <ul>
+            <li>✅ Validar en servidor (no solo cliente)</li>
+            <li>✅ Whitelist mejor que blacklist</li>
+            <li>✅ Sanitizar HTML/SQL/comandos shell</li>
+            <li>✅ Validar tipos de datos y rangos</li>
+            <li>✅ Limitar tamaño de inputs</li>
+            <li>✅ Escapar outputs según contexto (HTML, JavaScript, SQL, etc.)</li>
+        </ul>
+    </div>
+
+    <h3>🗄️ Base de Datos</h3>
+    <div class="info-box">
+        <ul>
+            <li>✅ Usar consultas parametrizadas/prepared statements</li>
+            <li>✅ Principio de menor privilegio para usuarios DB</li>
+            <li>✅ Cifrar datos sensibles en reposo</li>
+            <li>✅ Backups regulares y cifrados</li>
+            <li>✅ Deshabilitar mensajes de error detallados en producción</li>
+            <li>✅ Auditar accesos a datos sensibles</li>
+        </ul>
+    </div>
+
+    <h3>🌐 APIs y Servicios</h3>
+    <div class="info-box">
+        <ul>
+            <li>✅ Autenticación API (OAuth 2.0, API Keys)</li>
+            <li>✅ Rate limiting y throttling</li>
+            <li>✅ CORS configurado correctamente</li>
+            <li>✅ Validar Content-Type</li>
+            <li>✅ Versionado de API</li>
+            <li>✅ No exponer información sensible en URLs</li>
+            <li>✅ Logging y monitoreo de actividad sospechosa</li>
+        </ul>
+    </div>
+
+    <h3>📦 Dependencias y Código</h3>
+    <div class="info-box">
+        <ul>
+            <li>✅ Mantener dependencias actualizadas</li>
+            <li>✅ Escanear vulnerabilidades (npm audit, Snyk, Dependabot)</li>
+            <li>✅ Code review enfocado en seguridad</li>
+            <li>✅ No hardcodear secretos (usar variables de entorno)</li>
+            <li>✅ .gitignore para archivos sensibles</li>
+            <li>✅ Separar configuración por entorno</li>
+        </ul>
+    </div>
+
+    <h3>🚀 Deployment y Producción</h3>
+    <div class="info-box">
+        <ul>
+            <li>✅ HTTPS en todos lados (con HSTS)</li>
+            <li>✅ Headers de seguridad (CSP, X-Frame-Options, etc.)</li>
+            <li>✅ Deshabilitar debug mode</li>
+            <li>✅ Error handling genérico (no revelar stack traces)</li>
+            <li>✅ Logs centralizados y monitoreados</li>
+            <li>✅ WAF (Web Application Firewall)</li>
+            <li>✅ Backups y plan de disaster recovery</li>
+            <li>✅ Penetration testing periódico</li>
+        </ul>
+    </div>
+
+    <h3>📱 Frontend</h3>
+    <div class="info-box">
+        <ul>
+            <li>✅ Content Security Policy (CSP)</li>
+            <li>✅ Subresource Integrity (SRI) para CDNs</li>
+            <li>✅ No almacenar secretos en JavaScript</li>
+            <li>✅ Validar datos antes de renderizar</li>
+            <li>✅ Usar frameworks modernos con protecciones XSS</li>
+        </ul>
+    </div>
+
+    <h3>🔍 Testing de Seguridad</h3>
+    <div class="info-box">
+        <p><strong>Herramientas recomendadas:</strong></p>
+        <ul>
+            <li>🔧 OWASP ZAP - Web application scanner</li>
+            <li>🔧 Burp Suite - Proxy de interceptación</li>
+            <li>🔧 SQLMap - SQL injection tester</li>
+            <li>🔧 Nmap - Network scanner</li>
+            <li>🔧 SonarQube - Análisis de código</li>
+            <li>🔧 npm audit / yarn audit - Dependencias</li>
+        </ul>
+    </div>
+
+    <h3>📚 Recursos de Aprendizaje</h3>
+    <ul>
+        <li><strong>OWASP Top 10:</strong> Las 10 vulnerabilidades web más críticas</li>
+        <li><strong>CWE/SANS Top 25:</strong> Errores de software más peligrosos</li>
+        <li><strong>NIST Cybersecurity Framework:</strong> Estándares de seguridad</li>
+        <li><strong>PortSwigger Web Security Academy:</strong> Labs interactivos</li>
+        <li><strong>HackTheBox / TryHackMe:</strong> Práctica de pentesting</li>
+    </ul>
+
+    <div style="background: #e8f5e9; padding: 16px; border-left: 4px solid #4caf50; margin-top: 24px;">
+        <h4 style="margin-top: 0;">💚 Recuerda:</h4>
+        <p><strong>"La seguridad no es un producto, es un proceso"</strong></p>
+        <p>La seguridad debe ser considerada en cada fase del desarrollo, no añadida al final. Mantente actualizado,
+            practica defensa en profundidad, y asume que todo puede ser comprometido.</p>
+    </div>
+</section>

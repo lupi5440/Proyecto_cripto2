@@ -1,0 +1,98 @@
+<section id="xss" class="page">
+    <h2>⚠️ XSS - Cross-Site Scripting</h2>
+    <p class="page-description">XSS permite a un atacante inyectar scripts maliciosos en páginas web vistas por otros
+        usuarios. Puede robar cookies, secuestrar sesiones, redirigir a sitios maliciosos o modificar el contenido de la
+        página.</p>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h3>🧪 Demostración de XSS Reflejado</h3>
+
+            <div class="input-group">
+                <label for="xss-input">Entrada del usuario:</label>
+                <input id="xss-input" type="text" placeholder="Intenta: <script>alert('XSS')</script>" />
+            </div>
+
+            <p class="section-description">Prueba estos ataques XSS comunes:</p>
+            <ul style="margin-bottom: 16px;">
+                <li><code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> - Alerta básica</li>
+                <li><code>&lt;img src=x onerror="alert('XSS')"&gt;</code> - Usando imagen</li>
+                <li><code>&lt;body onload="alert('XSS')"&gt;</code> - Evento onload</li>
+            </ul>
+
+            <button id="xss-insecure" class="btn-attack">❌ Mostrar (INSEGURO - innerHTML)</button>
+            <button id="xss-secure" class="btn-primary" style="margin-left: 8px;">✅ Mostrar (SEGURO -
+                textContent)</button>
+
+            <div id="xss-result" class="result-box"></div>
+        </div>
+    </div>
+
+    <div class="info-box" style="background: #ffebee; border-left-color: #f44336;">
+        <h4>❌ Código Inseguro (innerHTML)</h4>
+        <pre style="background: #fff; padding: 12px; border-radius: 4px; overflow-x: auto;">
+// ¡NUNCA HAGAS ESTO!
+const userInput = req.query.name;
+document.getElementById('output').innerHTML = "Hola " + userInput;
+
+// Si el usuario ingresa: &lt;script&gt;alert('XSS')&lt;/script&gt;
+// El script se ejecuta en el navegador de la víctima</pre>
+    </div>
+
+    <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
+        <h4>✅ Código Seguro (textContent / Escapado)</h4>
+        <pre style="background: #fff; padding: 12px; border-radius: 4px; overflow-x: auto;">
+// ✅ Usar textContent (no ejecuta HTML/JavaScript)
+const userInput = req.query.name;
+document.getElementById('output').textContent = "Hola " + userInput;
+
+// ✅ O escapar HTML antes de insertar
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+document.getElementById('output').innerHTML = "Hola " + escapeHtml(userInput);</pre>
+    </div>
+
+    <div class="info-box">
+        <h4>🛡️ Defensas Contra XSS</h4>
+        <ul>
+            <li><strong>Escapar salida:</strong> Convertir &lt; &gt; en &amp;lt; &amp;gt;</li>
+            <li><strong>Content Security Policy (CSP):</strong> Header que bloquea scripts inline</li>
+            <li><strong>Sanitización:</strong> Bibliotecas como DOMPurify para limpiar HTML</li>
+            <li><strong>textContent:</strong> Usar en lugar de innerHTML cuando sea posible</li>
+            <li><strong>HttpOnly cookies:</strong> Prevenir robo de cookies por JavaScript</li>
+            <li><strong>Validación de entrada:</strong> Rechazar caracteres peligrosos</li>
+            <li><strong>Frameworks seguros:</strong> React, Vue, Angular escapan automáticamente</li>
+        </ul>
+    </div>
+
+    <div class="info-box" style="background: #fff3e0; border-left-color: #ff9800;">
+        <h4>⚠️ Tipos de XSS</h4>
+        <ul>
+            <li><strong>Reflejado:</strong> El script viene en la URL y se refleja de inmediato</li>
+            <li><strong>Almacenado:</strong> El script se guarda en DB y se ejecuta en cada visita</li>
+            <li><strong>DOM-based:</strong> El ataque modifica el DOM del lado del cliente</li>
+        </ul>
+    </div>
+</section>
+
+<style>
+    .btn-attack {
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-attack:hover {
+        background: #d32f2f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+    }
+</style>
