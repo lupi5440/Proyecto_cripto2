@@ -37,6 +37,28 @@
                     <p class="caption">Representación visual de una curva elíptica con puntos P, Q, R</p>
                 </div>
             </div>
+            <h3>📐 Gráficador de Curvas Elípticas</h3>
+            <div class="algo-info">
+                <p>A continuación, puedes introducir tus propios parametros (a, b) para crear una curva elíptica:</p>
+                <div class="curve-visualization">
+                    <div style="margin-top:12px;">
+                        <div class="input-group">
+                            <label>Parámetro a:</label>
+                            <input type="number" id="ec-a" />
+                        </div>
+                        <div class="input-group">
+                            <label>Parámetro b:</label>
+                            <input type="number" id="ec-b" />
+                        </div>
+                        <button id="plot-curve" class="btn-primary">Graficar Curva</button>
+                        <svg id="ecc-plot" width="100%" height="200" viewBox="0 0 400 200" style="margin-top: 12px;">
+                            <!-- Ejes -->
+                            <line x1="0" y1="100" x2="400" y2="100" stroke="#ccc" stroke-width="1" />
+                            <line x1="200" y1="0" x2="200" y2="200" stroke="#ccc" stroke-width="1" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="demo-section">

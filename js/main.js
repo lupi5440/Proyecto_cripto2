@@ -1190,6 +1190,126 @@ function setupECC() {
         });
     }
 
+    // ==================== GRAFICADOR (VISUAL, REALES) ====================
+    // Dibuja la curva y^2 = x^3 + a x + b en el SVG con id ecc-plot
+    function drawCurveReal(a, b, svgId = 'ecc-plot') {
+        const svg = document.getElementById(svgId);
+        if (!svg) return;
+
+        // Limpiar curvas previas
+        svg.querySelectorAll('.ecc-curve-branch').forEach(n => n.remove());
+
+        // Obtener dimensiones desde viewBox o client
+        const vb = svg.viewBox.baseVal;
+        const width = (vb && vb.width) ? vb.width : svg.clientWidth || 400;
+        const height = (vb && vb.height) ? vb.height : svg.clientHeight || 200;
+
+        // Dominio de dibujo en X (puedes ajustar esto o exponer al usuario)
+        const xMin = -6;
+        const xMax = 6;
+        const steps = 800;
+
+        // Muestreo de x
+        const xs = new Array(steps).fill(0).map((_, i) => xMin + (i / (steps - 1)) * (xMax - xMin));
+
+        // Calcular valores y y determinar rangos
+        let yMin = Infinity, yMax = -Infinity;
+
+        const values = xs.map(x => {
+            const v = x * x * x + a * x + b; // x^3 + a x + b
+            if (v >= 0) {
+                const y = Math.sqrt(v);
+                yMin = Math.min(yMin, -y);
+                yMax = Math.max(yMax, y);
+                return { x, yPos: y, yNeg: -y };
+            }
+            return { x, yPos: null, yNeg: null };
+        });
+
+        if (yMin === Infinity || yMax === -Infinity) {
+            // No hay puntos reales en el rango, mostrar un pequeño rango por defecto
+            yMin = -3;
+            yMax = 3;
+        }
+
+        // Margen vertical
+        const pad = (yMax - yMin) * 0.1 || 1;
+        yMin -= pad;
+        yMax += pad;
+
+        // Mapeo a coordenadas SVG
+        const toSvgX = x => ((x - xMin) / (xMax - xMin)) * width;
+        const toSvgY = y => (height - ((y - yMin) / (yMax - yMin)) * height);
+
+        // Construir trazados para ramas positivas y negativas
+        function buildPathFor(key) {
+            let d = '';
+            let started = false;
+            for (let i = 0; i < values.length; i++) {
+                const val = values[i][key];
+                if (val === null) {
+                    started = false; // romper segmento
+                    continue;
+                }
+                const x = values[i].x;
+                const sx = toSvgX(x);
+                const sy = toSvgY(val);
+                if (!started) {
+                    d += `M ${sx.toFixed(2)} ${sy.toFixed(2)} `;
+                    started = true;
+                } else {
+                    d += `L ${sx.toFixed(2)} ${sy.toFixed(2)} `;
+                }
+            }
+            return d.trim();
+        }
+
+        const dPos = buildPathFor('yPos');
+        const dNeg = buildPathFor('yNeg');
+
+        if (dPos) {
+            const pathPos = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            pathPos.setAttribute('d', dPos);
+            pathPos.setAttribute('stroke', '#1687a7');
+            pathPos.setAttribute('stroke-width', '2');
+            pathPos.setAttribute('fill', 'none');
+            pathPos.classList.add('ecc-curve-branch');
+            svg.appendChild(pathPos);
+        }
+
+        if (dNeg) {
+            const pathNeg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            pathNeg.setAttribute('d', dNeg);
+            pathNeg.setAttribute('stroke', '#ff9800');
+            pathNeg.setAttribute('stroke-width', '2');
+            pathNeg.setAttribute('fill', 'none');
+            pathNeg.classList.add('ecc-curve-branch');
+            svg.appendChild(pathNeg);
+        }
+    }
+
+    // Listener para el botón Graficar
+    const plotBtn = document.getElementById('plot-curve');
+    if (plotBtn) {
+        plotBtn.addEventListener('click', () => {
+            const aVal = parseFloat(document.getElementById('ec-a').value);
+            const bVal = parseFloat(document.getElementById('ec-b').value);
+            if (Number.isNaN(aVal) || Number.isNaN(bVal)) return;
+            drawCurveReal(aVal, bVal, 'ecc-plot');
+        });
+    }
+
+    // Dibujar automáticamente al validar curva
+    if (validateBtn) {
+        validateBtn.addEventListener('click', () => {
+            const aVal = parseFloat(document.getElementById('curve-a').value);
+            const bVal = parseFloat(document.getElementById('curve-b').value);
+            if (Number.isFinite(aVal) && Number.isFinite(bVal)) {
+                drawCurveReal(aVal, bVal, 'ecc-plot');
+            }
+        });
+    }
+
     console.log('setupECC() completado');
 }
 
