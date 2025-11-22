@@ -65,6 +65,12 @@ function showPage(page) {
             } else {
                 console.error('setupEncryption no está disponible!');
             }
+            console.log('Llamando a setupRSA()...');
+            if (typeof window.setupRSA === 'function') {
+                setupRSA();
+            } else {
+                console.error('setupRSA no está disponible!');
+            }
         }
         if (page === 'ecc') setupECC();
         if (page === 'hash') setupHash();
@@ -691,17 +697,22 @@ function setupECC() {
 
     // Inverso modular usando algoritmo extendido de Euclides
     function modInverse(a, m) {
-        a = mod(a, m);
+        // a, m pueden ser Numbers; trabajamos en BigInt para seguridad
+        a = BigInt(((a % m) + m) % m);
+        m = BigInt(m);
         let [old_r, r] = [a, m];
         let [old_s, s] = [1n, 0n];
 
         while (r !== 0n) {
-            const quotient = old_r / r;
-            [old_r, r] = [r, old_r - quotient * r];
-            [old_s, s] = [s, old_s - quotient * s];
+            const q = old_r / r;
+            [old_r, r] = [r, old_r - q * r];
+            [old_s, s] = [s, old_s - q * s];
         }
 
-        return old_r > 1n ? null : mod(Number(old_s), m);
+        if (old_r !== 1n) return null; // no existe inverso
+        // devolver como Number en rango 0..m-1
+        const res = (old_s + m) % m;
+        return Number(res);
     }
 
     // Verificar si un punto está en la curva
@@ -793,6 +804,33 @@ function setupECC() {
         return Math.abs(hash);
     }
 
+    function signToyECDSA(privateKey, message, G, a, p) {
+        // privateKey: Number, G: [gx,gy], a,p: Numbers
+        const h = simpleHash(message) % p;
+        const maxAttempts = 100;
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            // elegir k aleatorio en [1, p-1]
+            const k = Math.floor(Math.random() * (p - 1)) + 1;
+
+            // R = k * G
+            const R = scalarMult(k, G, a, p);
+            if (!R) continue; // punto en infinito, elegir otro k
+
+            const r = mod(R[0], p);
+            if (r === 0) continue;
+
+            const kInv = modInverse(k, p);
+            if (kInv === null) continue;
+
+            const s = mod(kInv * (h + r * privateKey), p);
+            if (s === 0) continue;
+
+            return { r, s, message, hash: h };
+        }
+
+        throw new Error('No se pudo generar una firma válida tras varios intentos (elige otra G/p).');
+    }
+    
     // ==================== VARIABLES GLOBALES ====================
     let currentCurve = { a: 0, b: 7, p: 17 };
     let currentPoints = [];
@@ -963,7 +1001,7 @@ function setupECC() {
                 current = pointAdd(current, P, a, p);
                 if (i <= 10 || i === k) {
                     steps += `${i}P = ${current ? `(${current[0]}, ${current[1]})` : '∞'}<br>`;
-                } else if (i === 11) {
+                } else if ( i === 11) {
                     steps += `...<br>`;
                 }
             }
@@ -1023,11 +1061,49 @@ function setupECC() {
     }
 
     // ==================== FIRMAR MENSAJE (ECDSA) ====================
-    const signBtn = document.getElementById('ecc-sign');
-    const signatureDiv = document.getElementById('ecc-signature');
+    //async function firmarDatos(privateKey, mensajeHash) {
+    //    // Convertir el mensaje (string) a ArrayBuffer
+    //    const encoder = new TextEncoder();
+    //    const data = encoder.encode(mensajeHash)
+    //    const signature = await window.crypto.subtle.sign(
+    //        {
+    //        name: "ECDSA",
+    //        hash: { name: "SHA-256" }, // El hash debe coincidir en firma y verificación
+    //        },
+    //        privateKey, // Solo la clave privada puede firmar
+    //        data // Los datos a firmar
+    //    );
+    //    
+    //    // La firma (signature) es un ArrayBuffer
+    //    console.log("Firma generada:", signature);
+    //    return signature;
+    //}
+//
+    //async function hashearMensaje(mensaje) {
+    //    // 1. Codificar el mensaje a ArrayBuffer
+    //    const encoder = new TextEncoder();
+    //    const data = encoder.encode(mensaje);
+//
+    //    // 2. Calcular el hash
+    //    const hashBuffer = await window.crypto.subtle.digest(
+    //        'SHA-256', // Algoritmo de hash
+    //        data       // Datos a hashear
+    //    );
+//
+    //    // 3. Convertir el ArrayBuffer a una cadena hexadecimal (para mostrarlo)
+    //    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    //    const hashHex = hashArray
+    //        .map((b) => b.toString(16).padStart(2, '0'))
+    //        .join('');
+//
+    //    return hashHex;
+    //}
+
+    const signBtn = document.getElementById('ecc-sign'); // boton que activa la firma ecdsa
+    const signatureDiv = document.getElementById('ecc-signature'); // campo donde se muestra la firma
 
     if (signBtn) {
-        signBtn.addEventListener('click', () => {
+        signBtn.addEventListener('click', async () => {
             const message = document.getElementById('ecc-message').value.trim();
 
             if (!message) {
@@ -1040,47 +1116,32 @@ function setupECC() {
                 return;
             }
 
-            const { a, p } = currentCurve;
             const { privateKey, basePoint } = currentKeys;
+            // Si prefieres usar hashearMensaje (SHA-256 real), await:
+            // const hashHex = await hashearMensaje(message);
 
-            // Hash del mensaje
-            const hash = simpleHash(message) % p;
+            // Usar la versión toy de firma que trabaja con tu curva modular
+            const sig = signToyECDSA(privateKey, message, basePoint, currentCurve.a, currentCurve.p);
 
-            // Generar número aleatorio k
-            const k = Math.floor(Math.random() * (p - 2)) + 1;
-
-            // Calcular R = k × G
-            const R = scalarMult(k, basePoint, a, p);
-            if (!R) {
-                alert('Error al generar firma');
-                return;
-            }
-
-            const r = R[0];
-
-            // Calcular s = k⁻¹(hash + r × privateKey) mod p
-            const kInv = modInverse(k, p);
-            const s = mod(kInv * (hash + r * privateKey), p);
-
-            currentSignature = { r, s, message, hash };
+            currentSignature = { r: sig.r, s: sig.s, message: sig.message, hash: sig.hash };
 
             signatureDiv.innerHTML = `
-                <strong style="color: #4caf50;">✅ Mensaje Firmado con ECDSA</strong><br><br>
-                <strong>Mensaje:</strong> "${message}"<br>
-                <strong>Hash:</strong> ${hash}<br><br>
+                <strong style="color: #4caf50;">✅ Mensaje Firmado</strong><br><br>
+                <strong>Mensaje:</strong> "${sig.message}"<br>
+                <strong>Hash (simple):</strong> ${sig.hash}<br><br>
                 <strong>📝 Firma Digital (r, s):</strong><br>
-                r = ${r}<br>
-                s = ${s}<br><br>
-                <strong>Proceso de firma:</strong><br>
+                r = ${sig.r}<br>
+                s = ${sig.s}<br><br>
+            `;
+        });
+    }
+    /*<strong>Proceso de firma:</strong><br>
                 1. Hash del mensaje: h = ${hash}<br>
                 2. Número aleatorio: k = ${k}<br>
                 3. Punto R = k × G = (${R[0]}, ${R[1]})<br>
                 4. r = ${r} (coordenada x de R)<br>
                 5. s = k⁻¹(h + r·d) mod p = ${s}<br><br>
-                <em>💡 La firma (r, s) prueba que conoces la clave privada sin revelarla.</em>
-            `;
-        });
-    }
+                <em>💡 La firma (r, s) prueba que conoces la clave privada sin revelarla.</em>*/
 
     // ==================== VERIFICAR FIRMA ====================
     const verifyBtn = document.getElementById('ecc-verify');
@@ -1271,35 +1332,7 @@ function setupECC() {
                 infoDiv.innerHTML += '<ul><li>El problema del logaritmo discreto en ECC depende de sumar y multiplicar puntos en una curva elíptica.</li></ul>';
                 infoDiv.innerHTML += '<ul><li>Para obtener P + Q, la línea que conecta P y Q intersecta la curva en un tercer punto cuyo reflejo es P + Q.</li></ul>';
                 infoDiv.innerHTML += '<ul><li>Para obtener kP, la tangente de P intersecta con un segundo punto cuyo reflejo es 2P, luego la tangente de 2P intersecta con 4P, y asi hasta encontrar kP.</li></ul>';
-                infoDiv.innerHTML += '<ul><li>En una curva elíptica <strong>singular</strong>, un punto puede no tener una tangente bien definida o tener dos tangentes cuando la curva se cruza a sí misma.</li></ul>';
-                infoDiv.innerHTML += '<ul><li>La singularidad elimina la propiedad matemática (suma y doblado de puntos) que la hace segura.</li></ul>';
-                infoDiv.innerHTML += '<br><strong>¡Recuerda siempre verificar que el discriminante sea diferente de cero!</strong>';
-                infoDiv.style.background = '#ffebee';
-                infoDiv.style.borderColor = '#f44336';
-                infoDiv.style.color = '#c62828';
-            }
-            
-            // Parámetros de graficación
-            const xMin = -6;
-            const xMax = 6;
-            const steps = 1000;
-            const xScale = 20;
-            const yScale = 20;
-            
-            // Generar puntos
-            const xs = Array.from({ length: steps }, (_, i) => xMin + (i / (steps - 1)) * (xMax - xMin));
-            const values = xs.map(x => {
-                const v = x * x * x + a * x + b;
-                if (v >= 0) {
-                    const y = Math.sqrt(v);
-                    return { x, yPos: y, yNeg: -y };
-                }
-                return { x, yPos: null, yNeg: null };
-            });
-            
-            // Construir paths con animación
-            function buildPath(key, color, filter = '') {
-                let d = '';
+                infoDiv.innerHTML += '<ul><li>Si la curva tiene una singularidad, estas operaciones pueden no estar bien definidas en todos los puntos, comprometiendo la seguridad.</li></ul>';
                 let started = false;
                 
                 for (let i = 0; i < values.length; i++) {

@@ -191,8 +191,11 @@
         <div class="demo-section">
             <h3>🔑 Generación de Claves ECDSA</h3>
             <div class="algo-info">
+                <div id="curve-info" class="curve-info">
+                    <p>ECDSA es un algoritmo muy popular que se usa para avisarle al destinatario que el mensaje fue hecho por el emisor (Autenticidad) y que no fue modificado (Integridad).</p>
+                </div>
                 <p>Usando la curva definida arriba, genera un par de claves criptográficas real.</p>
-                <div class="input-group">
+                    <div class="input-group">
                     <label>Punto Base G (x, y):</label>
                     <input type="text" id="base-point" placeholder="Ej: 5,1" value="5,1" />
                 </div>

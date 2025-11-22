@@ -330,6 +330,66 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                 </div>
             </div>
 
+            <!-- RSA interactivo para usuarios -->
+            <h3>🧮 RSA Interactivo</h3>
+            <div class="algo-info">
+                <h4>1. Generar claves de Bob</h4>
+                <p>Introduce dos primos para Bob (p, q) y un exponente público e (3 ≤ e ≤ 65537). Se calculará n, φ(n)
+                    y la clave privada d usando el algoritmo extendido de Euclides.</p>
+                <div class="mode-card" style="padding: 12px; margin-top: 12px;">
+                    <div style="display: grid; gap: 8px; grid-template-columns: 1fr 1fr;">
+                        <label>
+                            Primo p (Bob):
+                            <input type="text" id="bob-p" value="61" />
+                        </label>
+                        <label>
+                            Primo q (Bob):
+                            <input type="text" id="bob-q" value="53" />
+                        </label>
+                    </div>
+                    <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
+                        <button id="bob-generate" class="btn-attack" style="background:#1687a7;" onclick="generarLlaves()">Generar clave privada</button>
+                    </div>
+                    <div id="keyResults" style="display:none; margin-top:15px;">
+                        <p><strong>Cálculos Internos:</strong></p>
+                        <ul>
+                            <li>Módulo (n) = <span id="displayN" class="math"></span></li>
+                            <li>Phi (φ) = <span id="displayPhi" class="math"></span></li>
+                        </ul>
+                        <hr>
+                        <p>🔑 <strong>Llave Pública (e, n):</strong> (<span id="pubE"></span>, <span id="pubN"></span>) <br>
+                        <em>(Esta se la damos a Alice)</em></p>
+                        
+                        <p>🤐 <strong>Llave Privada (d):</strong> <span id="privD" class="math" style="background: #ffffcc; padding: 2px;"></span> <br>
+                        <em>(Esta la guarda Bob)</em></p>
+                    </div>
+                </div>
+
+                <h4>2. Cifrar mensaje de Alice</h4>
+                <p>En este apartado, el mensaje de Alice se cifrará usando la clave pública de Bob.</p>
+                <small>Fórmula aplicada: <code>C = (ASCII ^ e) % n</code></small>
+                <div class="mode-card" style="padding: 12px; margin-top: 12px;">
+                    <label>
+                        Escribe un mensaje corto para enviar a Bob:
+                        <input type="text" id="msg-alice" placeholder="Ej: Hola Bob" />
+                    </label>
+                    <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
+                        <button id="alice-cifrar" class="btn-attack" style="background:#1687a7;" onclick="cifrarMensaje()">Cifrar con llave pública</button>
+                    </div>
+                    <div id="alice-msg-cifrado" class="code-example" style="margin-top: 12px; white-space: pre-wrap; font-family: monospace;"></div>
+                </div>
+
+                <h4>3. Descifrar mensaje para Bob</h4>
+                <p>Ahora, el mensaje cifrado se descifrará usando la clave privada de Bob, para que Bob pueda leerlo.</p>
+                <small>Fórmula aplicada: <code>M = (C ^ d) % n</code></small>
+                <div class="mode-card" style="padding: 12px; margin-top: 12px;">
+                    <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
+                        <button id="bob-descifrar" class="btn-attack" style="background:#1687a7;" onclick="descifrarMensaje()">Descifrar con llave privada</button>
+                    </div>
+                    <div id="bob-msg-descifrado" class="code-example" style="margin-top: 12px; white-space: pre-wrap; font-family: monospace;"></div>
+                </div>
+            </div>
+
             <h4>🎭 Modos y Variantes</h4>
             <p>RSA puro es vulnerable a varios ataques. Se usan esquemas de padding seguros:</p>
 
@@ -1599,3 +1659,4 @@ NIST está estandarizando estos algoritmos (2024)
         console.log('setupEncryption asignada a window');
     }
 </script>
+<script src="/js/rsa.js"></script>
