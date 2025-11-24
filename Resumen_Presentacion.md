@@ -18,7 +18,7 @@ Integrantes:
 • [Nombre completo 3]
 • [Nombre completo 4]
 
-Fecha: 4 de Noviembre de 2025
+Fecha: 4 de noviembre de 2025
 ```
 
 ---
@@ -405,7 +405,7 @@ SECUNDARIOS:
 - [ ] Plan B si falla internet (todo es local, debería funcionar)
 - [ ] Conocer el orden de las diapositivas
 - [ ] Practicar transiciones entre demos
-- [ ] Timing: 10-15 minutos total
+- [ ] Tiempo estimado: 10-15 minutos total
 - [ ] Preparar respuestas a preguntas comunes:
   - ¿Por qué no usar framework como React?
   - ¿Es seguro usar Web Crypto API?

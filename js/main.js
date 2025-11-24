@@ -24,29 +24,37 @@ document.addEventListener('DOMContentLoaded', () => {
 // Navegación de páginas
 const pageMap = {
     home: 'pages/home.html',
-    'crypto-fundamentals': 'pages/crypto-fundamentals.html',
-    'crypto-events': 'pages/crypto-events.html',
-    'crypto-heroes': 'pages/crypto-heroes.html',
-    'privacy-tools': 'pages/privacy-tools.html',
-    'open-source': 'pages/open-source.html',
-    mitm: 'pages/mitm.html',
-    password: 'pages/password.html',
-    cipher: 'pages/cipher.html',
-    encryption: 'pages/encryption.html',
-    ecc: 'pages/ecc.html',
-    hash: 'pages/hash.html',
-    blockchain: 'pages/blockchain.html',
-    phishing: 'pages/phishing.html',
-    'social-eng': 'pages/social-eng.html',
-    sqli: 'pages/sqli.html',
-    xss: 'pages/xss.html',
-    csrf: 'pages/csrf.html',
-    session: 'pages/session.html',
-    '2fa': 'pages/2fa.html',
-    oauth: 'pages/oauth.html',
-    https: 'pages/https.html',
-    vpn: 'pages/vpn.html',
-    'security-tips': 'pages/security-tips.html'
+    // Criptografía
+    'crypto-fundamentals': 'pages/criptografia/crypto-fundamentals.html',
+    cipher: 'pages/criptografia/cipher.html',
+    encryption: 'pages/criptografia/encryption.html',
+    ecc: 'pages/criptografia/ecc.html',
+    hash: 'pages/criptografia/hash.html',
+    blockchain: 'pages/criptografia/blockchain.html',
+    // Seguridad Web
+    sqli: 'pages/seguridad-web/sqli.html',
+    xss: 'pages/seguridad-web/xss.html',
+    csrf: 'pages/seguridad-web/csrf.html',
+    mitm: 'pages/seguridad-web/mitm.html',
+    session: 'pages/seguridad-web/session.html',
+    // Autenticación
+    password: 'pages/autenticacion/password.html',
+    '2fa': 'pages/autenticacion/2fa.html',
+    oauth: 'pages/autenticacion/oauth.html',
+    // Ataques Sociales
+    phishing: 'pages/ataques-sociales/phishing.html',
+    'social-eng': 'pages/ataques-sociales/social-eng.html',
+    // Infraestructura
+    https: 'pages/infraestructura/https.html',
+    vpn: 'pages/infraestructura/vpn.html',
+    // Historia
+    'crypto-events': 'pages/historia/crypto-events.html',
+    'crypto-heroes': 'pages/historia/crypto-heroes.html',
+    // Privacidad
+    'privacy-tools': 'pages/privacidad/privacy-tools.html',
+    'open-source': 'pages/privacidad/open-source.html',
+    // Recursos
+    'security-tips': 'pages/recursos/security-tips.html'
 };
 
 function showPage(page) {
@@ -184,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage('home');
 });
 
-// --- Demos: solo inicialización mínima, el resto igual que antes ---
+// --- Demos: sólo inicialización mínima, el resto igual que antes ---
 function setupMitm() {
     const networkLog = [];
     const sendBtn = document.getElementById('mitm-send');
@@ -201,7 +209,7 @@ function setupMitm() {
     sendBtn.addEventListener('click', () => {
         const message = messageInput.value.trim();
         if (!message) {
-            alert('Por favor escribe un mensaje');
+            alert('Por favor, escribe un mensaje');
             return;
         }
 
@@ -209,7 +217,7 @@ function setupMitm() {
         const password = passInput.value;
 
         if (shouldEncrypt && !password) {
-            alert('Por favor ingresa una contraseña para cifrar');
+            alert('Por favor, ingresa una contraseña para cifrar');
             return;
         }
 
@@ -300,7 +308,7 @@ function setupCipher() {
         const key = keyInput.value;
 
         if (!text) {
-            resultArea.value = 'Error: Por favor ingresa un texto';
+            resultArea.value = 'Error: por favor, ingresa un texto';
             return;
         }
 
@@ -328,7 +336,7 @@ function setupCipher() {
         const key = keyInput.value;
 
         if (!text) {
-            resultArea.value = 'Error: Por favor ingresa un texto cifrado';
+            resultArea.value = 'Error: por favor, ingresa un texto cifrado';
             return;
         }
 
@@ -830,7 +838,7 @@ function setupECC() {
 
         throw new Error('No se pudo generar una firma válida tras varios intentos (elige otra G/p).');
     }
-    
+
     // ==================== VARIABLES GLOBALES ====================
     let currentCurve = { a: 0, b: 7, p: 17 };
     let currentPoints = [];
@@ -907,7 +915,7 @@ function setupECC() {
             const pointQStr = document.getElementById('point-q').value.trim();
 
             if (!pointPStr || !pointQStr) {
-                alert('Por favor ingresa ambos puntos en formato x,y');
+                alert('Por favor, ingresa ambos puntos en formato x,y');
                 return;
             }
 
@@ -973,7 +981,7 @@ function setupECC() {
             const pointStr = document.getElementById('point-scalar').value.trim();
 
             if (!pointStr) {
-                alert('Por favor ingresa un punto en formato x,y');
+                alert('Por favor, ingresa un punto en formato x,y');
                 return;
             }
 
@@ -1001,7 +1009,7 @@ function setupECC() {
                 current = pointAdd(current, P, a, p);
                 if (i <= 10 || i === k) {
                     steps += `${i}P = ${current ? `(${current[0]}, ${current[1]})` : '∞'}<br>`;
-                } else if ( i === 11) {
+                } else if (i === 11) {
                     steps += `...<br>`;
                 }
             }
@@ -1021,7 +1029,7 @@ function setupECC() {
             const basePointStr = document.getElementById('base-point').value.trim();
 
             if (!basePointStr) {
-                alert('Por favor ingresa un punto base G');
+                alert('Por favor, ingresa un punto base G');
                 return;
             }
 
@@ -1078,24 +1086,24 @@ function setupECC() {
     //    console.log("Firma generada:", signature);
     //    return signature;
     //}
-//
+    //
     //async function hashearMensaje(mensaje) {
     //    // 1. Codificar el mensaje a ArrayBuffer
     //    const encoder = new TextEncoder();
     //    const data = encoder.encode(mensaje);
-//
+    //
     //    // 2. Calcular el hash
     //    const hashBuffer = await window.crypto.subtle.digest(
     //        'SHA-256', // Algoritmo de hash
     //        data       // Datos a hashear
     //    );
-//
+    //
     //    // 3. Convertir el ArrayBuffer a una cadena hexadecimal (para mostrarlo)
     //    const hashArray = Array.from(new Uint8Array(hashBuffer));
     //    const hashHex = hashArray
     //        .map((b) => b.toString(16).padStart(2, '0'))
     //        .join('');
-//
+    //
     //    return hashHex;
     //}
 
@@ -1107,7 +1115,7 @@ function setupECC() {
             const message = document.getElementById('ecc-message').value.trim();
 
             if (!message) {
-                alert('Por favor ingresa un mensaje');
+                alert('Por favor, ingresa un mensaje');
                 return;
             }
 
@@ -1206,7 +1214,7 @@ function setupECC() {
             const fakeMessage = document.getElementById('ecc-fake-message').value.trim();
 
             if (!fakeMessage) {
-                alert('Ingresa un mensaje para verificar');
+                alert('Por favor, ingresa un mensaje para verificar');
                 return;
             }
 
@@ -1252,18 +1260,18 @@ function setupECC() {
     }
 
     // ==================== GRAFICADOR MEJORADO ====================
-    (function() {
+    (function () {
         let currentZoom = 1;
         const baseViewBox = { x: -200, y: -100, width: 400, height: 200 };
-        
+
         // Función para crear marcas en los ejes
         function createAxisMarks() {
             const svg = document.getElementById('ecc-plot');
             const marksGroup = document.getElementById('axis-marks');
             if (!marksGroup) return;
-            
+
             marksGroup.innerHTML = '';
-            
+
             // Marcas en eje X
             for (let i = -180; i <= 180; i += 40) {
                 if (i === 0) continue;
@@ -1275,7 +1283,7 @@ function setupECC() {
                 line.setAttribute('stroke', '#666');
                 line.setAttribute('stroke-width', '1.5');
                 marksGroup.appendChild(line);
-                
+
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', i);
                 text.setAttribute('y', 15);
@@ -1285,7 +1293,7 @@ function setupECC() {
                 text.textContent = (i / 20).toFixed(0);
                 marksGroup.appendChild(text);
             }
-            
+
             // Marcas en eje Y
             for (let i = -80; i <= 80; i += 40) {
                 if (i === 0) continue;
@@ -1297,7 +1305,7 @@ function setupECC() {
                 line.setAttribute('stroke', '#666');
                 line.setAttribute('stroke-width', '1.5');
                 marksGroup.appendChild(line);
-                
+
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', -15);
                 text.setAttribute('y', -i + 4);
@@ -1308,33 +1316,33 @@ function setupECC() {
                 marksGroup.appendChild(text);
             }
         }
-        
+
         // Función principal de graficación mejorada
         function drawCurveReal(a, b) {
             const svg = document.getElementById('ecc-plot');
             const curvesGroup = document.getElementById('curves-group');
             const infoDiv = document.getElementById('curve-info');
-            
+
             if (!svg || !curvesGroup) return;
-            
+
             // Actualizar displays
             document.getElementById('display-a').textContent = a.toFixed(2);
             document.getElementById('display-b').textContent = b.toFixed(2);
-            
+
             // Limpiar curvas previas
             curvesGroup.innerHTML = '';
-            
+
             // Verificar discriminante para singularidades
             const discriminant = 4 * (a * a * a) + 27 * (b * b);
             if (discriminant == 0) {
-                infoDiv.innerHTML = `<p>⚠️ Esta curva tiene una singularidad por que el discriminante = 0 (4(${a})³ + 27(${b})² = 0). No es una curva elíptica válida.</p>`;
+                infoDiv.innerHTML = `<p>⚠️ Esta curva tiene una singularidad porque el discriminante = 0 (4(${a})³ + 27(${b})² = 0). No es una curva elíptica válida.</p>`;
                 infoDiv.innerHTML += '<p><strong>¿En qué afecta esto a la criptografía de curva elíptica?</strong></p>';
                 infoDiv.innerHTML += '<ul><li>El problema del logaritmo discreto en ECC depende de sumar y multiplicar puntos en una curva elíptica.</li></ul>';
                 infoDiv.innerHTML += '<ul><li>Para obtener P + Q, la línea que conecta P y Q intersecta la curva en un tercer punto cuyo reflejo es P + Q.</li></ul>';
                 infoDiv.innerHTML += '<ul><li>Para obtener kP, la tangente de P intersecta con un segundo punto cuyo reflejo es 2P, luego la tangente de 2P intersecta con 4P, y asi hasta encontrar kP.</li></ul>';
                 infoDiv.innerHTML += '<ul><li>Si la curva tiene una singularidad, estas operaciones pueden no estar bien definidas en todos los puntos, comprometiendo la seguridad.</li></ul>';
                 let started = false;
-                
+
                 for (let i = 0; i < values.length; i++) {
                     const val = values[i][key];
                     if (val === null) {
@@ -1343,7 +1351,7 @@ function setupECC() {
                     }
                     const x = values[i].x * xScale;
                     const y = -val * yScale;
-                    
+
                     if (!started) {
                         d += `M ${x.toFixed(2)} ${y.toFixed(2)} `;
                         started = true;
@@ -1351,7 +1359,7 @@ function setupECC() {
                         d += `L ${x.toFixed(2)} ${y.toFixed(2)} `;
                     }
                 }
-                
+
                 if (d) {
                     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                     path.setAttribute('d', d.trim());
@@ -1362,17 +1370,17 @@ function setupECC() {
                     path.setAttribute('stroke-linejoin', 'round');
                     if (filter) path.setAttribute('filter', filter);
                     path.classList.add('ecc-curve-branch');
-                    
+
                     // Animación de trazo
                     const length = path.getTotalLength();
                     path.style.strokeDasharray = length;
                     path.style.strokeDashoffset = length;
                     path.style.animation = 'dash 1.5s ease-in-out forwards';
-                    
+
                     curvesGroup.appendChild(path);
                 }
             }
-            
+
             // Agregar keyframes para animación
             if (!document.getElementById('curve-animation-style')) {
                 const style = document.createElement('style');
@@ -1386,10 +1394,10 @@ function setupECC() {
                 `;
                 document.head.appendChild(style);
             }
-            
+
             buildPath('yPos', '#1687a7', 'url(#glow)');
             buildPath('yNeg', '#ff9800', 'url(#glow)');
-            
+
             if (discriminant != 0) {
                 infoDiv.innerHTML = `<p>✅ Curva elíptica graficada: y² = x³ + ${a.toFixed(2)}x + ${b.toFixed(2)}</p>`;
                 infoDiv.style.background = '#e8f5e9';
@@ -1397,26 +1405,26 @@ function setupECC() {
                 infoDiv.style.color = '#2e7d32';
             }
         }
-        
+
         // Controles de zoom
         function setupZoom() {
             const svg = document.getElementById('ecc-plot');
-            
+
             document.getElementById('zoom-in')?.addEventListener('click', () => {
                 currentZoom *= 0.8;
                 updateViewBox();
             });
-            
+
             document.getElementById('zoom-out')?.addEventListener('click', () => {
                 currentZoom *= 1.25;
                 updateViewBox();
             });
-            
+
             document.getElementById('zoom-reset')?.addEventListener('click', () => {
                 currentZoom = 1;
                 updateViewBox();
             });
-            
+
             function updateViewBox() {
                 const newWidth = baseViewBox.width * currentZoom;
                 const newHeight = baseViewBox.height * currentZoom;
@@ -1425,20 +1433,20 @@ function setupECC() {
                 svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
             }
         }
-        
+
         // Event listeners
         document.getElementById('plot-curve')?.addEventListener('click', () => {
             const aVal = parseFloat(document.getElementById('ec-a').value);
             const bVal = parseFloat(document.getElementById('ec-b').value);
-            
+
             if (isNaN(aVal) || isNaN(bVal)) {
                 alert('Por favor, introduce valores numéricos válidos para a y b');
                 return;
             }
-            
+
             drawCurveReal(aVal, bVal);
         });
-        
+
         document.getElementById('clear-curve')?.addEventListener('click', () => {
             const curvesGroup = document.getElementById('curves-group');
             if (curvesGroup) curvesGroup.innerHTML = '';
@@ -1451,10 +1459,10 @@ function setupECC() {
             document.getElementById('curve-info').style.borderColor = '#667eea';
             document.getElementById('curve-info').style.color = '#1976d2';
         });
-        
+
         // Presets
         document.querySelectorAll('.btn-preset').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const a = parseFloat(this.dataset.a);
                 const b = parseFloat(this.dataset.b);
                 document.getElementById('ec-a').value = a;
@@ -1462,7 +1470,7 @@ function setupECC() {
                 drawCurveReal(a, b);
             });
         });
-        
+
         // Enter key para graficar
         ['ec-a', 'ec-b'].forEach(id => {
             document.getElementById(id)?.addEventListener('keypress', (e) => {
@@ -1471,122 +1479,122 @@ function setupECC() {
                 }
             });
         });
-        
+
         // Inicialización
         createAxisMarks();
         setupZoom();
     })();
 
-/*
-    // ==================== GRAFICADOR (VISUAL, REALES) ====================
-    // Dibuja la curva y^2 = x^3 + a x + b en el SVG con id ecc-plot
-    function drawCurveReal(a, b, svgId = 'ecc-plot') {
-        const svg = document.getElementById(svgId);
-        if (!svg) return;
-
-        // Limpiar curvas previas
-        svg.querySelectorAll('.ecc-curve-branch').forEach(n => n.remove());
-
-        // Obtener dimensiones desde viewBox o client
-        const vb = svg.viewBox.baseVal;
-        const width = (vb && vb.width) ? vb.width : svg.clientWidth || 400;
-        const height = (vb && vb.height) ? vb.height : svg.clientHeight || 200;
-
-        // Dominio de dibujo en X (puedes ajustar esto o exponer al usuario)
-        const xMin = -6;
-        const xMax = 6;
-        const steps = 800;
-
-        // Muestreo de x
-        const xs = new Array(steps).fill(0).map((_, i) => xMin + (i / (steps - 1)) * (xMax - xMin));
-
-        // Calcular valores y y determinar rangos
-        let yMin = Infinity, yMax = -Infinity;
-
-        const values = xs.map(x => {
-            const v = x * x * x + a * x + b; // x^3 + a x + b
-            if (v >= 0) {
-                const y = Math.sqrt(v);
-                yMin = Math.min(yMin, -y);
-                yMax = Math.max(yMax, y);
-                return { x, yPos: y, yNeg: -y };
-            }
-            return { x, yPos: null, yNeg: null };
-        });
-
-        if (yMin === Infinity || yMax === -Infinity) {
-            // No hay puntos reales en el rango, mostrar un pequeño rango por defecto
-            yMin = -3;
-            yMax = 3;
-        }
-
-        // Margen vertical
-        const pad = (yMax - yMin) * 0.1 || 1;
-        yMin -= pad;
-        yMax += pad;
-
-        // Mapeo a coordenadas SVG
-        const toSvgX = x => ((x - xMin) / (xMax - xMin)) * width;
-        const toSvgY = y => (height - ((y - yMin) / (yMax - yMin)) * height);
-
-        // Construir trazados para ramas positivas y negativas
-        function buildPathFor(key) {
-            let d = '';
-            let started = false;
-            for (let i = 0; i < values.length; i++) {
-                const val = values[i][key];
-                if (val === null) {
-                    started = false; // romper segmento
-                    continue;
+    /*
+        // ==================== GRAFICADOR (VISUAL, REALES) ====================
+        // Dibuja la curva y^2 = x^3 + a x + b en el SVG con id ecc-plot
+        function drawCurveReal(a, b, svgId = 'ecc-plot') {
+            const svg = document.getElementById(svgId);
+            if (!svg) return;
+    
+            // Limpiar curvas previas
+            svg.querySelectorAll('.ecc-curve-branch').forEach(n => n.remove());
+    
+            // Obtener dimensiones desde viewBox o client
+            const vb = svg.viewBox.baseVal;
+            const width = (vb && vb.width) ? vb.width : svg.clientWidth || 400;
+            const height = (vb && vb.height) ? vb.height : svg.clientHeight || 200;
+    
+            // Dominio de dibujo en X (puedes ajustar esto o exponer al usuario)
+            const xMin = -6;
+            const xMax = 6;
+            const steps = 800;
+    
+            // Muestreo de x
+            const xs = new Array(steps).fill(0).map((_, i) => xMin + (i / (steps - 1)) * (xMax - xMin));
+    
+            // Calcular valores y y determinar rangos
+            let yMin = Infinity, yMax = -Infinity;
+    
+            const values = xs.map(x => {
+                const v = x * x * x + a * x + b; // x^3 + a x + b
+                if (v >= 0) {
+                    const y = Math.sqrt(v);
+                    yMin = Math.min(yMin, -y);
+                    yMax = Math.max(yMax, y);
+                    return { x, yPos: y, yNeg: -y };
                 }
-                const x = values[i].x;
-                const sx = toSvgX(x);
-                const sy = toSvgY(val);
-                if (!started) {
-                    d += `M ${sx.toFixed(2)} ${sy.toFixed(2)} `;
-                    started = true;
-                } else {
-                    d += `L ${sx.toFixed(2)} ${sy.toFixed(2)} `;
-                }
+                return { x, yPos: null, yNeg: null };
+            });
+    
+            if (yMin === Infinity || yMax === -Infinity) {
+                // No hay puntos reales en el rango, mostrar un pequeño rango por defecto
+                yMin = -3;
+                yMax = 3;
             }
-            return d.trim();
+    
+            // Margen vertical
+            const pad = (yMax - yMin) * 0.1 || 1;
+            yMin -= pad;
+            yMax += pad;
+    
+            // Mapeo a coordenadas SVG
+            const toSvgX = x => ((x - xMin) / (xMax - xMin)) * width;
+            const toSvgY = y => (height - ((y - yMin) / (yMax - yMin)) * height);
+    
+            // Construir trazados para ramas positivas y negativas
+            function buildPathFor(key) {
+                let d = '';
+                let started = false;
+                for (let i = 0; i < values.length; i++) {
+                    const val = values[i][key];
+                    if (val === null) {
+                        started = false; // romper segmento
+                        continue;
+                    }
+                    const x = values[i].x;
+                    const sx = toSvgX(x);
+                    const sy = toSvgY(val);
+                    if (!started) {
+                        d += `M ${sx.toFixed(2)} ${sy.toFixed(2)} `;
+                        started = true;
+                    } else {
+                        d += `L ${sx.toFixed(2)} ${sy.toFixed(2)} `;
+                    }
+                }
+                return d.trim();
+            }
+    
+            const dPos = buildPathFor('yPos');
+            const dNeg = buildPathFor('yNeg');
+    
+            if (dPos) {
+                const pathPos = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathPos.setAttribute('d', dPos);
+                pathPos.setAttribute('stroke', '#1687a7');
+                pathPos.setAttribute('stroke-width', '2');
+                pathPos.setAttribute('fill', 'none');
+                pathPos.classList.add('ecc-curve-branch');
+                svg.appendChild(pathPos);
+            }
+    
+            if (dNeg) {
+                const pathNeg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathNeg.setAttribute('d', dNeg);
+                pathNeg.setAttribute('stroke', '#ff9800');
+                pathNeg.setAttribute('stroke-width', '2');
+                pathNeg.setAttribute('fill', 'none');
+                pathNeg.classList.add('ecc-curve-branch');
+                svg.appendChild(pathNeg);
+            }
         }
-
-        const dPos = buildPathFor('yPos');
-        const dNeg = buildPathFor('yNeg');
-
-        if (dPos) {
-            const pathPos = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            pathPos.setAttribute('d', dPos);
-            pathPos.setAttribute('stroke', '#1687a7');
-            pathPos.setAttribute('stroke-width', '2');
-            pathPos.setAttribute('fill', 'none');
-            pathPos.classList.add('ecc-curve-branch');
-            svg.appendChild(pathPos);
+    
+        // Listener para el botón Graficar
+        const plotBtn = document.getElementById('plot-curve');
+        if (plotBtn) {
+            plotBtn.addEventListener('click', () => {
+                const aVal = parseFloat(document.getElementById('ec-a').value);
+                const bVal = parseFloat(document.getElementById('ec-b').value);
+                if (Number.isNaN(aVal) || Number.isNaN(bVal)) return;
+                drawCurveReal(aVal, bVal, 'ecc-plot');
+            });
         }
-
-        if (dNeg) {
-            const pathNeg = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            pathNeg.setAttribute('d', dNeg);
-            pathNeg.setAttribute('stroke', '#ff9800');
-            pathNeg.setAttribute('stroke-width', '2');
-            pathNeg.setAttribute('fill', 'none');
-            pathNeg.classList.add('ecc-curve-branch');
-            svg.appendChild(pathNeg);
-        }
-    }
-
-    // Listener para el botón Graficar
-    const plotBtn = document.getElementById('plot-curve');
-    if (plotBtn) {
-        plotBtn.addEventListener('click', () => {
-            const aVal = parseFloat(document.getElementById('ec-a').value);
-            const bVal = parseFloat(document.getElementById('ec-b').value);
-            if (Number.isNaN(aVal) || Number.isNaN(bVal)) return;
-            drawCurveReal(aVal, bVal, 'ecc-plot');
-        });
-    }
-*/
+    */
     // Dibujar automáticamente al validar curva
     if (validateBtn) {
         validateBtn.addEventListener('click', () => {
@@ -1760,7 +1768,7 @@ function setupHash() {
             const password = saltPassword.value;
 
             if (!password) {
-                alert('Por favor ingresa una contraseña');
+                alert('Por favor, ingresa una contraseña');
                 return;
             }
 

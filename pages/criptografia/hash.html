@@ -1,25 +1,24 @@
 <section id="hash" class="page">
-    <h2>🔗 Funciones Hash Criptográficas</h2>
+    <h2>🔗 Funciones hash criptográficas</h2>
     <p class="page-description">Las funciones hash son algoritmos que transforman datos de cualquier tamaño
         en un valor de tamaño fijo (hash). Son fundamentales para verificar integridad, almacenar contraseñas y
         blockchain [1-3,11].</p>
 
     <div class="demo-container">
         <div class="demo-section">
-            <h3>🎯 Propiedades de una Función Hash [1-3,11]</h3>
-            <div class="algo-info">
-                <ul>
-                    <li><strong>Determinista:</strong> Misma entrada → Siempre mismo hash</li>
-                    <li><strong>Rápida:</strong> Cálculo eficiente del hash</li>
-                    <li><strong>Efecto avalancha:</strong> Pequeño cambio → Hash completamente diferente</li>
-                    <li><strong>Unidireccional:</strong> Imposible obtener entrada desde hash</li>
-                    <li><strong>Resistencia a colisiones:</strong> Difícil encontrar dos entradas con mismo hash</li>
+            <h3>🎯 Propiedades de una función hash [1-3,11]</h3>
+            <div class="algo-info" } <ul>
+                <li><strong>Determinista:</strong> Misma entrada → Siempre mismo hash</li>
+                <li><strong>Rápida:</strong> Cálculo eficiente del hash</li>
+                <li><strong>Efecto avalancha:</strong> Pequeño cambio → Hash completamente diferente</li>
+                <li><strong>Unidireccional:</strong> Imposible obtener entrada desde hash</li>
+                <li><strong>Resistencia a colisiones:</strong> Difícil encontrar dos entradas con mismo hash</li>
                 </ul>
             </div>
         </div>
 
         <div class="demo-section">
-            <h3>🧪 Demostración Interactiva</h3>
+            <h3>🧪 Demostración interactiva</h3>
             <div class="input-group">
                 <label for="hash-input">Texto a hashear:</label>
                 <input type="text" id="hash-input" placeholder="Escribe algo..." value="Hola Mundo" />
@@ -39,7 +38,7 @@
     </div>
 
     <div class="comparison-table">
-        <h3>📊 Algoritmos Hash Populares [11]</h3>
+        <h3>📊 Algoritmos hash populares [11]</h3>
         <table>
             <thead>
                 <tr>
@@ -179,7 +178,7 @@ Cada usuario necesita rainbow table diferente → Inviable
     </div>
 
     <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
-        <h4>✅ Mejores Prácticas [1-3,11]</h4>
+        <h4>✅ Mejores prácticas [1-3,11]</h4>
         <ul>
             <li>Para contraseñas: Usa <strong>Argon2</strong> o <strong>bcrypt</strong> (no SHA-256 directamente)</li>
             <li>Para integridad: Usa <strong>SHA-256</strong> o superior</li>

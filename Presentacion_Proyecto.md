@@ -1,6 +1,6 @@
 # Presentación del Proyecto - Criptografía 2
 
-**Entrega: 4 de Noviembre de 2025**
+**Entrega: 4 de noviembre de 2025**
 
 ---
 
@@ -25,7 +25,7 @@ Criptografía 2
 - [Nombre completo del integrante 4]
 
 **Fecha de Entrega:**
-4 de Noviembre de 2025
+4 de noviembre de 2025
 
 ---
 
@@ -1229,4 +1229,4 @@ Para preguntas, sugerencias o reportes de bugs:
 
 _Proyecto desarrollado para la materia de Criptografía 2_  
 _Escuela Superior de Cómputo (ESCOM) - Instituto Politécnico Nacional (IPN)_  
-_Fecha: 4 de Noviembre de 2025_
+_Fecha: 4 de noviembre de 2025_

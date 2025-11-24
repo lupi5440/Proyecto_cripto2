@@ -6,7 +6,7 @@ let keys = {
 
 let encryptedMessage = []; // array de números cifrados
 
-// maximo comun divisor usando el algoritmo de Euclides
+// Máximo común divisor usando el algoritmo de Euclides
 function gcd(a, b) {
     while (b > 0n) {
         let temp = b;
@@ -16,7 +16,7 @@ function gcd(a, b) {
     return a;
 }
 
-// algoritmo de Euclides Extendido para encontrar el inverso modular (d)
+// Algoritmo de Euclides extendido para encontrar el inverso modular (d)
 function modInverse(e, phi) {
     let m0 = phi;
     let y = 0n;
@@ -45,7 +45,7 @@ function modInverse(e, phi) {
     return x;
 }
 
-// exponenciación modular rápida (base ^ exp) % mod
+// Exponenciación modular rápida (base ^ exp) % mod
 function modPow(base, exp, mod) {
     let res = 1n;
     base = base % mod;
@@ -84,11 +84,11 @@ function generarLlaves() {
         document.getElementById('pubE').innerText = e.toString();
         document.getElementById('pubN').innerText = n.toString();
         document.getElementById('privD').innerText = d.toString();
-        
+
         document.getElementById('keyResults').style.display = 'block';
 
     } catch (error) {
-        alert("Por favor ingresa números válidos.");
+        alert("Por favor, ingresa números válidos.");
         console.error(error);
     }
 }
@@ -105,10 +105,10 @@ function cifrarMensaje() {
 
     for (let i = 0; i < text.length; i++) {
         const charCode = BigInt(text.charCodeAt(i));
-        const encryptedChar = modPow(charCode, keys.e, keys.n); 
-        
+        const encryptedChar = modPow(charCode, keys.e, keys.n);
+
         encryptedMessage.push(encryptedChar);
-        
+
         visualization.push(`'${text[i]}'(${charCode}) → <strong>${encryptedChar}</strong>`);
     }
 
@@ -128,14 +128,14 @@ function descifrarMensaje() {
         const c = encryptedMessage[i];
 
         const decryptedCharInfo = modPow(c, keys.d, keys.n); // formula inversa: c^d mod n
-        
+
         const char = String.fromCharCode(Number(decryptedCharInfo)); // convertir de vuelta a carácter
-        
+
         decryptedString += char;
         visualization.push(`<strong>${c}</strong> → ${char}`);
     }
 
-    document.getElementById('bob-msg-descifrado').innerHTML = 
+    document.getElementById('bob-msg-descifrado').innerHTML =
         `<div>Proceso: ${visualization.join(' | ')}</div>` +
         `<div style="margin-top:10px; color:green; font-weight:bold;">Mensaje Final: "${decryptedString}"</div>`;
 }
@@ -143,7 +143,7 @@ function descifrarMensaje() {
 // Función para inicializar los listeners
 function setupRSA() {
     console.log("Configurando botones RSA...");
-    
+
     const genBtn = document.getElementById('bob-generate');
     const aliceBtn = document.getElementById('alice-cifrar');
     const descBtn = document.getElementById('bob-descifrar');

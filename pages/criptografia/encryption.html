@@ -1,5 +1,5 @@
 <section id="encryption" class="page">
-    <h2>🔐 Algoritmos de Cifrado Modernos</h2>
+    <h2>🔐 Algoritmos de cifrado modernos</h2>
     <p class="page-description">Los algoritmos de cifrado protegen la confidencialidad de los datos.
         Aprende sobre los estándares modernos más utilizados en la industria.</p>
 
@@ -30,7 +30,7 @@
             </p>
 
             <div class="internal-process">
-                <h5>Estructura de Rondas:</h5>
+                <h5>Estructura de rondas:</h5>
                 <ul>
                     <li><strong>AES-128:</strong> 10 rondas</li>
                     <li><strong>AES-192:</strong> 12 rondas</li>
@@ -96,8 +96,9 @@ Texto cifrado (128 bits)
                 </div>
             </div>
 
-            <h4>🎭 Modos de Operación</h4>
-            <p>AES cifra bloques de 128 bits. Para mensajes más largos, se usan <strong>modos de operación [7,8]</strong>:
+            <h4>🎭 Modos de operación</h4>
+            <p>AES cifra bloques de 128 bits. Para mensajes más largos, se usan <strong>modos de operación
+                    [7,8]</strong>:
             </p>
 
             <div class="modes-grid">
@@ -191,7 +192,7 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>Otros Modos [8]</h5>
+                    <h5>Otros modos [8]</h5>
                     <ul>
                         <li><strong>CFB/OFB:</strong> Modos de flujo legacy, reemplazados por CTR</li>
                         <li><strong>CCM:</strong> Autenticado (alternativa a GCM), usado en WPA2</li>
@@ -202,7 +203,7 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
             </div>
 
             <div class="best-practices">
-                <h4>🛡️ Mejores Prácticas AES [7]</h4>
+                <h4>🛡️ Mejores prácticas AES [7]</h4>
                 <ul>
                     <li>✅ Usa <strong>AES-256-GCM</strong> para nuevos proyectos</li>
                     <li>✅ Genera IV/nonce <strong>aleatorio único</strong> por mensaje (12 bytes para GCM)</li>
@@ -289,18 +290,18 @@ d es el secreto más importante (NUNCA compartir)</pre>
 
                 <h5>Claves resultantes:</h5>
                 <div class="code-example">
-                    <pre><strong>Clave Pública:</strong>  (e, n) = (65537, 3233)
+                    <pre><strong>Clave pública:</strong>  (e, n) = (65537, 3233)
   → Se distribuye libremente
   → Usada por cualquiera para CIFRAR mensajes
   → Usada para VERIFICAR firmas
 
-<strong>Clave Privada:</strong> (d, n) = (2753, 3233)
+<strong>Clave privada:</strong> (d, n) = (2753, 3233)
   → Mantenida en secreto absoluto
   → Usada para DESCIFRAR mensajes
   → Usada para CREAR firmas</pre>
                 </div>
 
-                <h5>Cifrado y Descifrado:</h5>
+                <h5>Cifrado y descifrado:</h5>
                 <div class="code-example">
                     <pre><strong>Cifrado (con clave pública):</strong>
 Mensaje m = 123 (debe ser m < n)
@@ -315,7 +316,7 @@ m = 855^2753 mod 3233 = 123 ✅
 (m^e)^d ≡ m (mod n)  ← Teorema de Euler</pre>
                 </div>
 
-                <h5>Firmas Digitales:</h5>
+                <h5>Firmas digitales:</h5>
                 <div class="code-example">
                     <pre><strong>Firmar (con clave privada):</strong>
 Hash del documento h = SHA-256(documento)
@@ -348,7 +349,8 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                         </label>
                     </div>
                     <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
-                        <button id="bob-generate" class="btn-attack" style="background:#1687a7;" onclick="generarLlaves()">Generar clave privada</button>
+                        <button id="bob-generate" class="btn-attack" style="background:#1687a7;"
+                            onclick="generarLlaves()">Generar clave privada</button>
                     </div>
                     <div id="keyResults" style="display:none; margin-top:15px;">
                         <p><strong>Cálculos Internos:</strong></p>
@@ -357,11 +359,15 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                             <li>Phi (φ) = <span id="displayPhi" class="math"></span></li>
                         </ul>
                         <hr>
-                        <p>🔑 <strong>Llave Pública (e, n):</strong> (<span id="pubE"></span>, <span id="pubN"></span>) <br>
-                        <em>(Esta se la damos a Alice)</em></p>
-                        
-                        <p>🤐 <strong>Llave Privada (d):</strong> <span id="privD" class="math" style="background: #ffffcc; padding: 2px;"></span> <br>
-                        <em>(Esta la guarda Bob)</em></p>
+                        <p>🔑 <strong>Llave Pública (e, n):</strong> (<span id="pubE"></span>, <span id="pubN"></span>)
+                            <br>
+                            <em>(Esta se la damos a Alice)</em>
+                        </p>
+
+                        <p>🤐 <strong>Llave Privada (d):</strong> <span id="privD" class="math"
+                                style="background: #ffffcc; padding: 2px;"></span> <br>
+                            <em>(Esta la guarda Bob)</em>
+                        </p>
                     </div>
                 </div>
 
@@ -374,23 +380,28 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                         <input type="text" id="msg-alice" placeholder="Ej: Hola Bob" />
                     </label>
                     <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
-                        <button id="alice-cifrar" class="btn-attack" style="background:#1687a7;" onclick="cifrarMensaje()">Cifrar con llave pública</button>
+                        <button id="alice-cifrar" class="btn-attack" style="background:#1687a7;"
+                            onclick="cifrarMensaje()">Cifrar con llave pública</button>
                     </div>
-                    <div id="alice-msg-cifrado" class="code-example" style="margin-top: 12px; white-space: pre-wrap; font-family: monospace;"></div>
+                    <div id="alice-msg-cifrado" class="code-example"
+                        style="margin-top: 12px; white-space: pre-wrap; font-family: monospace;"></div>
                 </div>
 
                 <h4>3. Descifrar mensaje para Bob</h4>
-                <p>Ahora, el mensaje cifrado se descifrará usando la clave privada de Bob, para que Bob pueda leerlo.</p>
+                <p>Ahora, el mensaje cifrado se descifrará usando la clave privada de Bob, para que Bob pueda leerlo.
+                </p>
                 <small>Fórmula aplicada: <code>M = (C ^ d) % n</code></small>
                 <div class="mode-card" style="padding: 12px; margin-top: 12px;">
                     <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
-                        <button id="bob-descifrar" class="btn-attack" style="background:#1687a7;" onclick="descifrarMensaje()">Descifrar con llave privada</button>
+                        <button id="bob-descifrar" class="btn-attack" style="background:#1687a7;"
+                            onclick="descifrarMensaje()">Descifrar con llave privada</button>
                     </div>
-                    <div id="bob-msg-descifrado" class="code-example" style="margin-top: 12px; white-space: pre-wrap; font-family: monospace;"></div>
+                    <div id="bob-msg-descifrado" class="code-example"
+                        style="margin-top: 12px; white-space: pre-wrap; font-family: monospace;"></div>
                 </div>
             </div>
 
-            <h4>🎭 Modos y Variantes</h4>
+            <h4>🎭 Modos y variantes</h4>
             <p>RSA puro es vulnerable a varios ataques. Se usan esquemas de padding seguros [9,10]:</p>
 
             <div class="modes-grid">
@@ -541,7 +552,7 @@ Usado en: PGP, S/MIME, TLS handshake</pre>
 
     <!-- SHA-256 y Funciones Hash -->
     <div class="demo-section algorithm-expanded">
-        <h3>🔗 SHA-256 y Funciones Hash Criptográficas [1,2,11]</h3>
+        <h3>🔗 SHA-256 y funciones hash criptográficas [1,2,11]</h3>
 
         <div class="algo-info">
             <h4>📜 Historia</h4>
@@ -567,7 +578,7 @@ Usado en: PGP, S/MIME, TLS handshake</pre>
                 de forma determinística pero aparentemente aleatoria.</p>
 
             <div class="internal-process">
-                <h5>Propiedades Fundamentales [1,2,11]:</h5>
+                <h5>Propiedades fundamentales [1,2,11]:</h5>
                 <ol>
                     <li><strong>Determinístico:</strong>
                         <div class="code-example">
@@ -603,7 +614,7 @@ Aún así: 340,282,366,920,938,463,463,374,607,431,768,211,456</pre>
                     </li>
                 </ol>
 
-                <h5>Proceso Interno de SHA-256 [1,2,11]:</h5>
+                <h5>Proceso interno de SHA-256 [1,2,11]:</h5>
                 <ol>
                     <li><strong>Padding (Relleno):</strong>
                         <div class="code-example">
@@ -666,7 +677,7 @@ Ejemplo salida:
                 </ol>
             </div>
 
-            <h4>🎭 Familia SHA-2 y Variantes</h4>
+            <h4>🎭 Familia SHA-2 y variantes</h4>
             <div class="modes-grid">
                 <div class="mode-card">
                     <h5>SHA-224 [1,2,11]</h5>
@@ -764,10 +775,10 @@ Uso: Argon2, WireGuard, Zcash, almacenamiento de archivos</pre>
                 </div>
             </div>
 
-            <h4>🔐 Usos Específicos de Hash</h4>
+            <h4>🔐 Usos específicos de hash</h4>
             <div class="modes-grid">
                 <div class="mode-card">
-                    <h5>Almacenamiento de Contraseñas [1-3,11]</h5>
+                    <h5>Almacenamiento de contraseñas [1-3,11]</h5>
                     <p><strong>❌ NO usar SHA-256 directo</strong></p>
                     <div class="code-example">
                         <pre>Problema: SHA-256 es demasiado RÁPIDO
@@ -926,7 +937,7 @@ Uso:
     </div>
 
     <div class="info-box">
-        <h4>🎯 Cuándo Usar Cada Uno </h4>
+        <h4>🎯 Cuándo usar cada uno </h4>
         <ul>
             <li><strong>AES:</strong> Cifrar archivos grandes, bases de datos, comunicaciones en tiempo real</li>
             <li><strong>RSA:</strong> Establecer conexión segura inicial, firmar documentos digitalmente</li>
@@ -1202,7 +1213,7 @@ NIST está estandarizando estos algoritmos (2024)
     </div>
 
     <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50;">
-        <h4>🛡️ Mejores Prácticas de Defensa</h4>
+        <h4>🛡️ Mejores prácticas de defensa</h4>
         <ul>
             <li><strong>Usa algoritmos modernos:</strong> AES-256, RSA-4096, SHA-256, Argon2</li>
             <li><strong>Claves fuertes:</strong> Mínimo 128 bits, aleatorias, rotadas periódicamente</li>

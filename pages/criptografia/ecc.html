@@ -1,5 +1,5 @@
 <section id="ecc" class="page">
-    <h2>📊 Criptografía de Curva Elíptica (ECC)</h2>
+    <h2>📊 Criptografía de curva elíptica (ECC)</h2>
     <p class="page-description">La criptografía de curva elíptica es un enfoque moderno de criptografía asimétrica
         que ofrece el mismo nivel de seguridad que RSA pero con claves mucho más pequeñas, haciéndola ideal para
         dispositivos móviles y IoT.</p>
@@ -37,26 +37,27 @@
                     <p class="caption">Representación visual de una curva elíptica con puntos P, Q, R</p>
                 </div>
             </div>
-            <h3>📐 Gráficador de Curvas Elípticas</h3>
+            <h3>📐 Gráficador de curvas elípticas</h3>
             <div class="algo-info">
                 <div class="equation-display">
                     <span class="equation-label">Ecuación:</span>
-                    <span class="equation-formula">y² = x³ + <span id="display-a">0</span>x + <span id="display-b">0</span></span>
+                    <span class="equation-formula">y² = x³ + <span id="display-a">0</span>x + <span
+                            id="display-b">0</span></span>
                 </div>
-                
+
                 <p style="margin-top: 15px;">Introduce tus propios parámetros (a, b) para crear una curva elíptica:</p>
-                
+
                 <div class="curve-visualization">
                     <div class="controls-container">
                         <div class="input-group">
                             <label for="ec-a">Parámetro a:</label>
-                            <input type="number" id="ec-a" step="0.1"/>
+                            <input type="number" id="ec-a" step="0.1" />
                         </div>
                         <div class="input-group">
                             <label for="ec-b">Parámetro b:</label>
-                            <input type="number" id="ec-b" step="0.1"/>
+                            <input type="number" id="ec-b" step="0.1" />
                         </div>
-                        
+
                         <div class="button-group">
                             <button id="plot-curve" class="btn-primary">
                                 <span class="btn-icon">📊</span> Graficar Curva
@@ -69,7 +70,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="graph-container">
                         <div class="graph-header">
                             <div class="legend">
@@ -88,39 +89,39 @@
                                 <button id="zoom-reset" class="zoom-btn" title="Restablecer">⟲</button>
                             </div>
                         </div>
-                        
+
                         <svg id="ecc-plot" viewBox="-200 -100 400 200" preserveAspectRatio="xMidYMid meet">
                             <!-- Fondo con grid -->
                             <defs>
                                 <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8e8e8" stroke-width="0.5"/>
+                                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8e8e8" stroke-width="0.5" />
                                 </pattern>
                                 <filter id="glow">
-                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur" />
                                     <feMerge>
-                                        <feMergeNode in="coloredBlur"/>
-                                        <feMergeNode in="SourceGraphic"/>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
                                     </feMerge>
                                 </filter>
                             </defs>
-                            
-                            <rect x="-200" y="-100" width="400" height="200" fill="url(#grid)"/>
-                            
+
+                            <rect x="-200" y="-100" width="400" height="200" fill="url(#grid)" />
+
                             <!-- Ejes principales -->
                             <line x1="-200" y1="0" x2="200" y2="0" stroke="#666" stroke-width="2" />
                             <line x1="0" y1="-100" x2="0" y2="100" stroke="#666" stroke-width="2" />
-                            
+
                             <!-- Marcas en los ejes -->
                             <g id="axis-marks"></g>
-                            
+
                             <!-- Labels de ejes -->
                             <text x="190" y="-5" font-size="14" fill="#666" font-weight="bold">x</text>
                             <text x="5" y="-85" font-size="14" fill="#666" font-weight="bold">y</text>
-                            
+
                             <!-- Grupo para las curvas -->
                             <g id="curves-group"></g>
                         </svg>
-                        
+
                         <div id="curve-info" class="curve-info">
                             <p>💡 Introduce valores y presiona "Graficar Curva" para visualizar</p>
                         </div>
@@ -130,10 +131,10 @@
         </div>
 
         <div class="demo-section">
-            <h3>🧮 Calculadora de Curvas Elípticas</h3>
+            <h3>🧮 Calculadora de curvas elípticas</h3>
             <div class="algo-info">
                 <div class="calculator-section">
-                    <h4>Definir Curva: y² = x³ + ax + b (mod p)</h4>
+                    <h4>Definir curva: y² = x³ + ax + b (mod p)</h4>
                     <div class="input-group">
                         <label>Parámetro a:</label>
                         <input type="number" id="curve-a" value="0" />
@@ -151,13 +152,13 @@
                 </div>
 
                 <div class="calculator-section">
-                    <h4>Generar Puntos de la Curva</h4>
-                    <button id="generate-points" class="btn-primary">Generar Todos los Puntos</button>
+                    <h4>Generar puntos de la curva</h4>
+                    <button id="generate-points" class="btn-primary">Generar todos los puntos</button>
                     <div id="curve-points" class="result-box"></div>
                 </div>
 
                 <div class="calculator-section">
-                    <h4>Suma de Puntos (P + Q)</h4>
+                    <h4>Suma de puntos (P + Q)</h4>
                     <div class="input-group">
                         <label>Punto P (x, y):</label>
                         <input type="text" id="point-p" placeholder="Ej: 5,1" />
@@ -171,7 +172,7 @@
                 </div>
 
                 <div class="calculator-section">
-                    <h4>Multiplicación Escalar (k × P)</h4>
+                    <h4>Multiplicación escalar (k × P)</h4>
                     <div class="input-group">
                         <label>Escalar k:</label>
                         <input type="number" id="scalar-k" value="5" />
@@ -189,13 +190,14 @@
 
     <div class="demo-container">
         <div class="demo-section">
-            <h3>🔑 Generación de Claves ECDSA</h3>
+            <h3>🔑 Generación de claves ECDSA</h3>
             <div class="algo-info">
                 <div id="curve-info" class="curve-info">
-                    <p>ECDSA es un algoritmo muy popular que se usa para avisarle al destinatario que el mensaje fue hecho por el emisor (Autenticidad) y que no fue modificado (Integridad).</p>
+                    <p>ECDSA es un algoritmo muy popular que se usa para avisarle al destinatario que el mensaje fue
+                        hecho por el emisor (Autenticidad) y que no fue modificado (Integridad).</p>
                 </div>
                 <p>Usando la curva definida arriba, genera un par de claves criptográficas real.</p>
-                    <div class="input-group">
+                <div class="input-group">
                     <label>Punto Base G (x, y):</label>
                     <input type="text" id="base-point" placeholder="Ej: 5,1" value="5,1" />
                 </div>
@@ -205,7 +207,7 @@
         </div>
 
         <div class="demo-section">
-            <h3>📝 Firma Digital ECDSA (REAL)</h3>
+            <h3>📝 Firma digital ECDSA (REAL)</h3>
             <div class="algo-info">
                 <p><strong>Elliptic Curve Digital Signature Algorithm</strong></p>
 
@@ -286,7 +288,7 @@
     </div>
 
     <div class="info-box">
-        <h4>🌟 Curvas Elípticas Populares</h4>
+        <h4>🌟 Curvas elípticas populares</h4>
         <ul>
             <li><strong>secp256k1:</strong> Bitcoin, Ethereum (256 bits)</li>
             <li><strong>P-256 (secp256r1):</strong> NIST, TLS, Apple (256 bits)</li>

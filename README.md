@@ -2,11 +2,36 @@
 
 Proyecto educativo que muestra varias vulnerabilidades y técnicas de mitigación.
 
-Archivos:
+## Estructura del Proyecto
 
-- `index.html` - interfaz principal con páginas para cada demo.
-- `main.js` - lógica de las demos (MITM simulado, cifrado, fuerza de contraseñas, SQLi simulado, XSS simulado).
-- `styles.css` - estilos simples.
+```
+proyecto/
+├── index.html              # Punto de entrada principal
+├── README.md              # Este archivo
+├── css/
+│   └── styles.css        # Estilos globales
+├── js/
+│   ├── main.js           # Lógica de navegación y demos
+│   └── rsa.js            # Implementación de RSA
+└── pages/
+    ├── home.html         # Página de inicio
+    ├── components/       # Componentes reutilizables (header, sidebar, footer)
+    ├── criptografia/     # Páginas de criptografía
+    ├── seguridad-web/    # Páginas de vulnerabilidades web
+    ├── autenticacion/    # Páginas de autenticación
+    ├── ataques-sociales/ # Páginas de ingeniería social
+    ├── infraestructura/  # Páginas de infraestructura de red
+    ├── historia/         # Historia y personajes
+    ├── privacidad/       # Herramientas de privacidad
+    └── recursos/         # Mejores prácticas
+```
+
+## Archivos principales
+
+- `index.html` - interfaz principal con navegación dinámica
+- `js/main.js` - lógica de las demos y navegación entre páginas
+- `js/rsa.js` - implementación del algoritmo RSA
+- `css/styles.css` - estilos responsive y componentes visuales
 
 Cómo usar:
 
@@ -24,4 +49,4 @@ Mejoras posibles:
 - Separar en páginas con routing (React/Vue) y añadir build.
 - Añadir ejemplos más completos de cifrado (firmas, intercambio de claves, etc.).
 
-Hecho por: demo educativo.
+Desarrollado como proyecto educativo.
