@@ -1,0 +1,118 @@
+/* ============================================
+   LAYOUT PRINCIPAL
+   Header, footer, container y responsive
+   ============================================ */
+
+/* Header principal */
+.main-header {
+  background: var(--color-primary, #1687a7);
+  color: white;
+  padding: 18px 32px 18px 60px;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  min-height: 90px;
+}
+
+.main-header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.header-purpose {
+  font-size: 1em;
+  margin: 8px auto 0 auto;
+  max-width: 700px;
+  color: #e0f2f7;
+}
+
+/* Container principal */
+.container {
+  display: flex;
+  min-height: 60vh;
+  margin-top: 0;
+  padding-bottom: 0;
+}
+
+/* Área de contenido principal */
+#main-content {
+  flex: 1;
+  padding: 32px;
+  background: var(--color-background, #f5f7fb);
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Footer */
+.main-footer {
+  background: var(--color-primary-dark, #0b3954);
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  z-index: 100;
+}
+
+.main-footer .legal {
+  font-size: 0.95em;
+  margin-top: 6px;
+  color: #cce3f7;
+}
+
+/* Contenedor de menú (oculto, usado en versión antigua) */
+#menu-container {
+  display: none;
+}
+
+/* Responsive - Tablets */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .main-header {
+    padding: 18px 32px 18px 60px;
+  }
+
+  .main-header h1 {
+    font-size: 1.5em;
+  }
+
+  .header-purpose {
+    font-size: 0.9em;
+  }
+}
+
+/* Responsive - Móviles */
+@media (max-width: 600px) {
+  .main-header {
+    padding: 15px 32px 15px 55px;
+    min-height: 80px;
+  }
+
+  .main-header h1 {
+    font-size: 1.3em;
+  }
+}
+
+/* Grid de dos columnas (usado en varias páginas) */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

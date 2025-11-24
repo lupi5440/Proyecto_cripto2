@@ -1,0 +1,84 @@
+/* ============================================
+   ESTILOS BASE
+   Estilos globales, reset y tipografía base
+   ============================================ */
+
+/* Reset y estilos globales del body */
+body {
+  margin: 0;
+  padding: 0;
+  background: #f5f7fb;
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Variables CSS (colores principales del tema) */
+:root {
+  --color-primary: #1687a7;
+  --color-primary-dark: #0b3954;
+  --color-primary-darker: #1c587a;
+  --color-accent: #4db8d8;
+  --color-background: #f5f7fb;
+  --color-white: #fff;
+  --color-text: #111;
+  --color-text-light: #555;
+  --color-text-lighter: #666;
+  --color-border: #ddd;
+  --color-border-light: #e0e0e0;
+  --color-info-bg: #e3f2fd;
+  --color-info-border: #2196f3;
+  --color-info-text: #1976d2;
+  --color-warning: #d32f2f;
+  --color-success: #4caf50;
+}
+
+/* Tipografía base */
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  line-height: 1.3;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Elementos de formulario base */
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Código y pre */
+code {
+  font-family: "Courier New", Consolas, Monaco, monospace;
+}
+
+pre {
+  background: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+}
+
+/* Listas */
+ul,
+ol {
+  line-height: 1.6;
+}
