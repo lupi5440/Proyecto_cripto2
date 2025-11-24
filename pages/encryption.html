@@ -13,7 +13,7 @@
                 para reemplazar
                 al obsoleto DES. De 15 candidatos, el algoritmo <strong>Rijndael</strong> (creado por los belgas
                 Joan Daemen y
-                Vincent Rijmen) ganó en 2000 y se convirtió en <strong>AES</strong> en 2001.</p>
+                Vincent Rijmen) ganó en 2000 y se convirtió en <strong>AES</strong> en 2001 [1,2,7].</p>
             <ul>
                 <li><strong>1997:</strong> NIST anuncia competencia para reemplazar DES</li>
                 <li><strong>1998:</strong> 15 algoritmos candidatos presentados</li>
@@ -26,7 +26,7 @@
             <h4>⚙️ Funcionamiento interno</h4>
             <p>AES es un <strong>cifrado de bloque</strong> que opera en bloques de <strong>128 bits (16
                     bytes)</strong>
-                usando claves de 128, 192 o 256 bits. El proceso consiste en múltiples rondas de transformaciones:
+                usando claves de 128, 192 o 256 bits [7]. El proceso consiste en múltiples rondas de transformaciones:
             </p>
 
             <div class="internal-process">
@@ -37,7 +37,7 @@
                     <li><strong>AES-256:</strong> 14 rondas</li>
                 </ul>
 
-                <h5>Operaciones en cada ronda:</h5>
+                <h5>Operaciones en cada ronda [7]:</h5>
                 <ol>
                     <li><strong>SubBytes:</strong> Sustitución no lineal usando tabla S-box (confusión)
                         <div class="code-example">
@@ -97,12 +97,12 @@ Texto cifrado (128 bits)
             </div>
 
             <h4>🎭 Modos de Operación</h4>
-            <p>AES cifra bloques de 128 bits. Para mensajes más largos, se usan <strong>modos de operación</strong>:
+            <p>AES cifra bloques de 128 bits. Para mensajes más largos, se usan <strong>modos de operación [7,8]</strong>:
             </p>
 
             <div class="modes-grid">
                 <div class="mode-card">
-                    <h5>ECB - Electronic Codebook</h5>
+                    <h5>ECB - Electronic Codebook [8]</h5>
                     <p><strong>⚠️ INSEGURO - No usar</strong></p>
                     <div class="code-example">
                         <pre>Cada bloque se cifra independientemente
@@ -116,7 +116,7 @@ Bloque 2 → AES → Cifrado 2
                 </div>
 
                 <div class="mode-card">
-                    <h5>CBC - Cipher Block Chaining</h5>
+                    <h5>CBC - Cipher Block Chaining [8]</h5>
                     <p><strong>✅ Seguro con IV único</strong></p>
                     <div class="code-example">
                         <pre>Cada bloque se XOR con el anterior antes de cifrar
@@ -134,7 +134,7 @@ Uso: Cifrado de archivos, TLS 1.0-1.2</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>CTR - Counter</h5>
+                    <h5>CTR - Counter [8]</h5>
                     <p><strong>✅ Seguro, paralelizable</strong></p>
                     <div class="code-example">
                         <pre>Convierte cifrado de bloque en cifrado de flujo
@@ -151,7 +151,7 @@ Uso: Discos cifrados, IPsec, SSH</pre>
                 </div>
 
                 <div class="mode-card" style="border-color: #4caf50; background: #f1f8f4;">
-                    <h5>GCM - Galois/Counter Mode</h5>
+                    <h5>GCM - Galois/Counter Mode [8]</h5>
                     <p><strong>✅✅ RECOMENDADO - Autenticado</strong></p>
                     <div class="code-example">
                         <pre>CTR + autenticación GMAC (Galois MAC)
@@ -173,7 +173,7 @@ Ejemplo: AES-256-GCM (estándar actual)</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>XTS - XEX Tweakable Block Cipher</h5>
+                    <h5>XTS - XEX Tweakable Block Cipher [8]</h5>
                     <p><strong>✅ Especializado para discos</strong></p>
                     <div class="code-example">
                         <pre>Diseñado para cifrado de disco completo
@@ -191,7 +191,7 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>Otros Modos</h5>
+                    <h5>Otros Modos [8]</h5>
                     <ul>
                         <li><strong>CFB/OFB:</strong> Modos de flujo legacy, reemplazados por CTR</li>
                         <li><strong>CCM:</strong> Autenticado (alternativa a GCM), usado en WPA2</li>
@@ -202,7 +202,7 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
             </div>
 
             <div class="best-practices">
-                <h4>🛡️ Mejores Prácticas AES</h4>
+                <h4>🛡️ Mejores Prácticas AES [7]</h4>
                 <ul>
                     <li>✅ Usa <strong>AES-256-GCM</strong> para nuevos proyectos</li>
                     <li>✅ Genera IV/nonce <strong>aleatorio único</strong> por mensaje (12 bytes para GCM)</li>
@@ -219,13 +219,13 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
 
     <!-- RSA -->
     <div class="demo-section algorithm-expanded">
-        <h3>🔓 RSA - Rivest-Shamir-Adleman</h3>
+        <h3>🔓 RSA - Rivest-Shamir-Adleman [10]</h3>
 
         <div class="algo-info">
             <h4>📜 Historia</h4>
             <p>En 1977, Ron <strong>R</strong>ivest, Adi <strong>S</strong>hamir y Leonard <strong>A</strong>dleman
                 del MIT publicaron el primer sistema práctico de criptografía de clave pública, revolucionando la
-                seguridad digital.</p>
+                seguridad digital [1,2].</p>
             <ul>
                 <li><strong>1976:</strong> Diffie-Hellman publican concepto de criptografía de clave pública</li>
                 <li><strong>1977:</strong> RSA es inventado como primer sistema práctico</li>
@@ -238,7 +238,7 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
             <h4>⚙️ Funcionamiento interno</h4>
             <p>RSA se basa en la <strong>factorización de números primos grandes</strong>. Es fácil multiplicar dos
                 primos enormes,
-                pero extremadamente difícil factorizar el resultado.</p>
+                pero extremadamente difícil factorizar el resultado [1.2,9,10].</p>
 
             <div class="internal-process">
                 <h5>Generación de claves:</h5>
@@ -391,11 +391,11 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
             </div>
 
             <h4>🎭 Modos y Variantes</h4>
-            <p>RSA puro es vulnerable a varios ataques. Se usan esquemas de padding seguros:</p>
+            <p>RSA puro es vulnerable a varios ataques. Se usan esquemas de padding seguros [9,10]:</p>
 
             <div class="modes-grid">
                 <div class="mode-card">
-                    <h5>RSA Textbook (Puro)</h5>
+                    <h5>RSA Textbook (Puro) [1,2,10]</h5>
                     <p><strong>⚠️ INSEGURO - No usar</strong></p>
                     <div class="code-example">
                         <pre>c = m^e mod n
@@ -408,7 +408,7 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>PKCS#1 v1.5 Padding</h5>
+                    <h5>PKCS#1 v1.5 Padding [1,2,10]</h5>
                     <p><strong>⚠️ Legacy - Siendo reemplazado</strong></p>
                     <div class="code-example">
                         <pre>Formato: 0x00 || 0x02 || padding || 0x00 || mensaje
@@ -423,7 +423,7 @@ Uso: Legacy, reemplazar con OAEP</pre>
                 </div>
 
                 <div class="mode-card" style="border-color: #4caf50; background: #f1f8f4;">
-                    <h5>OAEP - Optimal Asymmetric Encryption Padding</h5>
+                    <h5>OAEP - Optimal Asymmetric Encryption Padding [1,2,10]</h5>
                     <p><strong>✅✅ RECOMENDADO para cifrado</strong></p>
                     <div class="code-example">
                         <pre>RSA-OAEP = RSA + OAEP padding (PKCS#1 v2.1)
@@ -445,7 +445,7 @@ Uso: Estándar actual, PKCS#11, OpenSSL default</pre>
                 </div>
 
                 <div class="mode-card" style="border-color: #4caf50; background: #f1f8f4;">
-                    <h5>PSS - Probabilistic Signature Scheme</h5>
+                    <h5>PSS - Probabilistic Signature Scheme [1,2,10]</h5>
                     <p><strong>✅✅ RECOMENDADO para firmas</strong></p>
                     <div class="code-example">
                         <pre>RSA-PSS = RSA + PSS padding (PKCS#1 v2.1)
@@ -468,7 +468,7 @@ Ejemplo: RSA-PSS-SHA256 con salt de 32 bytes</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>Tamaños de Clave</h5>
+                    <h5>Tamaños de Clave [1,2,10]</h5>
                     <div class="code-example">
                         <pre><strong>Recomendaciones por año:</strong>
 
@@ -496,7 +496,7 @@ polinomial. Migrar a post-cuántico cuando disponible.</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>Limitaciones de RSA</h5>
+                    <h5>Limitaciones de RSA [1,2,10]</h5>
                     <ul>
                         <li><strong>Tamaño de mensaje:</strong> Solo puede cifrar datos < n (ej: 256 bytes para
                                 RSA-2048)</li>
@@ -517,7 +517,7 @@ Usado en: PGP, S/MIME, TLS handshake</pre>
             </div>
 
             <div class="best-practices">
-                <h4>🛡️ Mejores Prácticas RSA</h4>
+                <h4>🛡️ Mejores Prácticas RSA [1,2,9,10]</h4>
                 <ul>
                     <li>✅ Mínimo <strong>RSA-2048</strong>, preferible <strong>RSA-3072</strong> o
                         <strong>RSA-4096</strong>
@@ -541,11 +541,11 @@ Usado en: PGP, S/MIME, TLS handshake</pre>
 
     <!-- SHA-256 y Funciones Hash -->
     <div class="demo-section algorithm-expanded">
-        <h3>🔗 SHA-256 y Funciones Hash Criptográficas</h3>
+        <h3>🔗 SHA-256 y Funciones Hash Criptográficas [1,2,11]</h3>
 
         <div class="algo-info">
             <h4>📜 Historia</h4>
-            <p>Las funciones hash han evolucionado a medida que las anteriores fueron rotas:</p>
+            <p>Las funciones hash han evolucionado a medida que las anteriores fueron rotas [1,2]:</p>
             <ul>
                 <li><strong>1989:</strong> MD2 (Message Digest 2) por Ronald Rivest</li>
                 <li><strong>1990:</strong> MD4 - Más rápido, pero débil</li>
@@ -561,13 +561,13 @@ Usado en: PGP, S/MIME, TLS handshake</pre>
                 <li><strong>Presente:</strong> SHA-256 en Bitcoin, certificados SSL, integridad de archivos</li>
             </ul>
 
-            <h4>⚙️ Funcionamiento interno de SHA-256</h4>
+            <h4>⚙️ Funcionamiento interno de SHA-256 [1,2,11]</h4>
             <p>SHA-256 convierte cualquier entrada en una salida de <strong>256 bits (32 bytes / 64 caracteres
                     hexadecimales)</strong>
                 de forma determinística pero aparentemente aleatoria.</p>
 
             <div class="internal-process">
-                <h5>Propiedades Fundamentales:</h5>
+                <h5>Propiedades Fundamentales [1,2,11]:</h5>
                 <ol>
                     <li><strong>Determinístico:</strong>
                         <div class="code-example">
@@ -603,7 +603,7 @@ Aún así: 340,282,366,920,938,463,463,374,607,431,768,211,456</pre>
                     </li>
                 </ol>
 
-                <h5>Proceso Interno de SHA-256:</h5>
+                <h5>Proceso Interno de SHA-256 [1,2,11]:</h5>
                 <ol>
                     <li><strong>Padding (Relleno):</strong>
                         <div class="code-example">
@@ -669,7 +669,7 @@ Ejemplo salida:
             <h4>🎭 Familia SHA-2 y Variantes</h4>
             <div class="modes-grid">
                 <div class="mode-card">
-                    <h5>SHA-224</h5>
+                    <h5>SHA-224 [1,2,11]</h5>
                     <div class="code-example">
                         <pre><strong>Salida:</strong> 224 bits (28 bytes, 56 hex)
 <strong>Bloques:</strong> 512 bits
@@ -681,7 +681,7 @@ Igual que SHA-256 pero truncado</pre>
                 </div>
 
                 <div class="mode-card" style="border-color: #4caf50; background: #f1f8f4;">
-                    <h5>SHA-256</h5>
+                    <h5>SHA-256 [1,2,11]</h5>
                     <p><strong>✅✅ MÁS USADO</strong></p>
                     <div class="code-example">
                         <pre><strong>Salida:</strong> 256 bits (32 bytes, 64 hex)
@@ -701,7 +701,7 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>SHA-384</h5>
+                    <h5>SHA-384 [1,2,11]</h5>
                     <div class="code-example">
                         <pre><strong>Salida:</strong> 384 bits (48 bytes, 96 hex)
 <strong>Bloques:</strong> 1024 bits
@@ -713,7 +713,7 @@ Variante truncada de SHA-512</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>SHA-512</h5>
+                    <h5>SHA-512 [2,11]</h5>
                     <div class="code-example">
                         <pre><strong>Salida:</strong> 512 bits (64 bytes, 128 hex)
 <strong>Bloques:</strong> 1024 bits
@@ -732,7 +732,7 @@ Variantes:
                 </div>
 
                 <div class="mode-card">
-                    <h5>SHA-3 (Keccak)</h5>
+                    <h5>SHA-3 (Keccak) [11]</h5>
                     <div class="code-example">
                         <pre><strong>Diseño:</strong> Construcción esponja (completamente diferente)
 <strong>Salidas:</strong> SHA3-224, SHA3-256, SHA3-384, SHA3-512
@@ -748,7 +748,7 @@ Uso: Ethereum (Keccak-256), NIST backup para SHA-2</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>BLAKE2 / BLAKE3</h5>
+                    <h5>BLAKE2 / BLAKE3 [2,11]</h5>
                     <div class="code-example">
                         <pre><strong>BLAKE2b:</strong> Hasta 512 bits, más rápido que SHA-2
 <strong>BLAKE2s:</strong> Hasta 256 bits, optimizado para 32-bit
@@ -767,7 +767,7 @@ Uso: Argon2, WireGuard, Zcash, almacenamiento de archivos</pre>
             <h4>🔐 Usos Específicos de Hash</h4>
             <div class="modes-grid">
                 <div class="mode-card">
-                    <h5>Almacenamiento de Contraseñas</h5>
+                    <h5>Almacenamiento de Contraseñas [1-3,11]</h5>
                     <p><strong>❌ NO usar SHA-256 directo</strong></p>
                     <div class="code-example">
                         <pre>Problema: SHA-256 es demasiado RÁPIDO
@@ -800,7 +800,7 @@ PBKDF2-HMAC-SHA256("password", iterations=100000, salt)</pre>
                 </div>
 
                 <div class="mode-card">
-                    <h5>HMAC - Hash-based Message Authentication</h5>
+                    <h5>HMAC - Hash-based Message Authentication [11]</h5>
                     <div class="code-example">
                         <pre><strong>HMAC-SHA256(clave, mensaje)</strong>
 
@@ -854,7 +854,7 @@ Uso:
             </div>
 
             <div class="best-practices">
-                <h4>🛡️ Mejores Prácticas con Hash</h4>
+                <h4>🛡️ Mejores Prácticas con Hash [1-3,11]</h4>
                 <ul>
                     <li>✅ Usa <strong>SHA-256</strong> o superior para integridad general</li>
                     <li>✅ Usa <strong>Argon2id</strong> para almacenar contraseñas (o bcrypt si no disponible)</li>
@@ -874,7 +874,7 @@ Uso:
     </div>
 
     <div class="comparison-table">
-        <h3>📊 Comparación de Algoritmos</h3>
+        <h3>📊 Comparación de Algoritmos [1-3,7-11]</h3>
         <table>
             <thead>
                 <tr>
@@ -926,7 +926,7 @@ Uso:
     </div>
 
     <div class="info-box">
-        <h4>🎯 Cuándo Usar Cada Uno</h4>
+        <h4>🎯 Cuándo Usar Cada Uno </h4>
         <ul>
             <li><strong>AES:</strong> Cifrar archivos grandes, bases de datos, comunicaciones en tiempo real</li>
             <li><strong>RSA:</strong> Establecer conexión segura inicial, firmar documentos digitalmente</li>
@@ -1172,7 +1172,7 @@ Defensa: Comparación en tiempo constante
         </div>
 
         <div class="demo-section attack-section" style="background: #e1f5fe; border-color: #03a9f4;">
-            <h3>🖥️ Computación Cuántica</h3>
+            <h3>🖥️ Computación Cuántica [3,4]</h3>
             <div class="algo-info">
                 <p><strong>La amenaza futura más grande</strong></p>
                 <div class="attack-demo">
