@@ -40,7 +40,8 @@ const pageMap = {
     'privacy-tools': 'pages/privacidad/privacy-tools.html',
     'open-source': 'pages/privacidad/open-source.html',
     // Recursos
-    'security-tips': 'pages/recursos/security-tips.html'
+    'security-tips': 'pages/recursos/security-tips.html',
+    references: 'pages/references.html'
 };
 
 // Navegación de páginas con inicialización de funcionalidad

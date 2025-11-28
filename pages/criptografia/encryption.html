@@ -1,11 +1,11 @@
 <section id="encryption" class="page">
-    <h2>🔐 Algoritmos de cifrado modernos</h2>
+    <h2>Algoritmos de cifrado modernos</h2>
     <p class="page-description">Los algoritmos de cifrado protegen la confidencialidad de los datos.
         Aprende sobre los estándares modernos más utilizados en la industria.</p>
 
     <!-- AES -->
     <div class="demo-section algorithm-expanded">
-        <h3>🔑 AES - Advanced Encryption Standard</h3>
+        <h3>AES - Advanced Encryption Standard</h3>
 
         <div class="algo-info">
             <h4>📜 Historia</h4>
@@ -96,7 +96,7 @@ Texto cifrado (128 bits)
                 </div>
             </div>
 
-            <h4>🎭 Modos de operación</h4>
+            <h4>Modos de operación</h4>
             <p>AES cifra bloques de 128 bits. Para mensajes más largos, se usan <strong>modos de operación
                     [7,8]</strong>:
             </p>
@@ -220,7 +220,7 @@ Uso: BitLocker, FileVault, dm-crypt, VeraCrypt</pre>
 
     <!-- RSA -->
     <div class="demo-section algorithm-expanded">
-        <h3>🔓 RSA - Rivest-Shamir-Adleman [10]</h3>
+        <h3>RSA - Rivest-Shamir-Adleman [10]</h3>
 
         <div class="algo-info">
             <h4>📜 Historia</h4>
@@ -332,7 +332,7 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
             </div>
 
             <!-- RSA interactivo para usuarios -->
-            <h3>🧮 RSA Interactivo</h3>
+            <h3>RSA Interactivo</h3>
             <div class="algo-info">
                 <h4>1. Generar claves de Bob</h4>
                 <p>Introduce dos primos para Bob (p, q) y un exponente público e (3 ≤ e ≤ 65537). Se calculará n, φ(n)
@@ -359,12 +359,12 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                             <li>Phi (φ) = <span id="displayPhi" class="math"></span></li>
                         </ul>
                         <hr>
-                        <p>🔑 <strong>Llave Pública (e, n):</strong> (<span id="pubE"></span>, <span id="pubN"></span>)
+                        <p><strong>Llave Pública (e, n):</strong> (<span id="pubE"></span>, <span id="pubN"></span>)
                             <br>
                             <em>(Esta se la damos a Alice)</em>
                         </p>
 
-                        <p>🤐 <strong>Llave Privada (d):</strong> <span id="privD" class="math"
+                        <p><strong>Llave Privada (d):</strong> <span id="privD" class="math"
                                 style="background: #ffffcc; padding: 2px;"></span> <br>
                             <em>(Esta la guarda Bob)</em>
                         </p>
@@ -401,7 +401,7 @@ Si no coinciden: ❌ Documento alterado o firma falsa</pre>
                 </div>
             </div>
 
-            <h4>🎭 Modos y variantes</h4>
+            <h4>Modos y variantes</h4>
             <p>RSA puro es vulnerable a varios ataques. Se usan esquemas de padding seguros [9,10]:</p>
 
             <div class="modes-grid">
@@ -552,7 +552,7 @@ Usado en: PGP, S/MIME, TLS handshake</pre>
 
     <!-- SHA-256 y Funciones Hash -->
     <div class="demo-section algorithm-expanded">
-        <h3>🔗 SHA-256 y funciones hash criptográficas [1,2,11]</h3>
+        <h3>SHA-256 y funciones hash criptográficas [1,2,11]</h3>
 
         <div class="algo-info">
             <h4>📜 Historia</h4>
@@ -677,7 +677,7 @@ Ejemplo salida:
                 </ol>
             </div>
 
-            <h4>🎭 Familia SHA-2 y variantes</h4>
+            <h4>Familia SHA-2 y variantes</h4>
             <div class="modes-grid">
                 <div class="mode-card">
                     <h5>SHA-224 [1,2,11]</h5>
@@ -775,7 +775,7 @@ Uso: Argon2, WireGuard, Zcash, almacenamiento de archivos</pre>
                 </div>
             </div>
 
-            <h4>🔐 Usos específicos de hash</h4>
+            <h4>Usos específicos de hash</h4>
             <div class="modes-grid">
                 <div class="mode-card">
                     <h5>Almacenamiento de contraseñas [1-3,11]</h5>
@@ -885,7 +885,7 @@ Uso:
     </div>
 
     <div class="comparison-table">
-        <h3>📊 Comparación de Algoritmos [1-3,7-11]</h3>
+        <h3>Comparación de Algoritmos [1-3,7-11]</h3>
         <table>
             <thead>
                 <tr>
@@ -937,7 +937,7 @@ Uso:
     </div>
 
     <div class="info-box">
-        <h4>🎯 Cuándo usar cada uno </h4>
+        <h4>Cuándo usar cada uno </h4>
         <ul>
             <li><strong>AES:</strong> Cifrar archivos grandes, bases de datos, comunicaciones en tiempo real</li>
             <li><strong>RSA:</strong> Establecer conexión segura inicial, firmar documentos digitalmente</li>
@@ -989,7 +989,7 @@ Conclusión: Los PINs cortos son extremadamente vulnerables
                     </ul>
                     <div class="code-example"
                         style="margin-top: 15px; background: #e8f5e9; border-left-color: #4caf50;">
-                        <strong>📚 Recursos y Herramientas de Fuerza Bruta:</strong>
+                        <strong>Recursos y Herramientas de Fuerza Bruta:</strong>
                         <ul style="margin: 8px 0; padding-left: 20px; font-size: 0.9em;">
                             <li><a href="https://www.openwall.com/john/" target="_blank" style="color: #2e7d32;">John
                                     the Ripper</a> - Herramienta de password cracking (Open Source)</li>
@@ -1010,7 +1010,7 @@ Conclusión: Los PINs cortos son extremadamente vulnerables
         </div>
 
         <div class="demo-section attack-section">
-            <h3>📊 Análisis de Frecuencia</h3>
+            <h3>Análisis de Frecuencia</h3>
             <div class="algo-info">
                 <p><strong>Explotar patrones en el texto</strong></p>
                 <div class="attack-demo">
@@ -1035,7 +1035,7 @@ Defensa: Usar cifrados modernos (AES) que rompen patrones
         </div>
 
         <div class="demo-section attack-section">
-            <h3>🎯 Ataque de Diccionario</h3>
+            <h3>Ataque de Diccionario</h3>
             <div class="algo-info">
                 <p><strong>Probar contraseñas comunes primero</strong></p>
                 <div class="attack-demo">
@@ -1060,7 +1060,7 @@ sunshine, ashley, bailey, shadow, superman, admin...
                     </div>
                     <div class="code-example"
                         style="margin-top: 15px; background: #fff3e0; border-left-color: #ff9800;">
-                        <strong>📚 Recursos y Diccionarios de Contraseñas:</strong>
+                        <strong>Recursos y Diccionarios de Contraseñas:</strong>
                         <ul style="margin: 8px 0; padding-left: 20px; font-size: 0.9em;">
                             <li><a href="https://github.com/danielmiessler/SecLists" target="_blank"
                                     style="color: #e65100;">SecLists</a> - Colección masiva de listas (usernames,
