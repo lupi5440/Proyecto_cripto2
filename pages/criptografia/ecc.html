@@ -1,5 +1,5 @@
 <section id="ecc" class="page">
-    <h2>Criptografía de curva elíptica (ECC)</h2>
+    <h2>📊 Criptografía de curva elíptica (ECC)</h2>
     <p class="page-description">La criptografía de curva elíptica es un enfoque moderno de criptografía asimétrica
         que ofrece el mismo nivel de seguridad que RSA pero con claves mucho más pequeñas, haciéndola ideal para
         dispositivos móviles y IoT.</p>
@@ -58,15 +58,17 @@
                             <input type="number" id="ec-b" step="0.1" />
                         </div>
 
-                        <div class="button-group">
-                            <button id="plot-curve" class="btn-primary">
-                                <span class="btn-icon"></span> Graficar Curva
+                        <div class="button-group"
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px;">
+                            <button id="plot-curve" class="btn-primary" style="margin: 0;">
+                                <span class="btn-icon">📊</span> Graficar Curva
                             </button>
-                            <button id="clear-curve" class="btn-secondary">
-                                <span class="btn-icon"></span> Limpiar
+                            <button id="clear-curve" class="btn-secondary" style="margin: 0;">
+                                <span class="btn-icon">🔄</span> Limpiar
                             </button>
-                            <button class="btn-preset" data-a="0" data-b="0">
-                                <span class="btn-icon">Curva elíptica singular</span>
+                            <button class="btn-preset" data-a="0" data-b="7"
+                                style="margin: 0; background: #4caf50; color: white; border: none; grid-column: span 2;">
+                                <span class="btn-icon">🪙</span> Ejemplo: (a=0, b=7)
                             </button>
                         </div>
                     </div>
@@ -196,7 +198,7 @@
                     <p>ECDSA es un algoritmo muy popular que se usa para avisarle al destinatario que el mensaje fue
                         hecho por el emisor (Autenticidad) y que no fue modificado (Integridad).</p>
                 </div>
-                <p>Usando la curva definida arriba, genera un par de claves criptográficas real.</p>
+                <p>Usando la curva definida arriba, genera un par de claves criptográficas.</p>
                 <div class="input-group">
                     <label>Punto Base G (x, y):</label>
                     <input type="text" id="base-point" placeholder="Ej: 5,1" value="5,1" />
@@ -207,7 +209,7 @@
         </div>
 
         <div class="demo-section">
-            <h3>📝 Firma digital ECDSA (REAL)</h3>
+            <h3>📝 Firma digital ECDSA </h3>
             <div class="algo-info">
                 <p><strong>Elliptic Curve Digital Signature Algorithm</strong></p>
 
@@ -288,7 +290,7 @@
     </div>
 
     <div class="info-box">
-        <h4>Curvas elípticas populares</h4>
+        <h4>🌟 Curvas elípticas populares</h4>
         <ul>
             <li><strong>secp256k1:</strong> Bitcoin, Ethereum (256 bits)</li>
             <li><strong>P-256 (secp256r1):</strong> NIST, TLS, Apple (256 bits)</li>
