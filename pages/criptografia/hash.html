@@ -4,37 +4,58 @@
         en un valor de tamaño fijo (hash). Son fundamentales para verificar integridad, almacenar contraseñas y
         blockchain [1-3,11].</p>
 
-    <div class="demo-container">
-        <div class="demo-section">
-            <h3>Propiedades de una función hash [1-3,11]</h3>
-            <div class="algo-info" >
-                <ul>
+    <div class="demo-section">
+        <h3>Propiedades de una función hash [1-3,11]</h3>
+        <div class="algo-info">
+            <ul>
                 <li><strong>Determinista:</strong> Misma entrada → Siempre mismo hash</li>
                 <li><strong>Rápida:</strong> Cálculo eficiente del hash</li>
                 <li><strong>Efecto avalancha:</strong> Pequeño cambio → Hash completamente diferente</li>
                 <li><strong>Unidireccional:</strong> Imposible obtener entrada desde hash</li>
                 <li><strong>Resistencia a colisiones:</strong> Difícil encontrar dos entradas con mismo hash</li>
-                </ul>
-            </div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h3>🧪 Demostración interactiva</h3>
+        <div class="input-group">
+            <label for="hash-input">Texto a hashear:</label>
+            <input type="text" id="hash-input" placeholder="Escribe algo..." value="Hola Mundo" />
         </div>
 
-        <div class="demo-section">
-            <h3>🧪 Demostración interactiva</h3>
-            <div class="input-group">
-                <label for="hash-input">Texto a hashear:</label>
-                <input type="text" id="hash-input" placeholder="Escribe algo..." value="Hola Mundo" />
-            </div>
+        <button id="hash-calculate" class="btn-primary">Calcular Hashes</button>
 
-            <button id="hash-calculate" class="btn-primary">Calcular Hashes</button>
+        <div id="hash-results" class="result-box">
+            <p>Los hashes aparecerán aquí...</p>
+        </div>
 
-            <div id="hash-results" class="result-box">
-                <p>Los hashes aparecerán aquí...</p>
-            </div>
+        <div class="info-box" style="margin-top: 16px; background: #fff3e0;">
+            <strong>💡 Prueba esto:</strong> Cambia una sola letra y observa cómo el hash cambia completamente
+            (efecto avalancha)
+        </div>
 
-            <div class="info-box" style="margin-top: 16px; background: #fff3e0;">
-                <strong>💡 Prueba esto:</strong> Cambia una sola letra y observa cómo el hash cambia completamente
-                (efecto avalancha)
+        <div class="info-box" style="margin-top: 16px; background: #e3f2fd; border-left-color: #2196f3;">
+            <h4>📚 Implementación técnica</h4>
+            <p>Los hashes se calculan utilizando la <strong>Web Crypto API</strong> nativa del navegador:</p>
+            <div class="code-example">
+                <pre>
+// API nativa de JavaScript (no requiere librerías externas)
+const encoder = new TextEncoder();
+const data = encoder.encode(texto);
+const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+// Para MD5 y SHA-1: Librería crypto-js
+// &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"&gt;&lt;/script&gt;
+const md5Hash = CryptoJS.MD5(texto).toString();
+const sha1Hash = CryptoJS.SHA1(texto).toString();
+                </pre>
             </div>
+            <p><strong>Librerías utilizadas:</strong></p>
+            <ul>
+                <li><strong>Web Crypto API:</strong> SHA-256, SHA-384, SHA-512 (nativo del navegador)</li>
+                <li><strong>CryptoJS:</strong> MD5, SHA-1, SHA-3 y otros algoritmos legacy</li>
+            </ul>
         </div>
     </div>
 
@@ -104,14 +125,13 @@
         </table>
     </div>
 
-    <div class="demo-container">
-        <div class="demo-section attack-section">
-            <h3>⚠️ Colisiones - El Problema de MD5 [1-3,11]</h3>
-            <div class="algo-info">
-                <p>Una <strong>colisión</strong> ocurre cuando dos entradas diferentes producen el mismo hash.</p>
-                <div class="code-example">
-                    <strong>Ejemplo real de colisión MD5:</strong>
-                    <pre>
+    <div class="demo-section attack-section">
+        <h3>⚠️ Colisiones - El Problema de MD5 [1-3,11]</h3>
+        <div class="algo-info">
+            <p>Una <strong>colisión</strong> ocurre cuando dos entradas diferentes producen el mismo hash.</p>
+            <div class="code-example">
+                <strong>Ejemplo real de colisión MD5:</strong>
+                <pre>
 Archivo A: [datos binarios 1]
 MD5: d131dd02c5e6eec4...
 
@@ -119,48 +139,47 @@ Archivo B: [datos binarios diferentes]
 MD5: d131dd02c5e6eec4... ← ¡MISMO HASH!
 
 Consecuencia: Un atacante puede sustituir archivos sin ser detectado
-                    </pre>
-                </div>
-                <p><strong>Estado actual:</strong></p>
-                <ul>
-                    <li>MD5: ❌ Completamente roto (2004)</li>
-                    <li>SHA-1: ⚠️ Colisiones encontradas (2017)</li>
-                    <li>SHA-256: ✅ Sin colisiones conocidas</li>
-                    <li>SHA-3: ✅ Diseño resistente a colisiones</li>
-                </ul>
+                </pre>
             </div>
+            <p><strong>Estado actual:</strong></p>
+            <ul>
+                <li>MD5: ❌ Completamente roto (2004)</li>
+                <li>SHA-1: ⚠️ Colisiones encontradas (2017)</li>
+                <li>SHA-256: ✅ Sin colisiones conocidas</li>
+                <li>SHA-3: ✅ Diseño resistente a colisiones</li>
+            </ul>
         </div>
+    </div>
 
-        <div class="demo-section">
-            <h3>🍪 Salting - Protección de Contraseñas [1-3,11]</h3>
-            <div class="algo-info">
-                <p><strong>Salt:</strong> Dato aleatorio único agregado a cada contraseña antes de hashear</p>
-                <div class="code-example">
-                    <strong>Sin Salt (INSEGURO):</strong>
-                    <pre>
+    <div class="demo-section">
+        <h3>🍪 Salting - Protección de Contraseñas [1-3,11]</h3>
+        <div class="algo-info">
+            <p><strong>Salt:</strong> Dato aleatorio único agregado a cada contraseña antes de hashear</p>
+            <div class="code-example">
+                <strong>Sin Salt (INSEGURO):</strong>
+                <pre>
 Usuario1: password → 5f4dcc3b...
 Usuario2: password → 5f4dcc3b... ← ¡Mismo hash!
 
 Atacante usa rainbow table → Rompe ambas passwords
-                    </pre>
-                </div>
+                </pre>
+            </div>
 
-                <div class="code-example">
-                    <strong>Con Salt (SEGURO):</strong>
-                    <pre>
+            <div class="code-example">
+                <strong>Con Salt (SEGURO):</strong>
+                <pre>
 Usuario1: password + salt1 → a9f2bc3d...
 Usuario2: password + salt2 → 7e8d4a1c... ← Hash diferente
 
 Cada usuario necesita rainbow table diferente → Inviable
-                    </pre>
-                </div>
+                </pre>
+            </div>
 
-                <div class="demo-interactive">
-                    <h4>Demostración de Salt:</h4>
-                    <input type="password" id="salt-password" placeholder="Contraseña" value="password123" />
-                    <button id="salt-demo" class="btn-primary">Generar Hashes con Salt</button>
-                    <div id="salt-result" class="result-box"></div>
-                </div>
+            <div class="demo-interactive">
+                <h4>Demostración de Salt:</h4>
+                <input type="password" id="salt-password" placeholder="Contraseña" value="password123" />
+                <button id="salt-demo" class="btn-primary">Generar Hashes con Salt</button>
+                <div id="salt-result" class="result-box"></div>
             </div>
         </div>
     </div>

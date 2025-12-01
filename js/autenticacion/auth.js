@@ -34,42 +34,60 @@ function setupPassword() {
 
 // ===== 2FA (TWO-FACTOR AUTHENTICATION) =====
 function setup2FA() {
-    const generateBtn = document.getElementById('2fa-generate');
-    const verifyBtn = document.getElementById('2fa-verify');
-    const codeInput = document.getElementById('2fa-code');
-    const result = document.getElementById('2fa-result');
+    const startBtn = document.getElementById('totp-start');
+    const codeDisplay = document.getElementById('totp-code');
+    const timerBar = document.getElementById('timer-bar');
+    const timerText = document.getElementById('timer-text');
 
-    if (!generateBtn) return;
+    if (!startBtn) return;
 
-    let generatedCode = null;
+    let totpInterval = null;
 
-    generateBtn.addEventListener('click', () => {
-        generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-        result.innerHTML = `
-            <strong>✅ Código 2FA generado:</strong><br>
-            <span style="font-size: 2em; color: #1687a7; font-weight: bold;">${generatedCode}</span><br>
-            <em>Válido por 30 segundos (simulado)</em>
-        `;
-    });
+    // Función simple para generar código TOTP simulado
+    function generateTOTP() {
+        // Generar código de 6 dígitos basado en timestamp
+        const timestamp = Math.floor(Date.now() / 30000); // Intervalo de 30 segundos
+        const code = ((timestamp * 123456789) % 1000000).toString().padStart(6, '0');
+        return code;
+    }
 
-    verifyBtn.addEventListener('click', () => {
-        const code = codeInput.value;
+    // Función para actualizar el temporizador
+    function updateTimer() {
+        const now = Date.now();
+        const timeInPeriod = Math.floor((now / 1000) % 30);
+        const remaining = 30 - timeInPeriod;
 
-        if (!generatedCode) {
-            alert('Primero genera un código');
-            return;
+        timerText.textContent = `${remaining}s`;
+        const percentage = (remaining / 30) * 100;
+        timerBar.style.width = `${percentage}%`;
+
+        // Actualizar código
+        const code = generateTOTP();
+        codeDisplay.textContent = code;
+
+        // Animación cuando se renueva el código
+        if (remaining === 30) {
+            codeDisplay.style.animation = 'pulse 0.5s ease-in-out';
+            setTimeout(() => {
+                codeDisplay.style.animation = '';
+            }, 500);
         }
+    }
 
-        if (code === generatedCode) {
-            result.innerHTML = `
-                <strong style="color: #4caf50;">✅ Código verificado correctamente</strong><br>
-                Acceso concedido
-            `;
+    startBtn.addEventListener('click', () => {
+        if (totpInterval) {
+            // Detener generador
+            clearInterval(totpInterval);
+            totpInterval = null;
+            startBtn.textContent = 'Iniciar Generador TOTP';
+            codeDisplay.textContent = '------';
+            timerBar.style.width = '0%';
+            timerText.textContent = '30s';
         } else {
-            result.innerHTML = `
-                <strong style="color: #f44336;">❌ Código incorrecto</strong><br>
-                Acceso denegado
-            `;
+            // Iniciar generador
+            startBtn.textContent = 'Detener Generador TOTP';
+            updateTimer(); // Primera actualización inmediata
+            totpInterval = setInterval(updateTimer, 1000);
         }
     });
 }

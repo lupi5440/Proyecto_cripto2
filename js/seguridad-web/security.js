@@ -57,7 +57,8 @@ function setupMitm() {
             const li2 = document.createElement('li');
             li2.className = 'log-item';
             if (log.encrypted) {
-                li2.innerHTML = `<strong>Paquete #${i + 1}:</strong> <span class="encrypted">🔒 [Cifrado - ilegible]</span>`;
+                li2.innerHTML = `<strong>Paquete #${i + 1}:</strong> <span class="encrypted">🔒 [Cifrado con Base64 - ilegible]</span><br>
+                    <small style="color: #666; font-size: 0.85em;">💡 Nota: Cifrado usando Base64 (codificación simple para demostración). En producción se usa AES-256-GCM o similar.</small>`;
                 li2.style.borderLeft = '3px solid #4caf50';
             } else {
                 li2.innerHTML = `<strong>Paquete #${i + 1}:</strong> <span class="plain-text">⚠️ "${log.original}" [¡VISIBLE!]</span>`;
@@ -70,32 +71,118 @@ function setupMitm() {
 
 // ===== XSS =====
 function setupXss() {
-    const executeBtn = document.getElementById('xss-execute');
+    const insecureBtn = document.getElementById('xss-insecure');
+    const secureBtn = document.getElementById('xss-secure');
     const userInput = document.getElementById('xss-input');
-    const insecureOutput = document.getElementById('xss-insecure-output');
-    const secureOutput = document.getElementById('xss-secure-output');
+    const result = document.getElementById('xss-result');
 
-    if (!executeBtn) return;
+    if (!insecureBtn || !secureBtn) return;
 
-    executeBtn.addEventListener('click', () => {
+    // Botón INSEGURO - usa innerHTML (permite ejecución de scripts)
+    insecureBtn.addEventListener('click', () => {
         const input = userInput.value;
 
-        // Inseguro: inyecta directamente HTML
-        insecureOutput.innerHTML = input;
+        if (!input) {
+            alert('Por favor ingresa algún texto para probar');
+            return;
+        }
 
-        // Seguro: escapa el HTML
-        secureOutput.textContent = input;
+        result.innerHTML = `
+            <div style="background: #ffebee; padding: 16px; border-radius: 6px; border-left: 4px solid #f44336;">
+                <h4 style="margin-top: 0; color: #f44336;">❌ Salida INSEGURA (innerHTML)</h4>
+                <p><strong>Entrada del usuario:</strong></p>
+                <pre style="background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto;">${input}</pre>
+                
+                <p><strong>⚠️ Código ejecutado:</strong></p>
+                <div style="background: #fff; padding: 12px; border-radius: 4px; border: 2px solid #f44336;">
+                    ${input}
+                </div>
+                
+                <p style="margin-top: 12px; color: #d32f2f;">
+                    <strong>🚨 VULNERABILIDAD:</strong> Si el usuario ingresó un script (ej. &lt;script&gt;alert('XSS')&lt;/script&gt;), 
+                    se ejecutará en el navegador. Esto permite:
+                </p>
+                <ul style="color: #d32f2f; line-height: 1.8;">
+                    <li>Robar cookies de sesión (document.cookie)</li>
+                    <li>Secuestrar la sesión del usuario</li>
+                    <li>Redirigir a sitios maliciosos</li>
+                    <li>Modificar el contenido de la página</li>
+                    <li>Capturar pulsaciones de teclado (keylogger)</li>
+                </ul>
+            </div>
+        `;
+    });
+
+    // Botón SEGURO - usa textContent (no ejecuta scripts)
+    secureBtn.addEventListener('click', () => {
+        const input = userInput.value;
+
+        if (!input) {
+            alert('Por favor ingresa algún texto para probar');
+            return;
+        }
+
+        // Crear elementos de forma segura
+        const container = document.createElement('div');
+        container.style.cssText = 'background: #e8f5e9; padding: 16px; border-radius: 6px; border-left: 4px solid #4caf50;';
+
+        const title = document.createElement('h4');
+        title.style.cssText = 'margin-top: 0; color: #4caf50;';
+        title.textContent = '✅ Salida SEGURA (textContent)';
+
+        const label1 = document.createElement('p');
+        label1.innerHTML = '<strong>Entrada del usuario:</strong>';
+
+        const pre1 = document.createElement('pre');
+        pre1.style.cssText = 'background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto;';
+        pre1.textContent = input;
+
+        const label2 = document.createElement('p');
+        label2.innerHTML = '<strong>✅ Texto mostrado de forma segura:</strong>';
+
+        const safeDiv = document.createElement('div');
+        safeDiv.style.cssText = 'background: #fff; padding: 12px; border-radius: 4px; border: 2px solid #4caf50;';
+        safeDiv.textContent = input; // textContent previene ejecución de scripts
+
+        const explanation = document.createElement('p');
+        explanation.style.cssText = 'margin-top: 12px; color: #2e7d32;';
+        explanation.innerHTML = `
+            <strong>🛡️ PROTECCIÓN ACTIVA:</strong> El texto se muestra como texto plano, sin ejecutar código. 
+            Incluso si el usuario intenta inyectar &lt;script&gt;alert('XSS')&lt;/script&gt;, 
+            se mostrará literalmente como texto y no se ejecutará.
+        `;
+
+        const defenses = document.createElement('ul');
+        defenses.style.cssText = 'color: #2e7d32; line-height: 1.8;';
+        defenses.innerHTML = `
+            <li><strong>textContent:</strong> Trata todo como texto plano, no como HTML</li>
+            <li><strong>Escapado automático:</strong> &lt; se convierte en &amp;lt; y &gt; en &amp;gt;</li>
+            <li><strong>Sin ejecución:</strong> Scripts y eventos HTML son desactivados</li>
+            <li><strong>Contenido visible:</strong> El usuario ve exactamente lo que escribió</li>
+        `;
+
+        // Ensamblar todo
+        container.appendChild(title);
+        container.appendChild(label1);
+        container.appendChild(pre1);
+        container.appendChild(label2);
+        container.appendChild(safeDiv);
+        container.appendChild(explanation);
+        container.appendChild(defenses);
+
+        result.innerHTML = '';
+        result.appendChild(container);
     });
 }
 
 // ===== SQL INJECTION =====
 function setupSqli() {
-    const queryBtn = document.getElementById('sqli-query');
+    const insecureBtn = document.getElementById('sqli-insecure');
+    const secureBtn = document.getElementById('sqli-secure');
     const usernameInput = document.getElementById('sqli-username');
-    const insecureResult = document.getElementById('sqli-insecure');
-    const secureResult = document.getElementById('sqli-secure');
+    const result = document.getElementById('sqli-result');
 
-    if (!queryBtn) return;
+    if (!insecureBtn || !secureBtn) return;
 
     const fakeDatabase = [
         { id: 1, username: 'admin', password: 'admin123', role: 'administrator' },
@@ -103,121 +190,367 @@ function setupSqli() {
         { id: 3, username: 'user2', password: 'mypass', role: 'user' }
     ];
 
-    queryBtn.addEventListener('click', () => {
+    // Botón INSEGURO - concatenación directa
+    insecureBtn.addEventListener('click', () => {
         const username = usernameInput.value;
 
-        // Inseguro: concatenación directa
+        if (!username) {
+            alert('Por favor ingresa un nombre de usuario');
+            return;
+        }
+
+        // Simular concatenación directa (vulnerable)
         const insecureQuery = `SELECT * FROM users WHERE username = '${username}'`;
-        insecureResult.innerHTML = `
-            <strong>Query ejecutada:</strong><br>
-            <code>${insecureQuery}</code><br><br>
+
+        result.innerHTML = `
+            <div style="background: #ffebee; padding: 16px; border-radius: 6px; border-left: 4px solid #f44336;">
+                <h4 style="margin-top: 0; color: #f44336;">❌ CONSULTA INSEGURA (Concatenación Directa)</h4>
+                
+                <p><strong>Entrada del usuario:</strong></p>
+                <pre style="background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto;">${username}</pre>
+                
+                <p><strong>Query SQL ejecutada:</strong></p>
+                <pre style="background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto; border-left: 3px solid #f44336;">${insecureQuery}</pre>
+                
+                <p><strong>📊 Resultado:</strong></p>
+                <div style="background: #fff; padding: 12px; border-radius: 4px;">
         `;
 
-        if (username.includes("'") || username.toLowerCase().includes('or')) {
-            insecureResult.innerHTML += `<strong style="color: #f44336;">🚨 ¡INYECCIÓN SQL EXITOSA!</strong><br>
-                Todos los usuarios expuestos:<br>`;
+        // Detectar inyección SQL
+        if (username.includes("'") || username.toLowerCase().includes(' or ') || username.includes('--')) {
+            result.innerHTML += `
+                    <strong style="color: #f44336; font-size: 1.1em;">🚨 ¡INYECCIÓN SQL EXITOSA!</strong><br><br>
+                    <p style="color: #d32f2f;">La condición WHERE se modificó. Ahora la consulta devuelve:</p>
+                    <strong>TODOS LOS USUARIOS DE LA BASE DE DATOS:</strong><br><br>
+            `;
+
             fakeDatabase.forEach(user => {
-                insecureResult.innerHTML += `• ${user.username} (${user.role})<br>`;
+                result.innerHTML += `
+                    <div style="background: #ffebee; padding: 8px; margin: 4px 0; border-radius: 4px;">
+                        👤 <strong>${user.username}</strong> - ${user.role}<br>
+                        🔑 Password: <code>${user.password}</code> (¡EXPUESTA!)
+                    </div>
+                `;
             });
+
+            result.innerHTML += `
+                    <br>
+                    <p style="color: #d32f2f; font-weight: bold;">
+                        ⚠️ El atacante ahora tiene acceso a:<br>
+                        • Todas las cuentas de usuario<br>
+                        • Contraseñas en texto plano<br>
+                        • Roles y permisos<br>
+                        • Puede modificar o eliminar datos<br>
+                        • Puede escalar privilegios a administrador
+                    </p>
+            `;
         } else {
             const user = fakeDatabase.find(u => u.username === username);
             if (user) {
-                insecureResult.innerHTML += `Usuario encontrado: ${user.username}`;
+                result.innerHTML += `
+                    <strong style="color: #2e7d32;">Usuario encontrado:</strong><br>
+                    👤 ${user.username} (${user.role})
+                `;
             } else {
-                insecureResult.innerHTML += 'Usuario no encontrado';
+                result.innerHTML += `
+                    <strong style="color: #666;">❌ Usuario no encontrado</strong>
+                `;
             }
         }
 
-        // Seguro: consultas parametrizadas (simulado)
-        secureResult.innerHTML = `
-            <strong>Query segura:</strong><br>
-            <code>SELECT * FROM users WHERE username = ?</code><br>
-            <em>Parámetro: "${username}"</em><br><br>
+        result.innerHTML += `
+                </div>
+                
+                <div style="margin-top: 16px; padding: 12px; background: #fff3e0; border-radius: 4px; border-left: 3px solid #ff9800;">
+                    <strong>⚠️ ¿Por qué es vulnerable?</strong>
+                    <ul style="margin: 8px 0; line-height: 1.8;">
+                        <li>La entrada del usuario se concatena directamente en la consulta SQL</li>
+                        <li>Caracteres especiales como <code>'</code> alteran la sintaxis SQL</li>
+                        <li>El atacante puede modificar la lógica de la consulta</li>
+                        <li><code>OR '1'='1'</code> hace que la condición siempre sea verdadera</li>
+                        <li><code>--</code> comenta el resto de la consulta original</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+    });
+
+    // Botón SEGURO - consultas parametrizadas
+    secureBtn.addEventListener('click', () => {
+        const username = usernameInput.value;
+
+        if (!username) {
+            alert('Por favor ingresa un nombre de usuario');
+            return;
+        }
+
+        result.innerHTML = `
+            <div style="background: #e8f5e9; padding: 16px; border-radius: 6px; border-left: 4px solid #4caf50;">
+                <h4 style="margin-top: 0; color: #4caf50;">✅ CONSULTA SEGURA (Prepared Statement)</h4>
+                
+                <p><strong>Entrada del usuario:</strong></p>
+                <pre style="background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto;">${username}</pre>
+                
+                <p><strong>Query SQL parametrizada:</strong></p>
+                <pre style="background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto; border-left: 3px solid #4caf50;">SELECT * FROM users WHERE username = ?</pre>
+                
+                <p><strong>Parámetro tratado como dato:</strong></p>
+                <pre style="background: #fff; padding: 8px; border-radius: 4px; overflow-x: auto;">Parámetro[0] = "${username}"</pre>
+                
+                <p><strong>📊 Resultado:</strong></p>
+                <div style="background: #fff; padding: 12px; border-radius: 4px;">
         `;
 
+        // Buscar usuario de forma segura (el input se trata como literal)
         const user = fakeDatabase.find(u => u.username === username);
+
         if (user) {
-            secureResult.innerHTML += `<strong style="color: #4caf50;">✅ Usuario encontrado:</strong> ${user.username}`;
+            result.innerHTML += `
+                    <strong style="color: #2e7d32;">✅ Usuario encontrado:</strong><br>
+                    👤 <strong>${user.username}</strong> - ${user.role}
+            `;
         } else {
-            secureResult.innerHTML += '❌ Usuario no encontrado (entrada tratada como texto literal)';
+            result.innerHTML += `
+                    <strong style="color: #666;">❌ Usuario no encontrado</strong><br><br>
+                    <p style="color: #555;">
+                        La entrada se trató como <strong>texto literal</strong>.<br>
+                        Incluso si contiene <code>'</code> o <code>OR</code>, se busca exactamente ese texto.
+                    </p>
+            `;
         }
+
+        result.innerHTML += `
+                </div>
+                
+                <div style="margin-top: 16px; padding: 12px; background: #e3f2fd; border-radius: 4px; border-left: 3px solid #2196f3;">
+                    <strong>🛡️ ¿Por qué es seguro?</strong>
+                    <ul style="margin: 8px 0; line-height: 1.8;">
+                        <li><strong>Separación de código y datos:</strong> La consulta SQL se define primero</li>
+                        <li><strong>Parámetros tratados como datos:</strong> El <code>?</code> será reemplazado por el valor literal</li>
+                        <li><strong>Sin interpretación SQL:</strong> Los caracteres especiales no modifican la consulta</li>
+                        <li><strong>Escape automático:</strong> El motor de BD escapa los caracteres peligrosos</li>
+                        <li><strong>Inyección imposible:</strong> <code>'</code>, <code>OR</code>, <code>--</code> se buscan literalmente</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 12px; padding: 12px; background: #fff; border-radius: 4px; border: 2px dashed #4caf50;">
+                    <strong>💡 Ejemplo de código seguro:</strong>
+                    <pre style="margin-top: 8px; font-size: 0.9em;">// Node.js con MySQL2
+const query = 'SELECT * FROM users WHERE username = ?';
+db.execute(query, [username], (err, results) => {
+    // Los caracteres especiales son escapados automáticamente
+});</pre>
+                </div>
+            </div>
+        `;
     });
 }
 
 // ===== CSRF =====
 function setupCsrf() {
-    const sendBtn = document.getElementById('csrf-send');
-    const amountInput = document.getElementById('csrf-amount');
-    const tokenCheck = document.getElementById('csrf-token');
+    const attackBtn = document.getElementById('csrf-attack');
+    const safeBtn = document.getElementById('csrf-safe');
     const result = document.getElementById('csrf-result');
 
-    if (!sendBtn) return;
+    if (!attackBtn || !safeBtn) return;
 
-    const validToken = 'a1b2c3d4e5f6';
+    const validToken = 'csrf_a1b2c3d4e5f6g7h8';
 
-    sendBtn.addEventListener('click', () => {
-        const amount = amountInput.value;
-        const hasToken = tokenCheck.checked;
+    attackBtn.addEventListener('click', () => {
+        result.innerHTML = `
+            <div class="info-box" style="background: #ffebee; border-left-color: #f44336; margin-top: 16px;">
+                <h4>🚨 Simulación de Ataque CSRF</h4>
+                
+                <p><strong>Escenario:</strong> Estás autenticado en tu banco (banco.com) con sesión activa.</p>
+                
+                <p><strong>📧 Paso 1:</strong> Recibes un email: "¡Felicidades! Has ganado un premio, haz clic aquí"</p>
+                
+                <p><strong>🌐 Paso 2:</strong> El enlace te lleva a sitio-malicioso.com que contiene:</p>
+                <pre style="background: #fff; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.9em;">
+&lt;!-- Página maliciosa --&gt;
+&lt;form action="https://banco.com/transferir" method="POST"&gt;
+    &lt;input type="hidden" name="destino" value="atacante123" /&gt;
+    &lt;input type="hidden" name="monto" value="10000" /&gt;
+&lt;/form&gt;
+&lt;script&gt;
+    document.forms[0].submit(); // Envío automático
+&lt;/script&gt;
+                </pre>
 
-        if (!amount) {
-            alert('Ingresa un monto');
-            return;
-        }
+                <p><strong>⚠️ ¿Qué sucede?</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li>✅ Tu navegador <strong>automáticamente envía tus cookies de sesión</strong> del banco</li>
+                    <li>✅ El banco te reconoce como autenticado (sesión válida)</li>
+                    <li>✅ La transferencia se ejecuta sin tu consentimiento</li>
+                    <li>❌ <strong>Perdiste $10,000</strong> sin saberlo</li>
+                </ul>
 
-        if (hasToken) {
-            result.innerHTML = `
-                <strong style="color: #4caf50;">✅ Transferencia exitosa</strong><br>
-                Monto: $${amount}<br>
-                Token CSRF verificado: ${validToken}<br>
-                La solicitud proviene del sitio legítimo
-            `;
-        } else {
-            result.innerHTML = `
-                <strong style="color: #f44336;">🚨 ¡ATAQUE CSRF BLOQUEADO!</strong><br>
-                Intento de transferir: $${amount}<br>
-                ❌ Token CSRF faltante o inválido<br>
-                La solicitud fue rechazada por seguridad
-            `;
-        }
+                <p><strong>💰 Resultado del ataque:</strong></p>
+                <div style="background: #fff; padding: 12px; border-radius: 4px; border: 2px solid #f44336;">
+                    <strong style="color: #f44336;">❌ TRANSFERENCIA EJECUTADA SIN CONSENTIMIENTO</strong><br>
+                    <strong>Destino:</strong> Cuenta del atacante (atacante123)<br>
+                    <strong>Monto:</strong> $10,000.00<br>
+                    <strong>Estado:</strong> ✅ Aprobada (sesión válida detectada)<br>
+                    <strong>Token CSRF:</strong> ❌ No requerido (sitio vulnerable)
+                </div>
+
+                <p><strong>🎯 ¿Por qué funciona?</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li>El navegador envía cookies automáticamente a banco.com</li>
+                    <li>El banco no valida de dónde proviene la solicitud</li>
+                    <li>No hay token CSRF para verificar legitimidad</li>
+                    <li>La víctima nunca vio ni aprobó la transferencia</li>
+                </ul>
+            </div>
+        `;
+    });
+
+    safeBtn.addEventListener('click', () => {
+        result.innerHTML = `
+            <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50; margin-top: 16px;">
+                <h4>✅ Protección contra CSRF con Token</h4>
+                
+                <p><strong>🔒 Mismo escenario, pero con protección CSRF:</strong></p>
+                
+                <p><strong>🌐 Sitio malicioso intenta el ataque:</strong></p>
+                <pre style="background: #fff; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.9em;">
+&lt;!-- Página maliciosa --&gt;
+&lt;form action="https://banco.com/transferir" method="POST"&gt;
+    &lt;input type="hidden" name="destino" value="atacante123" /&gt;
+    &lt;input type="hidden" name="monto" value="10000" /&gt;
+    &lt;!-- ⚠️ NO TIENE el token CSRF válido --&gt;
+&lt;/form&gt;
+&lt;script&gt;
+    document.forms[0].submit();
+&lt;/script&gt;
+                </pre>
+
+                <p><strong>🛡️ El servidor bancario verifica:</strong></p>
+                <ol style="line-height: 1.8;">
+                    <li>✅ Cookie de sesión válida (usuario autenticado)</li>
+                    <li>❌ <strong>Token CSRF faltante o inválido</strong></li>
+                    <li>🚫 <strong>Solicitud rechazada</strong></li>
+                </ol>
+
+                <div style="background: #fff; padding: 12px; border-radius: 4px; border: 2px solid #4caf50; margin: 16px 0;">
+                    <strong style="color: #4caf50;">✅ ATAQUE CSRF BLOQUEADO</strong><br>
+                    <strong>Intento de transferencia:</strong> $10,000.00<br>
+                    <strong>Destino solicitado:</strong> atacante123<br>
+                    <strong>Token CSRF:</strong> ❌ Faltante<br>
+                    <strong>Estado:</strong> 🚫 <strong>RECHAZADA</strong><br>
+                    <strong>Razón:</strong> Token CSRF inválido o ausente
+                </div>
+
+                <p><strong>🔐 Cómo funciona el token CSRF:</strong></p>
+                <pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.9em;">
+// 1. Al cargar el formulario legítimo:
+&lt;form action="/transferir" method="POST"&gt;
+    &lt;input type="hidden" name="csrf_token" value="${validToken}" /&gt;
+    &lt;input name="destino" /&gt;
+    &lt;input name="monto" /&gt;
+    &lt;button&gt;Transferir&lt;/button&gt;
+&lt;/form&gt;
+
+// 2. En el servidor:
+if (request.csrf_token === session.csrf_token) {
+    // ✅ Token válido, procesar solicitud
+} else {
+    // ❌ Token inválido, rechazar solicitud
+}
+                </pre>
+
+                <p><strong>✅ Métodos de protección CSRF:</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Token CSRF:</strong> Token único por sesión/formulario, imposible de adivinar</li>
+                    <li><strong>SameSite Cookies:</strong> <code>Set-Cookie: session=...; SameSite=Strict</code>
+                        <br>→ Cookies no se envían en peticiones cross-site</li>
+                    <li><strong>Verificar Origin/Referer:</strong> Validar que petición viene del dominio correcto</li>
+                    <li><strong>Re-autenticación:</strong> Solicitar contraseña para acciones críticas</li>
+                    <li><strong>Doble Submit Cookie:</strong> Token en cookie + formulario, deben coincidir</li>
+                </ul>
+
+                <p><strong>💡 Buenas prácticas:</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li>✅ Usar métodos POST/PUT/DELETE para acciones que modifiquen datos</li>
+                    <li>✅ Nunca usar GET para operaciones que cambien estado</li>
+                    <li>✅ Implementar tokens CSRF en todos los formularios</li>
+                    <li>✅ Configurar cookies con <code>SameSite=Strict</code> o <code>Lax</code></li>
+                    <li>✅ Validar Origin/Referer headers</li>
+                    <li>✅ Requerir re-autenticación para operaciones sensibles</li>
+                </ul>
+            </div>
+        `;
     });
 }
 
 // ===== SESSION MANAGEMENT =====
 function setupSession() {
-    const loginBtn = document.getElementById('session-login');
-    const usernameInput = document.getElementById('session-username');
-    const secureCheck = document.getElementById('session-secure');
-    const sessionInfo = document.getElementById('session-info');
+    const showBtn = document.getElementById('session-show');
+    const result = document.getElementById('session-result');
 
-    if (!loginBtn) return;
+    if (!showBtn) return;
 
-    loginBtn.addEventListener('click', () => {
-        const username = usernameInput.value;
-        const isSecure = secureCheck.checked;
+    showBtn.addEventListener('click', () => {
+        // Generar ID de sesión seguro simulado
+        const sessionId = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
 
-        if (!username) {
-            alert('Ingresa un nombre de usuario');
-            return;
-        }
+        result.innerHTML = `
+            <div class="info-box" style="background: #e8f5e9; border-left-color: #4caf50; margin-top: 16px;">
+                <h4>✅ Configuración Segura de Sesión</h4>
+                
+                <p><strong>📋 Ejemplo de Session ID seguro:</strong></p>
+                <pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; overflow-x: auto;">
+Session-ID: ${sessionId}
+                </pre>
+                
+                <p><strong>🍪 Configuración de Cookie (Header HTTP):</strong></p>
+                <pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.9em;">
+Set-Cookie: sessionid=${sessionId}; 
+    HttpOnly;           // ← JavaScript NO puede acceder
+    Secure;             // ← Solo transmisión HTTPS
+    SameSite=Strict;    // ← Protección contra CSRF
+    Path=/;
+    Max-Age=3600;       // ← Expira en 1 hora
+    Domain=example.com
+                </pre>
 
-        const sessionId = Math.random().toString(36).substring(7);
+                <p><strong>🔒 ¿Qué hace cada bandera?</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li><strong>HttpOnly:</strong> La cookie NO es accesible vía <code>document.cookie</code> en JavaScript
+                        <br>→ Previene robo por XSS (Cross-Site Scripting)</li>
+                    
+                    <li><strong>Secure:</strong> La cookie SOLO se transmite por conexiones HTTPS
+                        <br>→ Previene intercepción en redes inseguras (Man-in-the-Middle)</li>
+                    
+                    <li><strong>SameSite=Strict:</strong> La cookie NO se envía en solicitudes cross-site
+                        <br>→ Previene CSRF (Cross-Site Request Forgery)</li>
+                    
+                    <li><strong>Max-Age:</strong> Tiempo de vida limitado de la sesión
+                        <br>→ Reduce ventana de oportunidad para ataques</li>
+                </ul>
 
-        sessionInfo.innerHTML = `
-            <strong>Usuario:</strong> ${username}<br>
-            <strong>Session ID:</strong> ${sessionId}<br>
-            <strong>Seguridad:</strong> ${isSecure ? '✅ HttpOnly, Secure, SameSite' : '❌ Cookie insegura'}<br>
+                <p><strong>🛡️ Buenas prácticas adicionales:</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li>✅ Regenerar Session ID después del login exitoso</li>
+                    <li>✅ Invalidar sesión después de logout</li>
+                    <li>✅ Usar IDs criptográficamente aleatorios (mínimo 128 bits)</li>
+                    <li>✅ Implementar timeout de inactividad (ej. 30 minutos)</li>
+                    <li>✅ Almacenar datos sensibles en servidor, no en cookie</li>
+                    <li>✅ Detectar cambios sospechosos (IP, User-Agent)</li>
+                    <li>✅ Limitar sesiones concurrentes por usuario</li>
+                    <li>✅ Usar HTTPS en toda la aplicación (no solo login)</li>
+                </ul>
+
+                <p><strong>❌ Configuración INSEGURA (NO hacer):</strong></p>
+                <pre style="background: #ffebee; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.9em; border-left: 4px solid #f44336;">
+Set-Cookie: sessionid=${sessionId}
+    // Sin HttpOnly → Vulnerable a XSS
+    // Sin Secure → Transmisión por HTTP plano
+    // Sin SameSite → Vulnerable a CSRF
+                </pre>
+            </div>
         `;
-
-        if (!isSecure) {
-            sessionInfo.innerHTML += `<br><strong style="color: #f44336;">⚠️ VULNERABILIDADES:</strong><br>
-                • Session Hijacking posible<br>
-                • Vulnerable a XSS<br>
-                • Cookie accesible por JavaScript`;
-        } else {
-            sessionInfo.innerHTML += `<br><strong style="color: #4caf50;">✅ PROTECCIONES ACTIVAS:</strong><br>
-                • HttpOnly: JavaScript no puede leer la cookie<br>
-                • Secure: Solo HTTPS<br>
-                • SameSite: Protección contra CSRF`;
-        }
     });
 }

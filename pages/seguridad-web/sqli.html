@@ -6,7 +6,7 @@
 
     <div class="demo-container">
         <div class="demo-section">
-            <h3>🧪 Demostración Interactiva</h3>
+            <h3>🧪 Demostración</h3>
 
             <div class="input-group">
                 <label for="sqli-username">Nombre de usuario:</label>
@@ -20,8 +20,11 @@
                 <li><code>' OR 1=1--</code> - Bypass de autenticación</li>
             </ul>
 
-            <button id="sqli-insecure" class="btn-attack">❌ Consultar (INSEGURO)</button>
-            <button id="sqli-secure" class="btn-primary" style="margin-left: 8px;">✅ Consultar (SEGURO)</button>
+            <div style="display: flex; gap: 10px; margin-top: 16px;">
+                <button id="sqli-insecure" class="btn-attack" style="flex: 1; margin: 0;">❌ Consultar
+                    (INSEGURO)</button>
+                <button id="sqli-secure" class="btn-primary" style="flex: 1; margin: 0;">✅ Consultar (SEGURO)</button>
+            </div>
 
             <div id="sqli-result" class="result-box"></div>
         </div>

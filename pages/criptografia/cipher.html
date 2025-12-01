@@ -3,44 +3,98 @@
     <p class="page-description">Compara el cifrado clásico de César con el moderno AES-GCM. Observa cómo ha evolucionado
         la criptografía desde los tiempos de la Roma antigua hasta los estándares actuales.</p>
 
-    <div class="demo-container">
-        <div class="demo-section">
-            <h3>Herramienta de cifrado</h3>
+    <div class="demo-section" style="max-width: 800px; margin: 20px auto;">
+        <h3>Herramienta de cifrado</h3>
 
-            <div class="input-group">
-                <label for="cipher-text">Texto a cifrar/descifrar:</label>
-                <input id="cipher-text" type="text" placeholder="Escribe tu mensaje aquí..." />
+        <div class="input-group">
+            <label for="cipher-text">Texto a cifrar/descifrar:</label>
+            <input id="cipher-text" type="text" placeholder="Escribe tu mensaje aquí..." style="max-width: none;" />
+        </div>
+
+        <div class="input-group">
+            <label for="cipher-method">Método de cifrado:</label>
+            <select id="cipher-method" style="max-width: none;">
+                <option value="caesar">Cifrado César (desplazamiento numérico)</option>
+                <option value="aes">AES-GCM (cifrado real, contraseña mín. 8 caracteres)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="cipher-key">Clave/Desplazamiento:</label>
+            <input id="cipher-key" type="text" value="3"
+                placeholder="Número (1-25) para César, contraseña fuerte para AES" style="max-width: none;" />
+            <small style="display: block; margin-top: 5px; color: #666;">
+                <strong>César:</strong> Solo número (ej: 3, 13, 25) |
+                <strong>AES:</strong> Mínimo 8 caracteres (ej: MiClave123!)
+            </small>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button id="cipher-encrypt" class="btn-primary" style="flex: 1; margin: 0;">🔒 Cifrar</button>
+            <button id="cipher-decrypt" class="btn-primary" style="flex: 1; margin: 0;">🔓 Descifrar</button>
+        </div>
+
+        <div class="result-box">
+            <h4>Resultado:</h4>
+            <textarea id="cipher-result" rows="6" readonly placeholder="El resultado aparecerá aquí..."></textarea>
+            <small style="display: block; margin-top: 8px; color: #666;">
+                💡 <strong>Tip:</strong> Para AES, copia el texto cifrado, pégalo en el campo de entrada y usa
+                "Descifrar" con la misma contraseña.
+            </small>
+        </div>
+
+        <div class="info-box" style="margin-top: 16px; background: #e3f2fd; border-left-color: #2196f3;">
+            <h4>📚 Implementación técnica</h4>
+            <p><strong>Cifrado César:</strong></p>
+            <div class="code-example">
+                <pre>
+// Implementado con JavaScript 
+function cesarEncrypt(text, shift) {
+    return text.split('').map(char => {
+        if (char.match(/[a-z]/i)) {
+            const code = char.charCodeAt(0);
+            const isUpperCase = code >= 65 && code <= 90;
+            const base = isUpperCase ? 65 : 97;
+            return String.fromCharCode(((code - base + shift) % 26) + base);
+        }
+        return char;
+    }).join('');
+}
+                </pre>
             </div>
 
-            <div class="input-group">
-                <label for="cipher-method">Método de cifrado:</label>
-                <select id="cipher-method">
-                    <option value="caesar">Cifrado César (desplazamiento numérico)</option>
-                    <option value="aes">AES-GCM (cifrado real, contraseña mín. 8 caracteres)</option>
-                </select>
+            <p style="margin-top: 16px;"><strong>Cifrado AES-GCM:</strong></p>
+            <div class="code-example">
+                <pre>
+// Web Crypto API
+const encoder = new TextEncoder();
+const salt = crypto.getRandomValues(new Uint8Array(16));
+const iv = crypto.getRandomValues(new Uint8Array(12));
+
+// Derivar clave desde contraseña con PBKDF2
+const keyMaterial = await crypto.subtle.importKey(
+    'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits', 'deriveKey']
+);
+
+const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+    keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['encrypt']
+);
+
+// Cifrar
+const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv }, key, encoder.encode(text)
+);
+                </pre>
             </div>
 
-            <div class="input-group">
-                <label for="cipher-key">Clave/Desplazamiento:</label>
-                <input id="cipher-key" type="text" value="3"
-                    placeholder="Número (1-25) para César, contraseña fuerte para AES" />
-                <small style="display: block; margin-top: 5px; color: #666;">
-                    <strong>César:</strong> Solo número (ej: 3, 13, 25) |
-                    <strong>AES:</strong> Mínimo 8 caracteres (ej: MiClave123!)
-                </small>
-            </div>
+            <p style="margin-top: 12px;"><strong>Librerías utilizadas:</strong></p>
+            <ul>
+                <li><strong>Cifrado César:</strong> JavaScript puro (charCodeAt, String.fromCharCode)</li>
+                <li><strong>AES-GCM:</strong> Web Crypto API nativa del navegador (crypto.subtle)</li>
+                <li><strong>PBKDF2:</strong> Derivación de clave incluida en Web Crypto API</li>
 
-            <button id="cipher-encrypt" class="btn-primary">🔒 Cifrar</button>
-            <button id="cipher-decrypt" class="btn-primary" style="margin-left: 8px;">🔓 Descifrar</button>
-
-            <div class="result-box">
-                <h4>Resultado:</h4>
-                <textarea id="cipher-result" rows="6" readonly placeholder="El resultado aparecerá aquí..."></textarea>
-                <small style="display: block; margin-top: 8px; color: #666;">
-                    💡 <strong>Tip:</strong> Para AES, copia el texto cifrado, pégalo en el campo de entrada y usa
-                    "Descifrar" con la misma contraseña.
-                </small>
-            </div>
+            </ul>
         </div>
     </div>
 

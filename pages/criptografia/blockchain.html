@@ -1,5 +1,5 @@
 <section id="blockchain" class="page">
-    <h2>⛓️ Blockchain y Criptografía</h2>
+    <h2>⛓️ Blockchain</h2>
     <p class="page-description">Blockchain es una tecnología de registro distribuido que usa criptografía
         para crear una cadena inmutable de bloques. Fundamental en criptomonedas y contratos inteligentes [12].</p>
 
@@ -72,12 +72,16 @@ Bloque #2
         <div class="blockchain-demo">
             <div class="input-group">
                 <label for="block-data">Datos del bloque:</label>
-                <input type="text" id="block-data" placeholder="Ej: Alice paga 5 BTC a Bob" />
+                <input type="text" id="block-data" placeholder="Ej: Alice paga 5 BTC a Bob"
+                    style="width: 100%; max-width: 100%;" />
             </div>
 
-            <button id="mine-block" class="btn-primary">Minar Bloque</button>
-            <button id="tamper-block" class="btn-attack" style="margin-left: 8px;">Alterar Blockchain</button>
-            <button id="reset-chain" class="btn-primary" style="margin-left: 8px; background: #666;">Reiniciar</button>
+            <div style="display: flex; gap: 10px; margin-top: 16px;">
+                <button id="mine-block" class="btn-primary" style="flex: 1; margin: 0;">Minar Bloque</button>
+                <button id="tamper-block" class="btn-attack" style="flex: 1; margin: 0;">Alterar Blockchain</button>
+                <button id="reset-chain" class="btn-primary"
+                    style="flex: 1; margin: 0; background: #666;">Reiniciar</button>
+            </div>
 
             <div id="blockchain-container" class="blockchain-container"></div>
             <div id="blockchain-status" class="blockchain-status"></div>
